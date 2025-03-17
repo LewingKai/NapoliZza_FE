@@ -20,6 +20,7 @@
 :root {
   --primary-color: '#233000';
   --text-desc: '#4D4D4D';
+  background-color: #ebf0e4;
 }
 
 * {
