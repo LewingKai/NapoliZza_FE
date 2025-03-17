@@ -1,6 +1,6 @@
 import { NavLink, Link } from 'react-router-dom'
-import logo from '../../../assets/images/Logo.svg'
-import { routes } from '../../../routes'
+import { Logo } from '../../../../assets/icons'
+import { routes } from '~/configs'
 import { useState, useEffect } from 'react'
 
 export default function Header() {
@@ -25,7 +25,7 @@ export default function Header() {
         }`}
     >
       <Link to={routes.HOME}>
-        <img src={logo} alt='Logo Website' className='h-[60px]' />
+        <img src={Logo} alt='Logo Website' className='h-[60px]' />
       </Link>
       <div className='gap-9 w-[30vw] justify-between flex'>
         <NavLink

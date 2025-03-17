@@ -1,13 +1,13 @@
-import logo from '../../../assets/images/Logo.svg'
+import { Logo } from '../../../../assets/icons'
 import { NavLink, Link } from 'react-router-dom'
-import { routes } from '../../../routes'
+import { routes } from '~/configs/routes'
 
 export default function Footer() {
   return (
     <div className='bg-primary h-[610px] items-center px-[138px] py-[40px] relative'>
       <div className='flex gap-8 pt-[100px] w-full justify-between items-center'>
         <Link to={routes.HOME}>
-          <img src={logo} alt='Logo Website' className='h-[80px]' />
+          <img src={Logo} alt='Logo Website' className='h-[80px]' />
         </Link>
         <div>
           <div className='text-white text-[25px] mb-3 font-bold'>Liên hệ</div>

@@ -1,41 +1,15 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
-import { publicRoutes } from './routes'
+import { Routes, Route } from 'react-router-dom'
+import Home from './pages/Home'
 import { DefaultLayout } from './components/Layout'
-import { Fragment } from 'react'
-import { ToastContainer } from 'react-toastify'
-import 'react-toastify/dist/ReactToastify.min.css'
-
+import Menu from './pages/Menu'
 function App() {
   return (
-    <>
-      {' '}
-      <Router>
-        <div className='App'>
-          <Routes>
-            {publicRoutes.map((route, index) => {
-              const Page = route.component
-              let Layout = DefaultLayout
-
-              console.log(1)
-
-              return (
-                <Route
-                  exact
-                  key={index}
-                  path={route.path}
-                  element={
-                    <Layout>
-                      <Page />
-                    </Layout>
-                  }
-                />
-              )
-            })}
-          </Routes>
-        </div>
-      </Router>
-      <ToastContainer />
-    </>
+    <Routes>
+      <Route element={<DefaultLayout />}>
+        <Route path='/' element={<Home />} />
+        <Route path='/menu' element={<Menu />} />
+      </Route>
+    </Routes>
   )
 }
 
