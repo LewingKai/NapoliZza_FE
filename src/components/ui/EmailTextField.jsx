@@ -12,7 +12,7 @@ function EmailTextField({ label, className, value, handleChange }) {
   }
 
   return (
-    <div className={`mx-auto max-w-[432px] h-[34px] my-5 ${className}`}>
+    <div className={`mx-auto max-w-[432px] ${className}`}>
       <TextField
         sx={{
           margin: 'auto',
