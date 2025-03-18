@@ -17,7 +17,7 @@ export default function Header() {
 
   return (
     <div
-      className={`bg-primary w-full h-[100px] flex items-center px-[138px] justify-between sticky top-0
+      className={`bg-primary w-full h-[100px] flex items-center px-[138px] justify-between sticky top-0 z-10
         ${
           scrolled
             ? 'shadow-[0_4px_10px_rgba(255,255,255,0.8)] rounded-b-[20px]'
