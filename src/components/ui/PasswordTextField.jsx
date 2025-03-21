@@ -5,7 +5,7 @@ import IconButton from '@mui/material/IconButton'
 import Visibility from '@mui/icons-material/Visibility'
 import VisibilityOff from '@mui/icons-material/VisibilityOff'
 
-function PasswordTextField({ label, confirm = false, className, value, handleChange }) {
+function PasswordTextField({ label, confirm = false, className, placeholder, value }) {
   const [password, setPassword] = useState(value || '')
   const [confirmPassword, setConfirmPassword] = useState('')
   const [showPassword, setShowPassword] = useState(false)
@@ -69,7 +69,7 @@ function PasswordTextField({ label, confirm = false, className, value, handleCha
   const toggleShowConfirmPassword = () => setShowConfirmPassword((prev) => !prev)
 
   return (
-    <div className={`mx-auto max-w-[432px] ${className}`}>
+    <div className={`mx-auto w-full max-w-[432px] ${className}`}>
       <TextField
         sx={{
           margin: 'auto',
@@ -85,6 +85,7 @@ function PasswordTextField({ label, confirm = false, className, value, handleCha
         onBlur={handlePasswordBlur}
         type={showPassword ? 'text' : 'password'}
         error={errorPassword}
+        placeholder={placeholder}
         helperText={errorPassword ? 'Mật khẩu phải có ít nhất 6 kí tự' : ''}
         InputProps={{
           endAdornment: (
@@ -102,7 +103,7 @@ function PasswordTextField({ label, confirm = false, className, value, handleCha
           sx={{
             margin: 'auto',
             width: '100%',
-            marginTop: '20px',
+            marginTop: '16px',
             '& .MuiOutlinedInput-root': {
               borderRadius: '8px',
               backgroundColor: '#F0F4F8',
@@ -114,6 +115,7 @@ function PasswordTextField({ label, confirm = false, className, value, handleCha
           onBlur={handleConfirmPasswordBlur}
           type={showConfirmPassword ? 'text' : 'password'}
           error={touchedConfirmPassword && (errorConfirmPassword || matchError)}
+          placeholder={placeholder}
           helperText={
             touchedConfirmPassword && errorConfirmPassword
               ? 'Đây là trường bắt buộc'

@@ -1,7 +1,7 @@
-import React from 'react'
+import React, { useState } from 'react'
 import TextField from '@mui/material/TextField'
 
-function EmailTextField({ label, className, placeholder, value }) {
+function RequiredTextField({ label, className, placeholder, value }) {
   return (
     <div className={`mx-auto w-full max-w-[432px] ${className}`}>
       <TextField
@@ -21,4 +21,4 @@ function EmailTextField({ label, className, placeholder, value }) {
   )
 }
 
-export default EmailTextField
+export default RequiredTextField
