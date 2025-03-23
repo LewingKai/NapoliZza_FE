@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import TextField from '@mui/material/TextField'
 import InputAdornment from '@mui/material/InputAdornment'
 import IconButton from '@mui/material/IconButton'
 import Visibility from '@mui/icons-material/Visibility'
 import VisibilityOff from '@mui/icons-material/VisibilityOff'
 
-function PasswordTextField({ label, confirm = false, className, placeholder, value }) {
+function PasswordTextField({ label, confirm = false, className, placeholder, value, onChange }) {
   const [password, setPassword] = useState(value || '')
   const [confirmPassword, setConfirmPassword] = useState('')
   const [showPassword, setShowPassword] = useState(false)
@@ -13,56 +13,30 @@ function PasswordTextField({ label, confirm = false, className, placeholder, val
   const [errorPassword, setErrorPassword] = useState(false)
   const [errorConfirmPassword, setErrorConfirmPassword] = useState(false)
   const [matchError, setMatchError] = useState(false)
-  const [touchedConfirmPassword, setTouchedConfirmPassword] = useState(false)
 
-  useEffect(() => {
-    if (password.length < 6 && password !== '') {
-      setErrorPassword(true)
-    } else {
-      setErrorPassword(false)
-    }
+  const isPasswordValid = (password) => password.length >= 6
 
-    if (touchedConfirmPassword) {
-      if (confirmPassword === '') {
-        setErrorConfirmPassword(true)
-      } else {
-        setErrorConfirmPassword(false)
-      }
-
-      if (password !== confirmPassword) {
-        setMatchError(true)
-      } else {
-        setMatchError(false)
-      }
-    }
-  }, [password, confirmPassword, touchedConfirmPassword])
-
-  const handlePasswordChange = (event) => {
-    setPassword(event.target.value)
-    handleChange(event)
-  }
-
-  const handleConfirmPasswordChange = (event) => {
-    setConfirmPassword(event.target.value)
-    setTouchedConfirmPassword(true)
-  }
+  const isConfirmPasswordValid = (password, confirmPassword) =>
+    confirmPassword !== '' && password === confirmPassword
 
   const handlePasswordBlur = () => {
-    if (!password || password.length < 6) {
-      setErrorPassword(true)
-    }
+    setErrorPassword(!isPasswordValid(password))
   }
 
   const handleConfirmPasswordBlur = () => {
-    setTouchedConfirmPassword(true)
-    if (!confirmPassword) {
-      setErrorConfirmPassword(true)
-    }
-    if (password && confirmPassword !== password) {
-      setMatchError(true)
-    } else {
-      setMatchError(false)
-    }
+    setErrorConfirmPassword(confirmPassword === '')
+    setMatchError(!isConfirmPasswordValid(password, confirmPassword))
+  }
+
+  const handlePasswordChange = (event) => {
+    const newPassword = event.target.value
+    setPassword(newPassword)
+    onChange && onChange(newPassword) // Gọi hàm onChange từ props nếu có
+  }
+
+  const handleConfirmPasswordChange = (event) => {
+    const newConfirmPassword = event.target.value
+    setConfirmPassword(newConfirmPassword)
   }
 
   const toggleShowPassword = () => setShowPassword((prev) => !prev)
@@ -82,7 +56,7 @@ function PasswordTextField({ label, confirm = false, className, placeholder, val
         label={label}
         value={password}
         onChange={handlePasswordChange}
-        onBlur={handlePasswordBlur}
+        onBlur={handlePasswordBlur} // Kiểm tra khi người dùng rời khỏi trường nhập liệu
         type={showPassword ? 'text' : 'password'}
         error={errorPassword}
         placeholder={placeholder}
@@ -112,12 +86,12 @@ function PasswordTextField({ label, confirm = false, className, placeholder, val
           label='Nhập lại mật khẩu'
           value={confirmPassword}
           onChange={handleConfirmPasswordChange}
-          onBlur={handleConfirmPasswordBlur}
+          onBlur={handleConfirmPasswordBlur} // Kiểm tra khi người dùng rời khỏi trường nhập liệu
           type={showConfirmPassword ? 'text' : 'password'}
-          error={touchedConfirmPassword && (errorConfirmPassword || matchError)}
+          error={errorConfirmPassword || matchError}
           placeholder={placeholder}
           helperText={
-            touchedConfirmPassword && errorConfirmPassword
+            errorConfirmPassword
               ? 'Đây là trường bắt buộc'
               : matchError
                 ? 'Mật khẩu không trùng khớp'
