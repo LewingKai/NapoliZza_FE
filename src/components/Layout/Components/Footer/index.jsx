@@ -1,17 +1,25 @@
-import { Logo } from '../../../../assets/icons'
+import logo from '../../../../assets/images/Logo.svg'
 import { NavLink, Link } from 'react-router-dom'
-import { routes } from '~/configs/routes'
+import { routes } from '../../../../routes/index'
 
 export default function Footer() {
+  const ClickOnTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    })
+  }
+
   return (
-    <div className='bg-primary h-[610px] items-center px-[138px] py-[40px] relative'>
-      <div className='flex gap-8 pt-[100px] w-full justify-between items-center'>
-        <Link to={routes.HOME}>
-          <img src={Logo} alt='Logo Website' className='h-[80px]' />
+    <div className='bg-primary h-[610px] items-center px-[100px] py-[40px] relative'>
+      <div className='flex gap-8 pt-[100px] w-full justify-between '>
+        <Link to={routes.HOME} onClick={ClickOnTop}>
+          <img src={logo} alt='Logo Website' className='h-[90px] mt-[100px]' />
         </Link>
         <div>
           <div className='text-white text-[25px] mb-3 font-bold'>Liên hệ</div>
           <ul>
+            <li className='text-white text-[15px]'>SĐT: 0338963327</li>
             <li className='text-white text-[15px]'>Email: info@napolizza.com</li>
             <li className='text-white text-[15px]'>
               Địa chỉ: Linh Trung, Tp. Thủ Đức, Tp. Hồ Chí Minh
@@ -23,12 +31,20 @@ export default function Footer() {
           <div className='text-white text-[25px] mb-3 font-bold'>Về NapoliZza</div>
           <ul>
             <li>
-              <NavLink to={routes.ABOUTUS} className='text-white text-[15px]'>
+              <NavLink
+                to={routes.ABOUTUS}
+                className='text-white text-[15px] hover:text-[#FFF671]'
+                onClick={ClickOnTop}
+              >
                 Giới thiệu
               </NavLink>
             </li>
             <li>
-              <NavLink to={routes.COMMIT} className='text-white text-[15px]'>
+              <NavLink
+                to={routes.COMMIT}
+                className='text-white text-[15px] hover:text-[#FFF671]'
+                onClick={ClickOnTop}
+              >
                 Cam kết của NapoliZza
               </NavLink>
             </li>
@@ -39,12 +55,20 @@ export default function Footer() {
           <div className='text-white text-[25px] mb-3 font-bold'>Chính sách</div>
           <ul>
             <li>
-              <NavLink to={routes.OPERATING_POLICY} className='text-white text-[15px]'>
+              <NavLink
+                to={routes.OPERATING_POLICY}
+                className='text-white text-[15px] hover:text-[#FFF671]'
+                onClick={ClickOnTop}
+              >
                 Chính sách hoạt động
               </NavLink>
             </li>
             <li>
-              <NavLink to={routes.POLICIES_REGULATIONS} className='text-white text-[15px]'>
+              <NavLink
+                to={routes.POLICIES_REGULATIONS}
+                className='text-white text-[15px] hover:text-[#FFF671]'
+                onClick={ClickOnTop}
+              >
                 Chính sách và quy định
               </NavLink>
             </li>
@@ -55,12 +79,20 @@ export default function Footer() {
           <div className='text-white text-[25px] mb-3 font-bold'>Hướng dẫn</div>
           <ul>
             <li>
-              <NavLink to={routes.BOOKING_GUIDE} className='text-white text-[15px]'>
+              <NavLink
+                to={routes.BOOKING_GUIDE}
+                className='text-white text-[15px] hover:text-[#FFF671]'
+                onClick={ClickOnTop}
+              >
                 Hướng dẫn đặt bàn
               </NavLink>
             </li>
             <li>
-              <NavLink to={routes.CONTACT_INSTRUCTIONS} className='text-white text-[15px]'>
+              <NavLink
+                to={routes.CONTACT_INSTRUCTIONS}
+                className='text-white text-[15px] hover:text-[#FFF671]'
+                onClick={ClickOnTop}
+              >
                 Hướng dẫn liên hệ
               </NavLink>
             </li>
