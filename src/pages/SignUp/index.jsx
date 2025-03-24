@@ -36,7 +36,7 @@ export default function SignUp() {
     birthday: '',
   })
 
-  // const [errors, setErrors] = useState({})
+  const [setErrors] = useState({})
 
   // Ánh xạ các trường với hàm xác thực tương ứng
   const fieldValidationMap = {

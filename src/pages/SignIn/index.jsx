@@ -14,7 +14,7 @@ export default function SignIn() {
     password: '',
   })
 
-  // const [errors, setErrors] = useState({})
+  const [setErrors] = useState({})
 
   // Ánh xạ các trường với hàm xác thực tương ứng
   const fieldValidationMap = {
