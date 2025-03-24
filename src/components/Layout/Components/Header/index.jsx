@@ -37,7 +37,7 @@ export default function Header() {
             color: isActive ? '#FFF671' : '#fff',
           })}
         >
-          Đặt bàn
+          Trang chủ
           <span className='absolute left-1/4 bottom-0 w-1/2 h-[2px] bg-white scale-x-0 group-hover:scale-x-100 transition-transform duration-300'></span>
         </NavLink>
 

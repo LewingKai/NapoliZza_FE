@@ -97,7 +97,6 @@ const outstandingPizza = [
   },
 ]
 
-
 const PrevArrow = (props) => {
   const { className, onClick, style } = props
   return (
@@ -262,10 +261,10 @@ export default function Home() {
         </div>
       </div>
 
-      <div className=' flex justify-between px-[100px] w-full mt-[100px] border-1 border-black'>
+      <div className=' flex justify-between px-[100px] w-full mt-[100px]'>
         {standards.map((item) => {
           return (
-            <div className='flex flex-col items-center text-center max-w-[310px]'>
+            <div className='flex flex-col items-center text-center max-w-[310px] border-2 p-5 rounded-4xl border-primary'>
               <img
                 src={item.icon}
                 alt='Ảnh icon của tiêu chuẩn'
@@ -285,7 +284,7 @@ export default function Home() {
           Một số loại nổi bật
         </h2>
         {/* drop-shadow-lg */}
-        <div className='w-full'>
+        <div className='w-full mt-5'>
           <div className='mx-auto max-w-[1200px] relative'>
             <Slider {...settings}>
               {outstandingPizza.map((item) => (
