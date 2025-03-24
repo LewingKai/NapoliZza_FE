@@ -2,6 +2,7 @@ import { NavLink, Link } from 'react-router-dom'
 import logo from '../../../../assets/images/Logo.svg'
 import { routes } from '../../../../routes/index'
 import { useState, useEffect } from 'react'
+import ScrollToTop from '../../ScrollToTop'
 
 export default function Header() {
   const [scrolled, setScrolled] = useState(false)
@@ -24,7 +25,7 @@ export default function Header() {
             : 'shadow-none rounded-b-none'
         }`}
     >
-      <Link to={routes.HOME}>
+      <Link to={routes.HOME} onClick={ScrollToTop}>
         <img src={logo} alt='Logo Website' className='h-[60px]' />
       </Link>
       <div className='gap-9 w-[30vw] justify-between flex'>
@@ -36,6 +37,7 @@ export default function Header() {
           style={({ isActive }) => ({
             color: isActive ? '#FFF671' : '#fff',
           })}
+          onClick={ScrollToTop}
         >
           Trang chủ
           <span className='absolute left-1/4 bottom-0 w-1/2 h-[2px] bg-white scale-x-0 group-hover:scale-x-100 transition-transform duration-300'></span>
@@ -49,6 +51,7 @@ export default function Header() {
           style={({ isActive }) => ({
             color: isActive ? '#FFF671' : '#fff',
           })}
+          onClick={ScrollToTop}
         >
           Đặt bàn
           <span className='absolute left-1/4 bottom-0 w-1/2 h-[2px] bg-white scale-x-0 group-hover:scale-x-100 transition-transform duration-300'></span>
@@ -62,6 +65,7 @@ export default function Header() {
           style={({ isActive }) => ({
             color: isActive ? '#FFF671' : '#fff',
           })}
+          onClick={ScrollToTop}
         >
           Món ăn
           <span className='absolute left-1/4 bottom-0 w-1/2 h-[2px] bg-white scale-x-0 group-hover:scale-x-100 transition-transform duration-300'></span>
@@ -75,18 +79,19 @@ export default function Header() {
           style={({ isActive }) => ({
             color: isActive ? '#FFF671' : '#fff',
           })}
+          onClick={ScrollToTop}
         >
           Về chúng tôi
           <span className='absolute left-1/4 bottom-0 w-1/2 h-[2px] bg-white scale-x-0 group-hover:scale-x-100 transition-transform duration-300'></span>
         </NavLink>
       </div>
       <div className='flex gap-4'>
-        <Link to={routes.SIGNIN}>
+        <Link to={routes.SIGNIN} onClick={ScrollToTop}>
           <button className='px-[20px] py-[8px] text-[20px] border-[2px] hover:border-secondary rounded-[10px] text-white hover:bg-secondary hover:text-primary '>
             Đăng nhập
           </button>
         </Link>
-        <Link to={routes.SIGNUP}>
+        <Link to={routes.SIGNUP} onClick={ScrollToTop}>
           <button className='px-[30px] py-[8px] text-[20px] border-[2px] hover:border-secondary rounded-[10px] text-white hover:bg-secondary hover:text-primary'>
             Đăng ký
           </button>
