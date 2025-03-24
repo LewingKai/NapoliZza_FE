@@ -1,6 +1,10 @@
-import { Routes, Route } from 'react-router-dom'
-import Home from './pages/Home'
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import { DefaultLayout } from './components/Layout'
+import { routes } from './configs'
+import ScrollToTop from './components/Layout/ScrollToTop'
+import SignIn from './pages/SignIn'
+import SignUp from './pages/SignUp'
+import Home from './pages/Home'
 import Menu from './pages/Menu'
 import AboutUs from './pages/AboutUs'
 import OurCommitNews from './pages/OurCommitNew'
@@ -21,6 +25,8 @@ function App() {
         <Route path='/chinh-sach-va-quy-dinh' element={<PolicyAndRegulations />} />
         <Route path='/huong-dan-dat-ban' element={<OrderInstructionsNew />} />
         <Route path='/huong-dan-lien-he' element={<ContactInstructionsNew />} />
+          <Route path={routes.SIGNIN} element={<SignIn />} />
+          <Route path={routes.SIGNUP} element={<SignUp />} />
       </Route>
     </Routes>
   )
