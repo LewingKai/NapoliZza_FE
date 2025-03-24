@@ -30,3 +30,18 @@
 body {
   text-rendering: optimizeSpeed;
 }
+
+.slick-prev:before,
+.slick-next:before {
+  display: none !important;
+}
+.slick-slide {
+  width: 300px !important;
+  display: inline-block !important;
+  margin-left: 10px !important;
+  height: 300px !important;
+}
+
+.custom-slider .slick-slide {
+  padding: 0 10px;
+}

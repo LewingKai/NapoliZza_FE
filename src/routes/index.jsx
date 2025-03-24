@@ -1,0 +1,13 @@
+export const routes = {
+  HOME: '/',
+  MENU: '/mon-an',
+  RESERVATION: '/dat-ban',
+  ABOUTUS: '/ve-chung-toi',
+  SIGNIN: '/dang-nhap',
+  SIGNUP: '/dang-ki',
+  COMMIT: '/cam-ket-cua-chung-toi',
+  OPERATING_POLICY: '/chinh-sach-hoat-dong',
+  POLICIES_REGULATIONS: '/chinh-sach-va-quy-dinh',
+  BOOKING_GUIDE: '/huong-dan-dat-ban',
+  CONTACT_INSTRUCTIONS: '/huong-dan-lien-he',
+}

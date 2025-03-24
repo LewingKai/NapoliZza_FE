@@ -1,26 +1,35 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { DefaultLayout } from './components/Layout'
 import { routes } from './configs'
-import ScrollToTop from './components/Layout/ScrollToTop'
-
-import Home from './pages/Home'
-import Menu from './pages/Menu'
 import SignIn from './pages/SignIn'
 import SignUp from './pages/SignUp'
+import Home from './pages/Home'
+import Menu from './pages/Menu'
+import AboutUs from './pages/AboutUs'
+import OurCommitNews from './pages/OurCommitNew'
+import OperatingPolicyNew from './pages/OperatingPolicyNew'
+import ContactInstructionsNew from './pages/ContactInstructionsNew'
+import OrderInstructionsNew from './pages/OrderInstructionsNew'
+import PolicyAndRegulations from './pages/PolicyAndRegulations'
 
 function App() {
   return (
-    <Router>
-      <ScrollToTop /> {/* Đặt bên ngoài <Routes> */}
+    <BrowserRouter>
       <Routes>
         <Route element={<DefaultLayout />}>
           <Route path={routes.HOME} element={<Home />} />
           <Route path={routes.MENU} element={<Menu />} />
+          <Route path={routes.ABOUTUS} element={<AboutUs />} />
+          <Route path={routes.COMMIT} element={<OurCommitNews />} />
+          <Route path={routes.OPERATING_POLICY} element={<OperatingPolicyNew />} />
+          <Route path={routes.POLICIES_REGULATIONS} element={<PolicyAndRegulations />} />
+          <Route path={routes.BOOKING_GUIDE} element={<OrderInstructionsNew />} />
+          <Route path={routes.CONTACT_INSTRUCTIONS} element={<ContactInstructionsNew />} />
           <Route path={routes.SIGNIN} element={<SignIn />} />
           <Route path={routes.SIGNUP} element={<SignUp />} />
         </Route>
       </Routes>
-    </Router>
+    </BrowserRouter>
   )
 }
 
