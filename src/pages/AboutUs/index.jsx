@@ -1,5 +1,5 @@
 import firstImage from '../../assets/images/AboutUs/first_image.png'
-import secondImage from '../../assets/images/AboutUs/second_image.png'
+import secondImage from '../../assets/images/AboutUs/second_Image.png'
 
 export default function AboutUs() {
   return (
