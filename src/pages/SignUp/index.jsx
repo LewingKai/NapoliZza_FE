@@ -17,6 +17,7 @@ import {
   validateBirthday,
 } from '~/utils/validation'
 import { routes } from '~/configs'
+import ScrollToTop from '~/components/Layout/ScrollToTop'
 
 export default function SignUp() {
   const Genders = ['Nam', 'Nữ', 'Khác']
@@ -74,7 +75,7 @@ export default function SignUp() {
   }
 
   return (
-    <div className='min-h-screen flex justify-center items-center'>
+    <div className='flex justify-center items-center'>
       <ToastContainer />
       <div className='w-[480px] my-12 px-6 py-8 bg-white rounded-xl flex flex-col gap-6 shadow-md'>
         <div className='text-center text-3xl font-bold leading-loose'>Tạo tài khoản</div>
@@ -141,7 +142,7 @@ export default function SignUp() {
         </Button>
         <div className='text-center'>
           Đã có tài khoản?{' '}
-          <Link to={routes.SIGNIN}>
+          <Link to={routes.SIGNIN} onClick={ScrollToTop}>
             <Button variant='link' className='text-third font-bold'>
               Đăng nhập
             </Button>
