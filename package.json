@@ -8,9 +8,11 @@
     "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "prepare": "husky install",
-    "format": "prettier ./src/**/*.jsx --check",
-    "format:fix": "prettier ./src/**/*.jsx --write"
+    "format": "prettier --write \"**/*.{ts,tsx,js,jsx,md,mdx,css,yaml,yml}\"",
+    "check": "prettier --check \"**/*.{ts,tsx,js,jsx,md,mdx,css,yaml,yml}\"",
+    "prepare": "husky",
+    "format:check": "prettier --config .prettierrc --check src/**/*.{ts,tsx,css,scss,sass,json}"
+
   },
   "lint-staged": {
     "**/*.{js,jsx,ts,tsx,css,scss,md,json}": [
