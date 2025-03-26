@@ -10,12 +10,11 @@ import iconCheese from '../../assets/images/home/icon_Cheese.png'
 import iconLemon from '../../assets/images/home/icon_lemon.png'
 import iconCarot from '../../assets/images/home/icon_carrot.png'
 import WhiteFoodCart from './components/whiteFoodCart'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faArrowRight } from '@fortawesome/free-solid-svg-icons'
 import Slider from 'react-slick'
 import 'slick-carousel/slick/slick.css'
 import 'slick-carousel/slick/slick-theme.css'
 import { ArrowBackIos, ArrowForwardIos } from '@mui/icons-material'
+import FoodCard from '~/components/Layout/Components/FoodCard'
 
 const menu = [
   {
@@ -197,17 +196,17 @@ export default function Home() {
   }
   return (
     <>
-      <div className='bg-primary'>
-        <div className='flex justify-between gap-10 px-[100px] pt-[60px]'>
+      <div className='bg-primary w-full'>
+        <div className='flex justify-between gap-10 px-[100px] pt-[30px]'>
           <h1 className='text-[100px]  text-white font-bold'>
             Mỗi chiếc Pizza - Mỗi một câu chuyện hương vị!
           </h1>
-          <img src={firstImage} alt='Bánh pizza nóng hổi' className='w-[600px]' />
+          <img src={firstImage} alt='Bánh pizza nóng hổi' className='w-[35vw] rounded-4xl' />
         </div>
-        <div className='flex gap-9 absolute bottom-[-300px] left-[550px]'>
-          <img src={oneImage} alt='Ảnh món ăn thứ nhất' className='w-[200px] h-[200px]' />
-          <img src={twoImage} alt='Ánh món ăn thứ hai' className='w-[200px] h-[200px]' />
-          <img src={threeImage} alt='Ảnh món ăn thứ ba' className='w-[200px] h-[200px]' />
+        <div className='flex gap-9 absolute bottom-[-200px] left-[550px]'>
+          <img src={oneImage} alt='Ảnh món ăn thứ nhất' className='w-[180px] h-[180px]' />
+          <img src={twoImage} alt='Ánh món ăn thứ hai' className='w-[180px] h-[180px]' />
+          <img src={threeImage} alt='Ảnh món ăn thứ ba' className='w-[180px] h-[180px]' />
         </div>
         <div className='mt-[250px] flex px-[100px] justify-between pb-[100px]'>
           <div>
@@ -246,7 +245,7 @@ export default function Home() {
       </div>
 
       <div className='bg-[#EBF0E4] pt-20 px-20 flex justify-between'>
-        <img src={manImage} alt='Người đàn ông đang nấu pizza' className='w-[600px] ' />
+        <img src={manImage} alt='Người đàn ông đang nấu pizza' className='w-[600px] rounded-3xl' />
         <div>
           <h2 className='text-black text-[70px] max-w-[700px] mt-8 font-extrabold'>
             Hương vị Pizza hoàn hảo tại NapoliZza!
@@ -279,32 +278,14 @@ export default function Home() {
         })}
       </div>
 
-      <div className='px-[100px]  mb-20'>
-        <h2 className='text-primary text-[60px] text-center font-extrabold mt-[90px]'>
-          Một số loại nổi bật
-        </h2>
+      <div className='px-[100px] mb-20 mt-[70px]'>
+        <h2 className='text-primary text-[60px] text-center font-extrabold'>Một số loại nổi bật</h2>
         {/* drop-shadow-lg */}
         <div className='w-full mt-5'>
           <div className='mx-auto max-w-[1200px] relative'>
             <Slider {...settings}>
               {outstandingPizza.map((item) => (
-                <div className='w-[300px] flex-shrink-0 bg-white rounded-[20px] drop-shadow-lg'>
-                  <img
-                    src={item.img}
-                    alt='Ảnh pizza'
-                    className='rounded-t-[10px] h-[300px] w-full object-cover'
-                  />
-                  <div className='p-4'>
-                    <h6 className='text-[30px] font-extrabold line-clamp-1'>{item.name}</h6>
-                    <div className='border  border-black border-dashed w-full mt-3'></div>
-                    <p className='text-[18px] line-clamp-4 mt-2'>{item.desc}</p>
-                    <div className=' text-[25px] font-bold mt-1'>{item.price} vnđ</div>
-                    <div className='flex gap-2 items-center mt-2'>
-                      <div className='text-blue-500 text-[15px]'>Xem thêm</div>
-                      <FontAwesomeIcon icon={faArrowRight} className='text-blue-500 text-lg' />
-                    </div>
-                  </div>
-                </div>
+                <FoodCard item={item} />
               ))}
             </Slider>
           </div>
