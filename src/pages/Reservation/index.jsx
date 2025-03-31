@@ -4,11 +4,14 @@ import CustomSelect from '~/components/ui/CustomSelect'
 import { useState } from 'react'
 import { toast, ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
+import { useNavigate } from 'react-router-dom'
+import { routes } from '~/routes'
 
 export default function Reservation() {
   const [date, setDate] = useState(null)
   const [time, setTime] = useState('')
   const [guests, setGuests] = useState('')
+  const navigate = useNavigate()
 
   const generateTimeOptions = () => {
     const options = []
@@ -63,6 +66,9 @@ export default function Reservation() {
     }
 
     toast.success('Đặt bàn thành công!')
+    navigate(`${routes.ORDERMENU}`, {
+      state: { date, time, guests },
+    })
   }
 
   return (
