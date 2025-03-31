@@ -11,6 +11,7 @@ import OperatingPolicyNew from './pages/OperatingPolicyNew'
 import ContactInstructionsNew from './pages/ContactInstructionsNew'
 import OrderInstructionsNew from './pages/OrderInstructionsNew'
 import PolicyAndRegulations from './pages/PolicyAndRegulations'
+import Reservation from './pages/Reservation'
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
           <Route path={routes.CONTACT_INSTRUCTIONS} element={<ContactInstructionsNew />} />
           <Route path={routes.SIGNIN} element={<SignIn />} />
           <Route path={routes.SIGNUP} element={<SignUp />} />
+          <Route path={routes.RESERVATION} element={<Reservation />} />
         </Route>
       </Routes>
     </BrowserRouter>
