@@ -2,6 +2,7 @@ export const routes = {
   HOME: '/',
   MENU: '/mon-an',
   RESERVATION: '/dat-ban',
+  ORDERMENU: '/dat-mon',
   ABOUTUS: '/ve-chung-toi',
   SIGNIN: '/dang-nhap',
   SIGNUP: '/dang-ki',

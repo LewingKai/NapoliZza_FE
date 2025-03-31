@@ -1,6 +1,6 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { DefaultLayout } from './components/Layout'
-import { routes } from './configs'
+import { routes } from './routes'
 import SignIn from './pages/SignIn'
 import SignUp from './pages/SignUp'
 import Home from './pages/Home'
@@ -12,10 +12,13 @@ import ContactInstructionsNew from './pages/ContactInstructionsNew'
 import OrderInstructionsNew from './pages/OrderInstructionsNew'
 import PolicyAndRegulations from './pages/PolicyAndRegulations'
 import DetailPage from './pages/DetailPage'
-import ReservationPage from './pages/Reservation'
+import Reservation from './pages/Reservation'
+import OrderMenu from './pages/OrderMenu'
+
 import Dashboard from './pages/Seller/Dashboard'
 import ManageRequest from './pages/Seller/ManageOder'
 import LayoutForSeller from './components/Layout/LayoutForSeller'
+
 function App() {
   return (
     <BrowserRouter>
@@ -32,7 +35,8 @@ function App() {
           <Route path={routes.SIGNIN} element={<SignIn />} />
           <Route path={routes.SIGNUP} element={<SignUp />} />
           <Route path={routes.DETAILPAGE} element={<DetailPage />} />
-          <Route path={routes.RESERVATION} element={<ReservationPage />} />
+          <Route path={routes.RESERVATION} element={<Reservation />} />
+          <Route path={routes.ORDERMENU} element={<OrderMenu />} />
         </Route>
 
         <Route element={<LayoutForSeller />}>
