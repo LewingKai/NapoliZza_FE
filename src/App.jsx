@@ -13,7 +13,9 @@ import OrderInstructionsNew from './pages/OrderInstructionsNew'
 import PolicyAndRegulations from './pages/PolicyAndRegulations'
 import DetailPage from './pages/DetailPage'
 import ReservationPage from './pages/Reservation'
-
+import Dashboard from './pages/Seller/Dashboard'
+import ManageRequest from './pages/Seller/ManageOder'
+import LayoutForSeller from './components/Layout/LayoutForSeller'
 function App() {
   return (
     <BrowserRouter>
@@ -31,6 +33,11 @@ function App() {
           <Route path={routes.SIGNUP} element={<SignUp />} />
           <Route path={routes.DETAILPAGE} element={<DetailPage />} />
           <Route path={routes.RESERVATION} element={<ReservationPage />} />
+        </Route>
+
+        <Route element={<LayoutForSeller />}>
+          <Route path={routes.DASHBOARD} element={<Dashboard />} />
+          <Route path={routes.MANAGEREQUEST} element={<ManageRequest />} />
         </Route>
       </Routes>
     </BrowserRouter>

@@ -8,11 +8,9 @@
     "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "format": "prettier --write \"**/*.{ts,tsx,js,jsx,md,mdx,css,yaml,yml}\"",
-    "check": "prettier --check \"**/*.{ts,tsx,js,jsx,md,mdx,css,yaml,yml}\"",
-    "prepare": "husky",
-    "format:check": "prettier --config .prettierrc --check src/**/*.{ts,tsx,css,scss,sass,json}"
-
+    "prepare": "husky install",
+    "format": "prettier ./src/**/*.jsx --check",
+    "format:fix": "prettier ./src/**/*.jsx --write"
   },
   "lint-staged": {
     "**/*.{js,jsx,ts,tsx,css,scss,md,json}": [
@@ -55,7 +53,7 @@
     "eslint-plugin-react-hooks": "^5.1.0",
     "eslint-plugin-react-refresh": "^0.4.19",
     "globals": "^15.15.0",
-    "husky": "^9.1.7",
+    "husky": "^8.0.0",
     "lint-staged": "^15.5.0",
     "postcss": "^8.5.3",
     "prettier": "^3.5.3",
