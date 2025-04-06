@@ -8,7 +8,7 @@ import tailwindcss from '@tailwindcss/vite'
 export default defineConfig({
   plugins: [tailwindcss(), react(), svgr()],
   server: {
-    host: '127.0.0.1',
+    host: 'localhost',
     port: 5173,
   },
   resolve: {

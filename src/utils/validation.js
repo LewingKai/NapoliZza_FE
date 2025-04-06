@@ -3,10 +3,14 @@ export const validateRequired = (value) => value && value.trim() !== ''
 
 // Kiểm tra tên hợp lệ (chỉ chứa chữ cái và viết hoa chữ cái đầu mỗi từ)
 export const validateName = (value) => {
-  const nameRegex = /^[A-ZÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠƯỲÝỴỶỸàáâãèéêìíòóôõùúăđĩũơưỳýỵỷỹ\s]+$/
+  if (!value) return false // Tránh lỗi khi giá trị rỗng
+
+  const nameRegex = /^[A-ZÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠƯỲÝỴỶỸa-zàáâãèéêìíòóôõùúăđĩũơưỳýỵỷỹ\s]+$/
+  const trimmedValue = value.trim().replace(/\s+/g, ' ') // Xóa khoảng trắng dư thừa
+
   return (
-    nameRegex.test(value) &&
-    value.split(' ').every((word) => word.charAt(0) === word.charAt(0).toUpperCase())
+    nameRegex.test(trimmedValue) &&
+    trimmedValue.split(' ').every((word) => word.length > 0 && word[0] === word[0].toUpperCase())
   )
 }
 
