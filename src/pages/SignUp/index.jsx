@@ -18,7 +18,7 @@ import {
 } from '~/utils/validation'
 import { routes } from '~/configs'
 import ScrollToTop from '~/components/Layout/ScrollToTop'
-import { api } from '~/apis'
+import { api } from '~/services/api'
 
 export default function SignUp() {
   const Genders = ['Nam', 'Nữ', 'Khác']
@@ -77,6 +77,7 @@ export default function SignUp() {
       if (response.data.success) {
         toast.success('Đăng ký thành công!')
         navigate(routes.SIGNIN)
+        window.scrollTo(0, 0)
       } else {
         toast.error('Đăng ký lỗi')
       }

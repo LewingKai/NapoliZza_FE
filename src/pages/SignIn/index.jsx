@@ -8,7 +8,7 @@ import { validateEmail, validatePassword } from '~/utils/validation'
 import { Link, useNavigate } from 'react-router-dom'
 import { routes } from '~/configs'
 import ScrollToTop from '~/components/Layout/ScrollToTop'
-import { api } from '../../apis/index.js'
+import { api } from '../../services/api.js'
 import { useDispatch } from 'react-redux'
 import { loginSuccess } from '~/redux/userSlice.js'
 
