@@ -5,17 +5,22 @@ import ValidatedTextField from '~/components/ui/ValidatedTextField'
 import PasswordTextField from '~/components/ui/PasswordTextField'
 import { Button } from '~/components/ui/Button'
 import { validateEmail, validatePassword } from '~/utils/validation'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { routes } from '~/configs'
 import ScrollToTop from '~/components/Layout/ScrollToTop'
+import { api } from '../../apis/index.js'
+import { useDispatch } from 'react-redux'
+import { loginSuccess } from '~/redux/userSlice.js'
 
 export default function SignIn() {
+  const navigate = useNavigate()
+  const dispatch = useDispatch()
   const [formData, setFormData] = useState({
     email: '',
     password: '',
   })
 
-  const [setErrors] = useState({})
+  const [errors, setErrors] = useState({})
 
   // Ánh xạ các trường với hàm xác thực tương ứng
   const fieldValidationMap = {
@@ -27,8 +32,10 @@ export default function SignIn() {
   const validateForm = () => {
     const newErrors = {}
     Object.keys(formData).forEach((field) => {
-      const isValid = fieldValidationMap[field](formData[field])
-      newErrors[field] = !isValid
+      if (fieldValidationMap[field]) {
+        const isValid = fieldValidationMap[field](formData[field])
+        newErrors[field] = !isValid
+      }
     })
     setErrors(newErrors)
     return Object.values(newErrors).every((error) => !error)
@@ -39,11 +46,23 @@ export default function SignIn() {
     setErrors((prev) => ({ ...prev, [field]: false })) // Xóa lỗi khi người dùng nhập lại
   }
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (validateForm()) {
-      toast.success('Đăng nhập thành công!')
+      try {
+        const response = await api.post('/user/accountAction/login', formData)
+        if (response.data.success) {
+          dispatch(loginSuccess({ user: response.data.data, token: response.data.accessToken }))
+          toast.success('Login successful!')
+          navigate(routes.HOME)
+        } else {
+          toast.error(response.data.message || 'Login failed')
+        }
+      } catch (error) {
+        toast.error(error.response?.data?.message || 'Login failed')
+      }
     } else {
       toast.error('Vui lòng điền đầy đủ thông tin hợp lệ!')
+      console.log(errors) // log errors
     }
   }
 

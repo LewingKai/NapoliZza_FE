@@ -6,7 +6,7 @@ import PasswordTextField from '~/components/ui/PasswordTextField'
 import { Button } from '~/components/ui/Button'
 import CustomSelect from '~/components/ui/CustomSelect'
 import CustomDatePicker from '~/components/ui/CustomDatePicker'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import {
   validateRequired,
   validateName,
@@ -18,9 +18,11 @@ import {
 } from '~/utils/validation'
 import { routes } from '~/configs'
 import ScrollToTop from '~/components/Layout/ScrollToTop'
+import { api } from '~/apis'
 
 export default function SignUp() {
   const Genders = ['Nam', 'Nữ', 'Khác']
+  const navigate = useNavigate()
 
   const gendersOptions = Genders.map((gender) => ({
     label: gender,
@@ -37,7 +39,7 @@ export default function SignUp() {
     birthday: '',
   })
 
-  const [setErrors] = useState({})
+  const [errors, setErrors] = useState({})
 
   // Ánh xạ các trường với hàm xác thực tương ứng
   const fieldValidationMap = {
@@ -54,8 +56,10 @@ export default function SignUp() {
   const validateForm = () => {
     const newErrors = {}
     Object.keys(formData).forEach((field) => {
-      const isValid = fieldValidationMap[field](formData[field])
-      newErrors[field] = !isValid
+      if (fieldValidationMap[field]) {
+        const isValid = fieldValidationMap[field](formData[field])
+        newErrors[field] = !isValid
+      }
     })
     setErrors(newErrors)
     return Object.values(newErrors).every((error) => !error)
@@ -66,9 +70,16 @@ export default function SignUp() {
     setErrors((prev) => ({ ...prev, [field]: false })) // Xóa lỗi khi người dùng nhập lại
   }
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (validateForm()) {
-      toast.success('Đăng ký thành công!')
+      console.log(errors)
+      const response = await api.post('/user/accountAction/register', formData)
+      if (response.data.success) {
+        toast.success('Đăng ký thành công!')
+        navigate(routes.SIGNIN)
+      } else {
+        toast.error('Đăng ký lỗi')
+      }
     } else {
       toast.error('Vui lòng điền đầy đủ thông tin hợp lệ!')
     }
