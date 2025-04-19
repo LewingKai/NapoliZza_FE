@@ -56,45 +56,6 @@ const standards = [
   },
 ]
 
-const outstandingPizza = [
-  {
-    img: introImage,
-    name: ' Pizza sốt pesto Pizza sốt pesto Pizza sốt pesto',
-    desc: 'Sốt Pesto có vị béo ngậy của phô mai, mùi thơm đặc trưng từ lá húng tây (basil), ngò rí và cuối cùng là vị mặn nhẹ của muối. Với hương bị béo ngậy của phô ....',
-    price: '200.000',
-  },
-  {
-    img: introImage,
-    name: ' Pizza sốt pesto Pizza sốt pesto Pizza sốt pesto',
-    desc: 'Sốt Pesto có vị béo ngậy của phô mai, mùi thơm đặc trưng từ lá húng tây (basil), ngò rí và cuối cùng là vị mặn nhẹ của muối. Với hương bị béo ngậy của phô ....',
-    price: '200.000',
-  },
-  {
-    img: introImage,
-    name: ' Pizza sốt pesto Pizza sốt pesto Pizza sốt pesto',
-    desc: 'Sốt Pesto có vị béo ngậy của phô mai, mùi thơm đặc trưng từ lá húng tây (basil), ngò rí và cuối cùng là vị mặn nhẹ của muối. Với hương bị béo ngậy của phô ....',
-    price: '200.000',
-  },
-  {
-    img: introImage,
-    name: ' Pizza sốt pesto Pizza sốt pesto Pizza sốt pesto',
-    desc: 'Sốt Pesto có vị béo ngậy của phô mai, mùi thơm đặc trưng từ lá húng tây (basil), ngò rí và cuối cùng là vị mặn nhẹ của muối. Với hương bị béo ngậy của phô ....',
-    price: '200.000',
-  },
-  {
-    img: introImage,
-    name: ' Pizza sốt pesto Pizza sốt pesto Pizza sốt pesto',
-    desc: 'Sốt Pesto có vị béo ngậy của phô mai, mùi thơm đặc trưng từ lá húng tây (basil), ngò rí và cuối cùng là vị mặn nhẹ của muối. Với hương bị béo ngậy của phô ....',
-    price: '200.000',
-  },
-  {
-    img: introImage,
-    name: ' Pizza sốt pesto Pizza sốt pesto Pizza sốt pesto',
-    desc: 'Sốt Pesto có vị béo ngậy của phô mai, mùi thơm đặc trưng từ lá húng tây (basil), ngò rí và cuối cùng là vị mặn nhẹ của muối. Với hương bị béo ngậy của phô ....',
-    price: '200.000',
-  },
-]
-
 const textHeader1 = 'text-[40px] sm:text-[50px] md:text-[70px] lg:text-[80px] xl:text-[100px]'
 const textHeader2 = 'text-[35px] sm:text-[40px] md:text-[50px] lg:text-[60px] xl:text-[70px]'
 const textTitle = 'text-[25px] sm:text-[30px] md:text-[35px] lg:text-[40px] xl:text-[45px]'
