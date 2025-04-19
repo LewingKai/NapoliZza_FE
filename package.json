@@ -9,7 +9,7 @@
     "lint": "eslint .",
     "preview": "vite preview",
     "prepare": "husky install",
-    "format": "prettier ./src/**/*.jsx --check",
+    "format:check": "prettier ./src/**/*.jsx --check",
     "format:fix": "prettier ./src/**/*.jsx --write"
   },
   "lint-staged": {
