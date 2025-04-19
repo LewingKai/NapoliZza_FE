@@ -1,8 +1,6 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faArrowRight } from '@fortawesome/free-solid-svg-icons'
 import { routes } from '~/configs'
 import { Link } from 'react-router-dom'
-import ScrollToTop from '../ScrollToTop'
+import ScrollToTop from '../Layout/ScrollToTop'
 export default function FoodCard({ item }) {
   return (
     <Link to={`${routes.DETAILPAGE}`} onClick={() => ScrollToTop()}>

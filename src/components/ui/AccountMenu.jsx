@@ -125,7 +125,7 @@ export default function AccountMenu({ user }) {
           </MenuItem>
         </Link>
         {user.role == 'admin' && (
-          <Link to={routes.MANAGEORDER}>
+          <Link to={routes.MANAGEREQUEST}>
             <MenuItem onClick={handleClose} sx={{ paddingTop: '8px', paddingBottom: '8px' }}>
               <FontAwesomeIcon icon={faStore} className='mr-2' size='lg' />
               Trang quản lý của Admin
