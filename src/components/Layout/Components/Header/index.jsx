@@ -5,7 +5,6 @@ import { useState, useEffect } from 'react'
 import ScrollToTop from '../../ScrollToTop'
 import AccountMenu from '~/components/ui/AccountMenu'
 import { useSelector } from 'react-redux'
-import SideBar from '~/components/ui/SideBar'
 export default function Header({ isOpenSidebar, setIsOpenSideBar }) {
   const [scrolled, setScrolled] = useState(false)
   const user = useSelector((state) => state.user.user)
