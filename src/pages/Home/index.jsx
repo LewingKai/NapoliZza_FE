@@ -294,10 +294,10 @@ export default function Home() {
         <div className='w-full mt-5'>
           <div className='mx-auto max-w-[1200px] relative'>
             <Slider {...settings}>
-              {outstandingPizza.map((item) => (
+              {/* {outstandingPizza.map((item) => (
                 <div>ádas</div>
-                // <FoodCard item={item} />
-              ))}
+                <FoodCard item={item} />
+              ))} */}
             </Slider>
           </div>
         </div>

@@ -38,6 +38,7 @@ export default function AccountMenu({ user }) {
       toast.success('Đăng xuất thành công!')
     } catch (error) {
       toast.error('Không thể đăng xuất!')
+      console.log('Lỗi đăng xuất', error)
     }
     navigate(routes.HOME)
     handleClose()

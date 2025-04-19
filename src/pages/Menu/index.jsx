@@ -28,7 +28,7 @@ const sortValue = [
 
 export default function Menu() {
   const [category, setCategory] = React.useState('pizza')
-  const [itemPrePage, setItemPerPage] = React.useState(20)
+  const itemPrePage = 20
   const [pages, setPages] = React.useState(1)
   const [pageNumber, setPageNumber] = React.useState(0)
   const [searchValue, setSearchValue] = React.useState('')
@@ -45,7 +45,7 @@ export default function Menu() {
   const handleChangeSearch = (e) => {
     setSearchValue(e.target.value)
   }
-  const handleSubmit = (e) => {
+  const handleSubmit = () => {
     getDish()
   }
   const handleChangeCategory = (e) => {
