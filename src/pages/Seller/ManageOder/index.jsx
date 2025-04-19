@@ -73,7 +73,7 @@ const requests = [
 ]
 
 export default function ManageOder() {
-  const [orderList, setOrderList] = useState(requests)
+  const orderList = requests
   const [status, setStatus] = useState('pending')
   const [skipPage, setSkipPage] = useState(0)
   const [rowsPerPage, setRowsPerPage] = useState(5)

@@ -14,7 +14,6 @@ import Slider from 'react-slick'
 import 'slick-carousel/slick/slick.css'
 import 'slick-carousel/slick/slick-theme.css'
 import { ArrowBackIos, ArrowForwardIos } from '@mui/icons-material'
-import FoodCard from '~/components/Layout/Components/FoodCard'
 
 const menu = [
   {
@@ -57,45 +56,10 @@ const standards = [
   },
 ]
 
-const outstandingPizza = [
-  {
-    img: introImage,
-    name: ' Pizza sốt pesto Pizza sốt pesto Pizza sốt pesto',
-    desc: 'Sốt Pesto có vị béo ngậy của phô mai, mùi thơm đặc trưng từ lá húng tây (basil), ngò rí và cuối cùng là vị mặn nhẹ của muối. Với hương bị béo ngậy của phô ....',
-    price: '200.000',
-  },
-  {
-    img: introImage,
-    name: ' Pizza sốt pesto Pizza sốt pesto Pizza sốt pesto',
-    desc: 'Sốt Pesto có vị béo ngậy của phô mai, mùi thơm đặc trưng từ lá húng tây (basil), ngò rí và cuối cùng là vị mặn nhẹ của muối. Với hương bị béo ngậy của phô ....',
-    price: '200.000',
-  },
-  {
-    img: introImage,
-    name: ' Pizza sốt pesto Pizza sốt pesto Pizza sốt pesto',
-    desc: 'Sốt Pesto có vị béo ngậy của phô mai, mùi thơm đặc trưng từ lá húng tây (basil), ngò rí và cuối cùng là vị mặn nhẹ của muối. Với hương bị béo ngậy của phô ....',
-    price: '200.000',
-  },
-  {
-    img: introImage,
-    name: ' Pizza sốt pesto Pizza sốt pesto Pizza sốt pesto',
-    desc: 'Sốt Pesto có vị béo ngậy của phô mai, mùi thơm đặc trưng từ lá húng tây (basil), ngò rí và cuối cùng là vị mặn nhẹ của muối. Với hương bị béo ngậy của phô ....',
-    price: '200.000',
-  },
-  {
-    img: introImage,
-    name: ' Pizza sốt pesto Pizza sốt pesto Pizza sốt pesto',
-    desc: 'Sốt Pesto có vị béo ngậy của phô mai, mùi thơm đặc trưng từ lá húng tây (basil), ngò rí và cuối cùng là vị mặn nhẹ của muối. Với hương bị béo ngậy của phô ....',
-    price: '200.000',
-  },
-  {
-    img: introImage,
-    name: ' Pizza sốt pesto Pizza sốt pesto Pizza sốt pesto',
-    desc: 'Sốt Pesto có vị béo ngậy của phô mai, mùi thơm đặc trưng từ lá húng tây (basil), ngò rí và cuối cùng là vị mặn nhẹ của muối. Với hương bị béo ngậy của phô ....',
-    price: '200.000',
-  },
-]
-
+const textHeader1 = 'text-[40px] sm:text-[50px] md:text-[70px] lg:text-[80px] xl:text-[100px]'
+const textHeader2 = 'text-[35px] sm:text-[40px] md:text-[50px] lg:text-[60px] xl:text-[70px]'
+const textTitle = 'text-[25px] sm:text-[30px] md:text-[35px] lg:text-[40px] xl:text-[45px]'
+const textDesc = 'text-[18px] sm:text-[20px] md:text-[27px] lg:text-[30px] xl:text-[30px]'
 const PrevArrow = (props) => {
   const { className, onClick, style } = props
   return (
@@ -180,13 +144,13 @@ export default function Home() {
           slidesToShow: 2,
           slidesToScroll: 1,
           initialSlide: 2,
-          centerMode: true,
+          centerMode: false,
         },
       },
       {
         breakpoint: 700,
         settings: {
-          slidesToShow: 2,
+          slidesToShow: 1,
           slidesToScroll: 1,
           initialSlide: 2,
           centerMode: false,
@@ -197,33 +161,38 @@ export default function Home() {
   return (
     <>
       <div className='bg-primary w-full'>
-        <div className='flex justify-between gap-10 px-[100px] pt-[30px]'>
-          <h1 className='text-[100px]  text-white font-bold'>
+        <div className='flex justify-between md:gap-5 gap-3 px-[5vw] pt-[30px]'>
+          <h1 className={`${textHeader1}  text-white font-bold`}>
             Mỗi chiếc Pizza - Mỗi một câu chuyện hương vị!
           </h1>
-          <img src={firstImage} alt='Bánh pizza nóng hổi' className='w-[35vw] rounded-4xl' />
+          <img
+            src={firstImage}
+            alt='Bánh pizza nóng hổi'
+            className='w-[40vw] sm:h-[100vh] object-cover rounded-4xl'
+          />
         </div>
-        <div className='flex gap-9 absolute bottom-[-200px] left-[550px]'>
+
+        <div className='hidden md:flex gap-9 absolute bottom-[-200px] left-[550px]'>
           <img src={oneImage} alt='Ảnh món ăn thứ nhất' className='w-[180px] h-[180px]' />
           <img src={twoImage} alt='Ánh món ăn thứ hai' className='w-[180px] h-[180px]' />
           <img src={threeImage} alt='Ảnh món ăn thứ ba' className='w-[180px] h-[180px]' />
         </div>
-        <div className='mt-[250px] flex px-[100px] justify-between pb-[100px]'>
-          <div>
-            <img src={inviteImage} alt='Ảnh bánh pizza' className='w-[700px]' />
-            <h2 className='text-white text-[50px] max-w-[700px] mt-8'>
+        <div className='sm:mt-[20vh] mt-[10vh] flex px-[5vw] gap-5 justify-between pb-[10vh]'>
+          <div className='flex flex-col gap-3 w-[40vw]'>
+            <img src={inviteImage} alt='Ảnh bánh pizza' className='rounded-xl' />
+            <h2 className={`text-white ${textTitle} max-w-[700px] mt-6`}>
               Mời bạn đến bữa tiệc Pizza ở nhà hàng của chúng tôi!
             </h2>
-            <p className='max-w-[700px] text-white text-[25px]'>
+            <p className={`max-w-[700px] text-white ${textDesc}`}>
               Hãy để Pizza lấp đầy trái tin vầ chiếc bụng đói của bạn!
             </p>
           </div>
-          <div>
-            <p className='max-w-[500px] text-white text-[25px]'>
+          <div className='w-[35vw]'>
+            <p className={`text-white ${textDesc}`}>
               Chúng tôi mang đến hương vị Ý đích thực, từ những chiếc pizza nóng hổi đến không gian
               ấm cúng để bạn sẻ chia khoảnh khắc bên gia đình và bạn bè.
             </p>
-            <img src={introImage} alt='Ảnh bánh pizza' className='w-[500px] mt-8' />
+            <img src={introImage} alt='Ảnh bánh pizza' className='w-full mt-8 rounded-xl' />
           </div>
         </div>
       </div>
@@ -234,23 +203,23 @@ export default function Home() {
           backgroundSize: 'cover',
           backgroundPosition: 'center',
         }}
-        className='px-[100px] justify-center pt-[100px]'
+        className='px-[5vw] justify-center pt-[10vh]'
       >
-        <h1 className='text-primary text-[70px] font-extrabold mb-5 '>Thực đơn...</h1>
-        <div className='grid grid-cols-1 md:grid-cols-2 justify-center w-full gap-10'>
+        <h1 className={`text-primary ${textHeader2} font-extrabold mb-5`}>Thực đơn...</h1>
+        <div className='grid grid-cols-2 md:grid-cols-2 justify-center w-full gap-10'>
           {menu.map((item) => (
             <WhiteFoodCart item={item} />
           ))}
         </div>
       </div>
 
-      <div className='bg-[#EBF0E4] pt-20 px-20 flex justify-between'>
+      <div className='bg-[#EBF0E4] pt-20 px-20 md:flex justify-between'>
         <img src={manImage} alt='Người đàn ông đang nấu pizza' className='w-[600px] rounded-3xl' />
         <div>
-          <h2 className='text-black text-[70px] max-w-[700px] mt-8 font-extrabold'>
+          <h2 className={`text-black ${textHeader2} max-w-[700px] mt-8 font-extrabold`}>
             Hương vị Pizza hoàn hảo tại NapoliZza!
           </h2>
-          <p className='max-w-[700px] text-descText text-[20px] mt-5 italic font-thin'>
+          <p className={`max-w-[700px] text-descText ${textDesc} mt-5 italic font-thin`}>
             Tại NapoliZza, mỗi chiếc pizza được làm từ bột tươi nhào thủ công, kết hợp với phô mai
             mozzarella hảo hạng và sốt cà chua đậm đà. Được nướng trong lò đá truyền thống, pizza
             của chúng tôi có lớp vỏ giòn rụm, nhân mềm thơm ngon. Đội ngũ đầu bếp tận tâm, luôn sáng
@@ -260,7 +229,7 @@ export default function Home() {
         </div>
       </div>
 
-      <div className=' flex justify-between px-[100px] w-full mt-[100px]'>
+      <div className=' grid grid-cols-1 md:grid-cols-3 gap-3  mx-auto justify-items-center px-[5vw] w-full mt-[100px]'>
         {standards.map((item) => {
           return (
             <div className='flex flex-col items-center text-center max-w-[310px] border-2 p-5 rounded-4xl border-primary'>
@@ -279,14 +248,17 @@ export default function Home() {
       </div>
 
       <div className='px-[100px] mb-20 mt-[70px]'>
-        <h2 className='text-primary text-[60px] text-center font-extrabold'>Một số loại nổi bật</h2>
+        <h2 className={`text-primary ${textHeader2} text-center font-extrabold`}>
+          Một số loại nổi bật
+        </h2>
         {/* drop-shadow-lg */}
         <div className='w-full mt-5'>
           <div className='mx-auto max-w-[1200px] relative'>
             <Slider {...settings}>
-              {outstandingPizza.map((item) => (
+              {/* {outstandingPizza.map((item) => (
+                <div>ádas</div>
                 <FoodCard item={item} />
-              ))}
+              ))} */}
             </Slider>
           </div>
         </div>
