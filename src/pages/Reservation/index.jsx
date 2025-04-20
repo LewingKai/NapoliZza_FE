@@ -1,11 +1,13 @@
-import { Button } from '~/components/ui/Button'
-import CustomDatePicker from '~/components/ui/CustomDatePicker'
-import CustomSelect from '~/components/ui/CustomSelect'
-import { useState } from 'react'
+import React, { useState } from 'react'
 import { toast, ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import { useNavigate } from 'react-router-dom'
 import { routes } from '~/routes'
+import { Button } from '~/components/ui/Button'
+import CustomDatePicker from '~/components/ui/CustomDatePicker'
+import ValidatedTextField from '~/components/ui/ValidatedTextField'
+import { validateGuests } from '~/utils/validation'
+import CustomSelect from '~/components/ui/CustomSelect'
 
 export default function Reservation() {
   const [date, setDate] = useState(null)
@@ -32,14 +34,14 @@ export default function Reservation() {
 
   const timeOptions = generateTimeOptions()
 
-  const guestOptions = Array.from({ length: 30 }, (_, i) => ({
-    value: (i + 1).toString(),
-    label: `${i + 1} Người`,
-  }))
-
   const handleReservation = () => {
     if (!date || !time || !guests) {
       toast.error('Vui lòng chọn đầy đủ thông tin.')
+      return
+    }
+
+    if (!validateGuests(guests)) {
+      toast.error('Số lượng khách phải từ 1 đến 30.')
       return
     }
 
@@ -48,21 +50,9 @@ export default function Reservation() {
     selectedDateTime.setHours(hours, minutes, 0, 0)
 
     const now = new Date()
-
-    // Kiểm tra nếu thời gian đã qua
     if (selectedDateTime <= now) {
       toast.error('Không thể đặt bàn vào thời gian đã qua.')
       return
-    }
-
-    // Kiểm tra nếu đặt cùng ngày thì phải sau 2 tiếng
-    const isSameDay = selectedDateTime.toDateString() === now.toDateString()
-    if (isSameDay) {
-      const twoHoursLater = new Date(now.getTime() + 2 * 60 * 60 * 1000) // Thêm 2 tiếng
-      if (selectedDateTime <= twoHoursLater) {
-        toast.error('Nếu đặt bàn trong ngày, vui lòng chọn thời gian sau 2 tiếng từ bây giờ.')
-        return
-      }
     }
 
     toast.success('Đặt bàn thành công!')
@@ -91,12 +81,13 @@ export default function Reservation() {
           onChange={setTime}
           placeholder='Chọn giờ đặt bàn'
         />
-        <CustomSelect
+        <ValidatedTextField
           label='Số lượng khách'
-          options={guestOptions}
           value={guests}
           onChange={setGuests}
-          placeholder='Chọn số lượng khách'
+          validationRules={validateGuests}
+          errorMessage='Số lượng khách phải từ 1 đến 30.'
+          placeholder='Nhập số lượng khách'
         />
       </div>
       <div className='flex justify-center my-20'>

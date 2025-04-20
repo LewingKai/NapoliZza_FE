@@ -11,6 +11,7 @@ function CustomDatePicker({ label, className, placeholder, value, onChange, ...r
         <DatePicker
           value={value ? dayjs(value) : null}
           onChange={(newValue) => onChange && onChange(newValue ? newValue.toISOString() : null)}
+          minDate={dayjs()}
           slotProps={{
             textField: {
               fullWidth: true,
