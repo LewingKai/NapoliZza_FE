@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { toast, ToastContainer } from 'react-toastify'
+import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import ValidatedTextField from '~/components/ui/ValidatedTextField'
 import PasswordTextField from '~/components/ui/PasswordTextField'
@@ -88,7 +88,6 @@ export default function SignUp() {
 
   return (
     <div className='flex justify-center items-center'>
-      <ToastContainer />
       <div className='w-[480px] my-12 px-6 py-8 bg-white rounded-xl flex flex-col gap-6 shadow-md'>
         <div className='text-center text-3xl font-bold leading-loose'>Tạo tài khoản</div>
         <div className='flex flex-col gap-4'>
