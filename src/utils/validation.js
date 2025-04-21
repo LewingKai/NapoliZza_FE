@@ -39,3 +39,9 @@ export const validateBirthday = (value) => value && value.trim() !== ''
 
 // Kiểm tra giới tính hợp lệ (không được để trống)
 export const validateGender = (value) => value && value.trim() !== ''
+
+// Kiểm tra số lượng khách hợp lệ (từ 1 đến 30)
+export const validateGuests = (value) => {
+  const numericValue = Number(value)
+  return numericValue >= 1 && numericValue <= 30
+}
