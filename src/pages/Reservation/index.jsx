@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { toast, ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import { useNavigate } from 'react-router-dom'
+import { useSelector } from 'react-redux'
 import { routes } from '~/routes'
 import { Button } from '~/components/ui/Button'
 import CustomDatePicker from '~/components/ui/CustomDatePicker'
@@ -14,27 +15,49 @@ export default function Reservation() {
   const [time, setTime] = useState('')
   const [guests, setGuests] = useState('')
   const navigate = useNavigate()
+  const { user, token } = useSelector((state) => state.user)
 
   const generateTimeOptions = () => {
     const options = []
+    const now = new Date()
+    const isToday = date && new Date(date).toDateString() === now.toDateString()
     let hour = 9
     let minute = 0
+
     while (hour < 24) {
       const value = `${hour.toString().padStart(2, '0')}:${minute.toString().padStart(2, '0')}`
       const label = value
-      options.push({ value, label })
+
+      if (isToday) {
+        const currentTime = new Date()
+        currentTime.setHours(hour, minute, 0, 0)
+
+        if (currentTime.getTime() > now.getTime() + 2 * 60 * 60 * 1000) {
+          options.push({ value, label })
+        }
+      } else {
+        options.push({ value, label })
+      }
+
       minute += 30
       if (minute === 60) {
         minute = 0
         hour += 1
       }
     }
+
     return options.filter((option) => option.value <= '23:45')
   }
 
   const timeOptions = generateTimeOptions()
 
   const handleReservation = () => {
+    if (!token) {
+      toast.error('Vui lòng đăng nhập để đặt bàn.')
+      navigate(`${routes.SIGNIN}`)
+      return
+    }
+
     if (!date || !time || !guests) {
       toast.error('Vui lòng chọn đầy đủ thông tin.')
       return
