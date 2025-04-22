@@ -22,15 +22,14 @@ const Navigation = ({ labels, value, onChange }) => {
           fontSize: { xs: 12, sm: 14 },
           fontFamily: 'Roboto, sans-serif',
           fontWeight: 'medium',
-          color: '#333333',
+          color: 'var(--color-black)',
           transition: 'color 0.3s, background-color 0.3s',
           '&:hover': {
-            backgroundColor: '#f4e4d8',
-            color: '#233000',
+            backgroundColor: '#cfe1b9',
           },
         },
         '& .MuiTabs-indicator': {
-          backgroundColor: '#233000',
+          backgroundColor: 'var(--color-third)',
           height: '3px',
         },
       }}
@@ -41,7 +40,7 @@ const Navigation = ({ labels, value, onChange }) => {
           label={label}
           sx={{
             '&.Mui-selected': {
-              color: '#7D0600',
+              color: 'var(--color-third)',
               fontWeight: 'bold',
             },
           }}

@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
 import Navigation from './_components/Navigation'
-import { useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
 import ReservationApi from '~/api/reservationApi'
 import { Button } from '~/components/ui/Button'
@@ -9,8 +8,6 @@ const OrderTracking = () => {
   const tabLabels = ['Chờ xác nhận', 'Đã xác nhận', 'Bị từ chối', 'Đã hủy']
   const [selectedTab, setSelectedTab] = useState(0)
   const [reservations, setReservations] = useState([])
-  const [loading, setLoading] = useState(true)
-  const { token } = useSelector((state) => state.user)
 
   const fetchReservations = async () => {
     try {
@@ -18,9 +15,8 @@ const OrderTracking = () => {
       const status = statusMap[selectedTab]
 
       // Gọi API để lấy danh sách đặt bàn
-      const response = await ReservationApi.getReservations(token, status)
+      const response = await ReservationApi.getReservations(status) // Không cần truyền accessToken
 
-      // Kiểm tra và lọc dữ liệu trả về
       if (response && response.success) {
         const filteredReservations = Array.isArray(response.data)
           ? response.data.filter((reservation) => reservation.status === status)
@@ -31,13 +27,12 @@ const OrderTracking = () => {
       }
     } catch (error) {
       toast.error('Lỗi khi tải danh sách đặt bàn.')
-      setReservations([])
     }
   }
 
   const handleCancelReservation = async (id) => {
     try {
-      await ReservationApi.cancelReservation(id, token)
+      await ReservationApi.cancelReservation(id)
       toast.success('Hủy đặt bàn thành công!')
       fetchReservations()
     } catch (error) {
@@ -47,7 +42,7 @@ const OrderTracking = () => {
 
   const handleChangePaymentMethod = async (id, paymentMethod) => {
     try {
-      await ReservationApi.changePaymentMethod(id, paymentMethod, token)
+      await ReservationApi.changePaymentMethod(id, paymentMethod)
       toast.success('Thay đổi phương thức thanh toán thành công!')
       fetchReservations()
     } catch (error) {
