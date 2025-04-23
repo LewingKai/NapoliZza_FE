@@ -14,6 +14,8 @@ import Slider from 'react-slick'
 import 'slick-carousel/slick/slick.css'
 import 'slick-carousel/slick/slick-theme.css'
 import { ArrowBackIos, ArrowForwardIos } from '@mui/icons-material'
+import { useEffect, useState } from 'react'
+import DishApi from '~/api/dishApi'
 
 const menu = [
   {
@@ -62,6 +64,20 @@ const textTitle = 'text-[25px] sm:text-[30px] md:text-[35px] lg:text-[40px] xl:t
 const textDesc = 'text-[18px] sm:text-[20px] md:text-[27px] lg:text-[30px] xl:text-[30px]'
 const PrevArrow = (props) => {
   const { className, onClick, style } = props
+  const [standards, setStandards] = useState([])
+
+  const getTopRatingDish = async () => {
+    try {
+      const res = await DishApi.getTopRatingDish()
+      console.log('top rating: ', ress)
+    } catch (error) {
+      console.log('Có lỗi khi lấy món nổi bật: ', error)
+    }
+  }
+
+  useEffect(() => {
+    getTopRatingDish()
+  }, [])
   return (
     <div
       className={className}

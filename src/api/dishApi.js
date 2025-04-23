@@ -26,6 +26,16 @@ class dishApi {
       throw new Error('Đã có lỗi khi lấy món ăn: ', error)
     }
   }
+
+  async getTopRatingDish() {
+    try {
+      const res = await axiosClient.get(`${DishEndpoints.getTopRating}`)
+      return res.data
+    } catch (error) {
+      console.error('Lỗi từ server:', error)
+      throw new Error('Đã có lỗi khi lấy món ăn: ', error)
+    }
+  }
 }
 
 const DishApi = new dishApi()

@@ -14,10 +14,9 @@ import PolicyAndRegulations from './pages/PolicyAndRegulations'
 import DetailPage from './pages/DetailPage'
 import Reservation from './pages/Reservation'
 import OrderMenu from './pages/OrderMenu'
-
-import Dashboard from './pages/Seller/Dashboard'
-import ManageRequest from './pages/Seller/ManageOder'
-import LayoutForSeller from './components/Layout/LayoutForSeller'
+// import LayoutForSeller from './components/Layout/LayoutForSeller'
+// import Dashboard from './pages/Admin/Dashboard'
+// import ManageOder from './pages/Admin/ManageOder'
 
 function App() {
   return (
@@ -40,8 +39,8 @@ function App() {
         </Route>
 
         <Route element={<LayoutForSeller />}>
-          <Route path={routes.DASHBOARD} element={<Dashboard />} />
-          <Route path={routes.MANAGEREQUEST} element={<ManageRequest />} />
+          <Route path={routes.DASHBOARD} element={<SignIn />} />
+          <Route path={routes.MANAGEREQUEST} element={<SignIn />} />
         </Route>
       </Routes>
     </BrowserRouter>
