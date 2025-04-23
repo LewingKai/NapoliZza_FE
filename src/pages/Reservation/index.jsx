@@ -15,7 +15,6 @@ export default function Reservation() {
   const [time, setTime] = useState('')
   const [guests, setGuests] = useState('')
   const navigate = useNavigate()
-  const { user, token } = useSelector((state) => state.user)
 
   const generateTimeOptions = () => {
     const options = []
@@ -52,12 +51,6 @@ export default function Reservation() {
   const timeOptions = generateTimeOptions()
 
   const handleReservation = () => {
-    if (!token) {
-      toast.error('Vui lòng đăng nhập để đặt bàn.')
-      navigate(`${routes.SIGNIN}`)
-      return
-    }
-
     if (!date || !time || !guests) {
       toast.error('Vui lòng chọn đầy đủ thông tin.')
       return
