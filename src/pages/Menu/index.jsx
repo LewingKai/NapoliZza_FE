@@ -10,7 +10,7 @@ import Pagination from '@mui/material/Pagination'
 import Stack from '@mui/material/Stack'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faFilter } from '@fortawesome/free-solid-svg-icons'
-import ScrollToTop from '~/components/Layout/ScrollToTop'
+
 const MenuProps = {
   PaperProps: {
     style: {
@@ -64,9 +64,9 @@ export default function Menu() {
   }
 
   React.useEffect(() => {
+    window.scrollTo(0, 0)
     console.log('render')
     getDish()
-    ScrollToTop()
   }, [pages, category, sortList])
   return (
     <div className='p-[1vw] sm:p-[5vw]'>

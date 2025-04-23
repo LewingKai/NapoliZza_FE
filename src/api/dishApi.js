@@ -27,9 +27,13 @@ class dishApi {
     }
   }
 
-  async getTopRatingDish() {
+  async getTopRatingDish(token) {
     try {
-      const res = await axiosClient.get(`${DishEndpoints.getTopRating}`)
+      const res = await axiosClient.get(`${DishEndpoints.getTopRating}`, {
+        headers: {
+          Authorization: `Bearer ${token}`, // Sử dụng token
+        },
+      })
       return res.data
     } catch (error) {
       console.error('Lỗi từ server:', error)

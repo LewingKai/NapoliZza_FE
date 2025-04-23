@@ -13,9 +13,11 @@ import WhiteFoodCart from './components/whiteFoodCart'
 import Slider from 'react-slick'
 import 'slick-carousel/slick/slick.css'
 import 'slick-carousel/slick/slick-theme.css'
-import { ArrowBackIos, ArrowForwardIos } from '@mui/icons-material'
+import { ArrowBackIos, ArrowForwardIos, WidthFull } from '@mui/icons-material'
 import { useEffect, useState } from 'react'
 import DishApi from '~/api/dishApi'
+import { useSelector } from 'react-redux'
+import FoodCard from '~/components/ui/FoodCard'
 
 const menu = [
   {
@@ -56,6 +58,64 @@ const standards = [
     title: 'Phô mai tươi tự làm',
     desc: 'Sự kết hợp hoàn hảo giữa ẩm thực Ý và Nhật, từ pizza cá hồi sashimi đến những món ăn kèm tinh tế, mang lại trải nghiệm mới lạ.',
   },
+  {
+    icon: iconLemon,
+    title: 'Phô mai tươi tự làm',
+    desc: 'Sự kết hợp hoàn hảo giữa ẩm thực Ý và Nhật, từ pizza cá hồi sashimi đến những món ăn kèm tinh tế, mang lại trải nghiệm mới lạ.',
+  },
+]
+
+const categoryList = [
+  {
+    index: 1,
+    title: 'Pizza',
+    desc: 'Thơm ngon, phô mai ngập tràn, đa dạng hương vị chuẩn Ý',
+  },
+  {
+    index: 2,
+    title: 'Appetizer',
+    desc: 'Món khai vị hấp dẫn, kích thích vị giác',
+  },
+  {
+    index: 3,
+    title: 'Salad',
+    desc: 'Tươi mát, bổ dưỡng với rau củ sạch và sốt đặc biệt',
+  },
+  {
+    index: 4,
+    title: 'Pasta',
+    desc: 'Mì Ý đậm đà, phong cách truyền thống hoặc hiện đại',
+  },
+  {
+    index: 5,
+    title: 'Drinks',
+    desc: 'Giải khát mọi lúc với đủ loại nước ngon, mát lạnh',
+  },
+  {
+    index: 6,
+    title: 'Topping',
+    desc: 'Tùy chọn thêm topping yêu thích cho món ăn của bạn',
+  },
+  {
+    index: 7,
+    title: 'Delivery-combo',
+    desc: 'Combo giao hàng siêu tiết kiệm, tiện lợi',
+  },
+  {
+    index: 8,
+    title: 'Seasonal',
+    desc: 'Món theo mùa, tươi ngon và đầy cảm hứng',
+  },
+  {
+    index: 9,
+    title: 'Desserts',
+    desc: 'Ngọt ngào tráng miệng, kết thúc bữa ăn hoàn hảo',
+  },
+  {
+    index: 10,
+    title: 'Market',
+    desc: 'Sản phẩm từ cửa hàng, mang hương vị về nhà',
+  },
 ]
 
 const textHeader1 = 'text-[40px] sm:text-[50px] md:text-[70px] lg:text-[80px] xl:text-[100px]'
@@ -64,20 +124,6 @@ const textTitle = 'text-[25px] sm:text-[30px] md:text-[35px] lg:text-[40px] xl:t
 const textDesc = 'text-[18px] sm:text-[20px] md:text-[27px] lg:text-[30px] xl:text-[30px]'
 const PrevArrow = (props) => {
   const { className, onClick, style } = props
-  const [standards, setStandards] = useState([])
-
-  const getTopRatingDish = async () => {
-    try {
-      const res = await DishApi.getTopRatingDish()
-      console.log('top rating: ', ress)
-    } catch (error) {
-      console.log('Có lỗi khi lấy món nổi bật: ', error)
-    }
-  }
-
-  useEffect(() => {
-    getTopRatingDish()
-  }, [])
   return (
     <div
       className={className}
@@ -129,20 +175,37 @@ const NextArrow = (props) => {
 }
 
 export default function Home() {
+  const [topRatingList, setTopRatingList] = useState([])
+  const { token } = useSelector((state) => state.user)
+  const getTopRatingDish = async () => {
+    try {
+      const res = await DishApi.getTopRatingDish(token)
+      console.log('top rating: ', res)
+      setTopRatingList(res.data)
+    } catch (error) {
+      console.log('Có lỗi khi lấy món nổi bật: ', error)
+    }
+  }
+
+  useEffect(() => {
+    getTopRatingDish()
+  }, [])
+
   const settings = {
     dots: true,
     infinite: true,
     speed: 500,
     slidesToShow: 4,
-    slidesToScroll: 1,
+    slidesToScroll: 3,
     autoplay: true,
-    autoplaySpeed: 3000,
+    autoplaySpeed: 2000,
     pauseOnHover: true,
     vertical: false,
     verticalSwiping: false,
     centerMode: true,
-    nextArrow: <NextArrow />, // Custom Next Arrow
-    prevArrow: <PrevArrow />, // Custom Previous Arrow
+    WidthFull,
+    nextArrow: <NextArrow />,
+    prevArrow: <PrevArrow />,
     responsive: [
       {
         breakpoint: 1200,
@@ -222,11 +285,27 @@ export default function Home() {
         className='px-[5vw] justify-center pt-[10vh]'
       >
         <h1 className={`text-primary ${textHeader2} font-extrabold mb-5`}>Thực đơn...</h1>
-        <div className='grid grid-cols-2 md:grid-cols-2 justify-center w-full gap-10'>
+        <div className='grid grid-cols-5 gap-5'>
+          {categoryList.map((item, index) => {
+            return (
+              <div
+                style={{
+                  backgroundImage: `url(${firstImage})`,
+                  backgroundSize: 'cover',
+                  backgroundPosition: 'center',
+                }}
+                className='w-[16vw] h-[40vh] rounded-br-[70px] rounded-tl-[70px]'
+              >
+                <div>sadsadas</div>
+              </div>
+            )
+          })}
+        </div>
+        {/* <div className='grid grid-cols-2 md:grid-cols-2 justify-center w-full gap-10'>
           {menu.map((item) => (
             <WhiteFoodCart item={item} />
           ))}
-        </div>
+        </div> */}
       </div>
 
       <div className='bg-[#EBF0E4] pt-20 px-20 md:flex justify-between'>
@@ -245,16 +324,16 @@ export default function Home() {
         </div>
       </div>
 
-      <div className=' grid grid-cols-1 md:grid-cols-3 gap-3  mx-auto justify-items-center px-[5vw] w-full mt-[100px]'>
+      <div className=' grid grid-cols-1 md:grid-cols-4 gap-3  mx-auto justify-items-center px-[5vw] w-full mt-[100px]'>
         {standards.map((item) => {
           return (
-            <div className='flex flex-col items-center text-center max-w-[310px] border-2 p-5 rounded-4xl border-primary'>
+            <div className='flex flex-col shadow-lg shadow-sky-50 hover:scale-110 transition delay-100 duration-400 items-center text-center max-w-[310px] bg-white p-5 rounded-4xl'>
               <img
                 src={item.icon}
                 alt='Ảnh icon của tiêu chuẩn'
-                className='p-[35px] bg-[#EBF0E4] rounded-full w-[170px]'
+                className='p-[35px] bg-white rounded-full w-[170px]'
               />
-              <h6 className='text-black text-[25px] max-w-[700px] mt-3 font-extrabold'>
+              <h6 className='text-black text-[22px] max-w-[700px] mt-1 font-extrabold'>
                 {item.title}
               </h6>
               <p className='text-descText text-[15px] mt-2'>{item.desc}</p>
@@ -269,12 +348,11 @@ export default function Home() {
         </h2>
         {/* drop-shadow-lg */}
         <div className='w-full mt-5'>
-          <div className='mx-auto max-w-[1200px] relative'>
+          <div className='mx-auto max-w-[1400px] relative'>
             <Slider {...settings}>
-              {/* {outstandingPizza.map((item) => (
-                <div>ádas</div>
+              {topRatingList.map((item) => (
                 <FoodCard item={item} />
-              ))} */}
+              ))}
             </Slider>
           </div>
         </div>

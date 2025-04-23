@@ -14,13 +14,15 @@ import PolicyAndRegulations from './pages/PolicyAndRegulations'
 import DetailPage from './pages/DetailPage'
 import Reservation from './pages/Reservation'
 import OrderMenu from './pages/OrderMenu'
-// import LayoutForSeller from './components/Layout/LayoutForSeller'
+import LayoutForSeller from './components/Layout/LayoutForSeller'
+import ScrollToTop from './components/Layout/ScrollToTop'
 // import Dashboard from './pages/Admin/Dashboard'
 // import ManageOder from './pages/Admin/ManageOder'
 
 function App() {
   return (
     <BrowserRouter>
+      <ScrollToTop />
       <Routes>
         <Route element={<DefaultLayout />}>
           <Route path={routes.HOME} element={<Home />} />
@@ -39,8 +41,8 @@ function App() {
         </Route>
 
         <Route element={<LayoutForSeller />}>
-          <Route path={routes.DASHBOARD} element={<SignIn />} />
-          <Route path={routes.MANAGEREQUEST} element={<SignIn />} />
+          {/* <Route path={routes.DASHBOARD} element={<SignIn />} />
+          <Route path={routes.MANAGEREQUEST} element={<SignIn />} /> */}
         </Route>
       </Routes>
     </BrowserRouter>
