@@ -50,7 +50,7 @@ const OrderTracking = () => {
     }
   }
 
-  const handleTabChange = (event, newValue) => {
+  const handleTabChange = (_event, newValue) => {
     setSelectedTab(newValue)
   }
 
@@ -78,10 +78,8 @@ const OrderTracking = () => {
                   <strong>Số lượng khách:</strong> {reservation.numGuests}
                 </p>
                 <p>
-                  <strong>Tổng tiền:</strong> {reservation.totalPrice.toLocaleString()} VND
-                </p>
-                <p>
-                  <strong>Phương thức thanh toán:</strong> {reservation.paymentMethod}
+                  <strong>Phương thức thanh toán:</strong>{' '}
+                  {reservation.paymentMethod === 'direct' ? 'Online' : 'Trực tiếp'}
                 </p>
                 <p>
                   <strong>Ghi chú:</strong> {reservation.note || 'Không có'}
@@ -89,15 +87,27 @@ const OrderTracking = () => {
                 <p>
                   <strong>Món ăn:</strong>
                 </p>
-                <ul className='list-disc pl-5'>
-                  {reservation.listDishes.map((dish) => (
-                    <li key={dish.dishId._id}>
-                      {dish.dishId.name} - {dish.quantity} phần
-                    </li>
-                  ))}
-                </ul>
+                <table className='w-full border-collapse border mt-2'>
+                  <thead>
+                    <tr>
+                      <th className='border px-2 py-1'>Tên món</th>
+                      <th className='border px-2 py-1'>Số lượng</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {reservation.listDishes.map((dish) => (
+                      <tr key={dish.dishId._id}>
+                        <td className='border px-2 py-1'>{dish.dishId.name}</td>
+                        <td className='border px-2 py-1'>{dish.quantity}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+                <p className='mt-3'>
+                  <strong>Tổng tiền:</strong> {reservation.totalPrice.toLocaleString()} VND
+                </p>
                 {reservation.status === 'pending' && (
-                  <div className='mt-3 flex gap-3'>
+                  <div className='mt-3 flex gap-3 justify-end'>
                     <Button
                       variant='outline'
                       className='bg-third text-white'
