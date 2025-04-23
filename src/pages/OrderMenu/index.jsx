@@ -1,72 +1,54 @@
-import { useLocation } from 'react-router-dom'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import { useNavigate, useLocation } from 'react-router-dom'
+import { useSelector } from 'react-redux'
+import DishApi from '~/api/dishApi'
+import ReservationApi from '~/api/reservationApi'
 import { Button } from '~/components/ui/Button'
-
-const menuData = [
-  {
-    category: 'Pizza',
-    items: [
-      {
-        id: 1,
-        name: 'Pizza Tôm sốt tỏi cay',
-        price: 254000,
-        image: 'https://pizza4ps.com/wp-content/uploads/2024/04/BYO_Garlic-Shrimp-Pizza-1.jpg',
-      },
-      {
-        id: 2,
-        name: 'Phô mai Burrata thịt nguội',
-        price: 298000,
-        image: 'https://pizza4ps.com/wp-content/uploads/2023/07/PizzaBYO-1.png',
-      },
-    ],
-  },
-  {
-    category: 'Appetizers & Salads',
-    items: [
-      {
-        id: 3,
-        name: 'Các loại phô mai nhà làm (S)',
-        price: 109000,
-        image: 'https://pizza4ps.com/wp-content/uploads/2023/07/BYO_Assorted-Cheese_S-2-scaled.jpg',
-      },
-      {
-        id: 4,
-        name: 'Set thịt nguội và phô mai',
-        price: 172000,
-        image: 'https://pizza4ps.com/wp-content/uploads/2023/08/BYO_Cold-Cuts_S-2-scaled.jpg',
-      },
-    ],
-  },
-  {
-    category: 'Drink/Alcohol',
-    items: [
-      {
-        id: 5,
-        name: 'Rượu Sake tự nhiên (Ly)',
-        price: 120000,
-        image: 'https://pizza4ps.com/wp-content/uploads/2023/07/40950006_2.jpg',
-      },
-      {
-        id: 6,
-        name: 'Sangria Đỏ (Ly)',
-        price: 99000,
-        image: 'https://pizza4ps.com/wp-content/uploads/2023/07/1-APPLY-24-Red-SangriaGlass.jpg',
-      },
-    ],
-  },
-]
+import dayjs from 'dayjs'
+import { toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
+import { routes } from '~/routes'
 
 export default function OrderMenu() {
   const location = useLocation()
-  const reservationDetails = location.state || {}
+  const { date, time, guests } = location.state || {}
+
   const [cart, setCart] = useState([])
+  const [note, setNote] = useState('')
+  const [menuData, setMenuData] = useState({})
+  const [loading, setLoading] = useState(true)
+  const navigate = useNavigate()
+
+  const categories = [
+    'pizza',
+    'appetizer',
+    'salad',
+    'pasta',
+    'drinks',
+    'topping',
+    'delivery-combo',
+    'seasonal',
+    'desserts',
+    'market',
+  ]
+
+  const formatDate = (dateString) => {
+    if (!dateString) return 'Chưa chọn'
+    const dateObj = new Date(dateString)
+    return dateObj.toLocaleDateString('vi-VN', {
+      weekday: 'long',
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+    })
+  }
 
   const addToCart = (item) => {
     setCart((prevCart) => {
-      const existingItem = prevCart.find((cartItem) => cartItem.id === item.id)
+      const existingItem = prevCart.find((cartItem) => cartItem._id === item._id)
       if (existingItem) {
         return prevCart.map((cartItem) =>
-          cartItem.id === item.id ? { ...cartItem, quantity: cartItem.quantity + 1 } : cartItem,
+          cartItem._id === item._id ? { ...cartItem, quantity: cartItem.quantity + 1 } : cartItem,
         )
       }
       return [...prevCart, { ...item, quantity: 1 }]
@@ -74,53 +56,102 @@ export default function OrderMenu() {
   }
 
   const removeFromCart = (id) => {
-    setCart((prevCart) => prevCart.filter((item) => item.id !== id))
+    setCart((prevCart) => prevCart.filter((item) => item._id !== id))
   }
 
   const totalPrice = cart.reduce((total, item) => total + item.price * item.quantity, 0)
 
+  const handleSubmitReservation = async () => {
+    const formattedDate = dayjs(date).format('YYYY-MM-DD')
+    const formattedTime = dayjs(time, 'HH:mm').format('HH:mm')
+
+    const reservationData = {
+      date: formattedDate,
+      time: formattedTime,
+      numGuests: guests,
+      note,
+      listDishes: cart.map((item) => ({
+        dishId: item._id,
+        quantity: item.quantity,
+      })),
+    }
+
+    try {
+      const response = await ReservationApi.createReservation(reservationData) // Không cần truyền accessToken
+      toast.success('Đặt bàn thành công!')
+      console.log('Response:', response)
+      navigate(`${routes.HOME}`)
+      window.scrollTo(0, 0)
+    } catch (error) {
+      toast.error(error.response?.data?.message || 'Đã xảy ra lỗi khi đặt bàn.')
+    }
+  }
+
+  useEffect(() => {
+    const fetchMenuData = async () => {
+      try {
+        setLoading(true)
+        const data = {}
+        for (const category of categories) {
+          const response = await DishApi.searchDish(100, 1, '', category, [])
+          data[category] = response.dishes
+        }
+        setMenuData(data)
+      } catch (error) {
+        console.error('Lỗi khi lấy danh sách món ăn:', error)
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    fetchMenuData()
+  }, [])
+
   return (
     <div className='flex justify-between px-[138px] py-10'>
-      {/* Danh sách món ăn */}
       <div className='w-2/3 pr-10'>
-        <h1 className='text-4xl font-bold mb-5'>Đặt món</h1>
-        <div className='mb-5'>
-          <p>
-            <strong>Ngày:</strong> {reservationDetails.date}
-          </p>
-          <p>
-            <strong>Giờ:</strong> {reservationDetails.time}
-          </p>
-          <p>
-            <strong>Số lượng khách:</strong> {reservationDetails.guests}
-          </p>
-        </div>
-
-        {menuData.map((category) => (
-          <div key={category.category} className='mb-10'>
-            <h2 className='text-2xl font-bold mb-3'>{category.category}</h2>
-            <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5'>
-              {category.items.map((item) => (
-                <div key={item.id} className=' p-3 rounded-lg flex flex-col items-center bg-white'>
-                  <img
-                    src={item.image}
-                    alt={item.name}
-                    className='w-52 h-52 object-cover mb-3 rounded-md'
-                  />
-                  <h3 className='text-lg font-bold text-center h-14'>{item.name}</h3>
-                  <p className='text-descText'>{item.price.toLocaleString()} VND</p>
-                  <Button
-                    variant='outline'
-                    className='mt-3 w-full bg-third rounded-md'
-                    onClick={() => addToCart(item)}
-                  >
-                    Thêm vào giỏ
-                  </Button>
-                </div>
-              ))}
+        {/* Thông tin đặt bàn */}
+        <h1 className='text-4xl font-bold mb-5'>Thông tin đặt bàn</h1>
+        <p>
+          <strong>Ngày:</strong> {formatDate(date)}
+        </p>
+        <p>
+          <strong>Giờ:</strong> {time}
+        </p>
+        <p>
+          <strong>Số lượng khách:</strong> {guests}
+        </p>
+        {/* Danh sách món ăn */}
+        <h1 className='text-4xl font-bold my-5'>Đặt món</h1>
+        {loading ? (
+          <p>Đang tải dữ liệu...</p>
+        ) : (
+          categories.map((category) => (
+            <div key={category} className='mb-10'>
+              <h2 className='text-2xl font-bold mb-5 capitalize'>{category}</h2>
+              <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5'>
+                {menuData[category]?.map((item) => (
+                  <div key={item.id} className='p-3 rounded-lg flex flex-col items-center bg-white'>
+                    <img
+                      src={item.dishImg?.url}
+                      alt={item.name}
+                      className='w-52 h-52 object-cover mb-3 rounded-md'
+                    />
+                    <h3 className='text-lg font-bold text-center h-14'>{item.name}</h3>
+                    <p className='text-descText'>{item.price.toLocaleString()} VND</p>
+                    <Button
+                      variant='outline'
+                      className='mt-3 w-full bg-third rounded-md'
+                      onClick={() => addToCart(item)}
+                    >
+                      Thêm vào giỏ
+                    </Button>
+                  </div>
+                ))}
+              </div>
             </div>
-          </div>
-        ))}
+          ))
+        )}
       </div>
 
       {/* Giỏ hàng */}
@@ -133,7 +164,7 @@ export default function OrderMenu() {
             {cart.map((item) => (
               <div key={item.id} className='flex items-center justify-between mb-3 border-b pb-3'>
                 <img
-                  src={item.image}
+                  src={item.dishImg?.url}
                   alt={item.name}
                   className='w-16 h-16 object-cover rounded-md'
                 />
@@ -143,7 +174,7 @@ export default function OrderMenu() {
                     {item.quantity} x {item.price.toLocaleString()} VND
                   </p>
                 </div>
-                <div className='flex items-center'>
+                <div className='flex items-center space-x-2'>
                   <Button
                     variant='outline'
                     className='bg-third px-4'
@@ -153,18 +184,18 @@ export default function OrderMenu() {
                   </Button>
                   <Button
                     variant='outline'
-                    className='bg-third px-4 ml-2'
+                    className='bg-third px-4'
                     onClick={() => {
                       if (item.quantity > 1) {
                         setCart((prevCart) =>
                           prevCart.map((cartItem) =>
-                            cartItem.id === item.id
+                            cartItem._id === item._id
                               ? { ...cartItem, quantity: cartItem.quantity - 1 }
                               : cartItem,
                           ),
                         )
                       } else {
-                        removeFromCart(item.id)
+                        removeFromCart(item._id)
                       }
                     }}
                   >
@@ -175,7 +206,16 @@ export default function OrderMenu() {
             ))}
             <div className='mt-5'>
               <p className='font-bold text-lg'>Tổng tiền: {totalPrice.toLocaleString()} VND</p>
-              <Button variant='outline' className='mt-3 w-full bg-third rounded-md'>
+              <textarea
+                className='w-full mt-3 p-2 border rounded-md'
+                placeholder='Nhập chú thích cho giỏ hàng...'
+                onChange={(e) => setNote(e.target.value)}
+              />
+              <Button
+                variant='outline'
+                className='mt-3 w-full bg-third rounded-md'
+                onClick={handleSubmitReservation}
+              >
                 Tiếp tục
               </Button>
             </div>

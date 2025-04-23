@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { toast, ToastContainer } from 'react-toastify'
+import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import ValidatedTextField from '~/components/ui/ValidatedTextField'
 import PasswordTextField from '~/components/ui/PasswordTextField'
@@ -43,7 +43,7 @@ export default function SignIn() {
 
   const handleChange = (field, value) => {
     setFormData((prev) => ({ ...prev, [field]: value }))
-    setErrors((prev) => ({ ...prev, [field]: false })) // Xóa lỗi khi người dùng nhập lại
+    setErrors((prev) => ({ ...prev, [field]: false }))
   }
 
   const handleSubmit = async () => {
@@ -52,7 +52,7 @@ export default function SignIn() {
         const response = await api.post('/user/accountAction/login', formData)
         if (response.data.success) {
           dispatch(loginSuccess({ user: response.data.data, token: response.data.accessToken }))
-          toast.success('Login successful!')
+          toast.success('Đăng nhập thành công!')
           navigate(routes.HOME)
         } else {
           toast.error(response.data.message || 'Login failed')
@@ -61,14 +61,13 @@ export default function SignIn() {
         toast.error(error.response?.data?.message || 'Login failed')
       }
     } else {
-      toast.error('Vui lòng điền đầy đủ thông tin hợp lệ!')
+      toast.error('Đăng nhập không thành công!')
       console.log(errors) // log errors
     }
   }
 
   return (
     <div className='flex justify-center items-center'>
-      <ToastContainer />
       <div className='w-[480px] mt-12 mb-14 px-6 py-8 bg-white rounded-xl flex flex-col gap-6 shadow-md'>
         <div className='text-center text-3xl font-bold leading-loose'>Đăng nhập</div>
         <div className='flex flex-col gap-4'>

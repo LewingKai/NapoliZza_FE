@@ -11,7 +11,9 @@ export const routes = {
   POLICIES_REGULATIONS: '/chinh-sach-va-quy-dinh',
   BOOKING_GUIDE: '/huong-dan-dat-ban',
   CONTACT_INSTRUCTIONS: '/huong-dan-lien-he',
+  ORDER_TRACKING: '/theo-doi-dat-ban',
   DETAIL_ACCOUNT: '/thong-tin-tai-khoan',
+
   MANAGEREQUEST: '/seller/manage-request',
   DASHBOARD: '/seller/dashboard',
 }
