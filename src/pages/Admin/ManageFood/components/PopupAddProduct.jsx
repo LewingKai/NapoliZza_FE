@@ -106,7 +106,7 @@ export default function PopupAddProduct({ isOpen, onClose, fetchProducts }) {
         if (file) product.append('ingredientImgs', file)
       })
 
-      const res = await AdminApi.addADish(product)
+      await AdminApi.addADish(product)
       toast.success('Thêm thành công món ăn mới!')
       fetchProducts()
       handleClose()

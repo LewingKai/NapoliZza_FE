@@ -1,6 +1,5 @@
 import { Avatar } from '@mui/material'
 import { useSelector } from 'react-redux'
-import ava from '~/assets/images/AboutUs/first_image.png'
 export default function HeaderOfSeller() {
   const user = useSelector((state) => state.user.user)
   return (
