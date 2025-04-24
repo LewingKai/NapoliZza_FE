@@ -16,14 +16,18 @@ import Reservation from './pages/Reservation'
 import OrderMenu from './pages/OrderMenu'
 import OrderTracking from './pages/OrderTracking'
 import DetailAccount from './pages/DetailAccount'
-
-import Dashboard from './pages/Seller/Dashboard'
-import ManageRequest from './pages/Seller/ManageOder'
 import LayoutForSeller from './components/Layout/LayoutForSeller'
+import ScrollToTop from './components/Layout/ScrollToTop'
+import Dashboard from './pages/Admin/Dashboard'
+import ManageOder from './pages/Admin/ManageOder'
+import ManageFood from './pages/Admin/ManageFood'
+// import Dashboard from './pages/Admin/Dashboard'
+// import ManageOder from './pages/Admin/ManageOder'
 
 function App() {
   return (
     <BrowserRouter>
+      <ScrollToTop />
       <Routes>
         <Route element={<DefaultLayout />}>
           <Route path={routes.HOME} element={<Home />} />
@@ -45,7 +49,8 @@ function App() {
 
         <Route element={<LayoutForSeller />}>
           <Route path={routes.DASHBOARD} element={<Dashboard />} />
-          <Route path={routes.MANAGEREQUEST} element={<ManageRequest />} />
+          <Route path={routes.MANAGEREQUEST} element={<ManageOder />} />
+          <Route path={routes.MANAGEFOOD} element={<ManageFood />} />
         </Route>
       </Routes>
     </BrowserRouter>

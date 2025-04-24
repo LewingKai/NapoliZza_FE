@@ -27,6 +27,7 @@ const OrderTracking = () => {
       }
     } catch (error) {
       toast.error('Lỗi khi tải danh sách đặt bàn.')
+      console.log('Lỗi: ', error)
     }
   }
 
@@ -37,6 +38,7 @@ const OrderTracking = () => {
       fetchReservations()
     } catch (error) {
       toast.error('Không thể hủy đặt bàn.')
+      console.log('Lỗi: ', error)
     }
   }
 
@@ -47,6 +49,7 @@ const OrderTracking = () => {
       fetchReservations()
     } catch (error) {
       toast.error('Không thể thay đổi phương thức thanh toán.')
+      console.log('Lỗi: ', error)
     }
   }
 

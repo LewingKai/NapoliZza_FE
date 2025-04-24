@@ -12,8 +12,10 @@ export const routes = {
   BOOKING_GUIDE: '/huong-dan-dat-ban',
   CONTACT_INSTRUCTIONS: '/huong-dan-lien-he',
   ORDER_TRACKING: '/theo-doi-dat-ban',
+  MANAGEREQUEST: '/admin/manage-request',
+  DASHBOARD: '/admin/dashboard',
+  MANAGEFOOD: '/admin/manage-food',
+  DETAILPAGE: '/detail-dish/:id',
+  getDetailPage: (id) => `/detail-dish/${id}`,
   DETAIL_ACCOUNT: '/thong-tin-tai-khoan',
-
-  MANAGEREQUEST: '/seller/manage-request',
-  DASHBOARD: '/seller/dashboard',
 }

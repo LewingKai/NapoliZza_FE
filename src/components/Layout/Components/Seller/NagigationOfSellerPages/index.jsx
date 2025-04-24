@@ -1,6 +1,6 @@
 import logo from '~/assets/images/Logo.svg'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faHouse, faListCheck, faArrowLeft } from '@fortawesome/free-solid-svg-icons'
+import { faHouse, faListCheck, faArrowLeft, faPizzaSlice } from '@fortawesome/free-solid-svg-icons'
 import { routes } from '~/routes'
 import ScrollToTop from '~/components/Layout/ScrollToTop'
 
@@ -35,7 +35,21 @@ export default function Navigation() {
           onClick={ScrollToTop}
         >
           <FontAwesomeIcon icon={faListCheck} size='lg' />
-          <div className='text-[20px]'>Quản lý đơn hàng</div>
+          <div className='text-[20px]'>Quản lý đơn</div>
+          <span className='absolute left-1/4 bottom-0 w-1/2 h-[3px] bg-[white] scale-x-0 group-hover:scale-x-100 transition-transform duration-300'></span>
+        </NavLink>
+
+        <NavLink
+          to={routes.MANAGEFOOD}
+          className={({ isActive }) =>
+            `font-medium text-[25px] group flex items-center gap-3 relative transition-all duration-300 ${
+              isActive ? 'text-[#FFF671]' : 'text-[white] hover:text-[#FFF671]'
+            }`
+          }
+          onClick={ScrollToTop}
+        >
+          <FontAwesomeIcon icon={faPizzaSlice} size='lg' />
+          <div className='text-[20px]'>Quản lý món ăn</div>
           <span className='absolute left-1/4 bottom-0 w-1/2 h-[3px] bg-[white] scale-x-0 group-hover:scale-x-100 transition-transform duration-300'></span>
         </NavLink>
       </div>

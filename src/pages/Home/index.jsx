@@ -9,34 +9,25 @@ import manImage from '../../assets/images/home/man_image.png'
 import iconCheese from '../../assets/images/home/icon_Cheese.png'
 import iconLemon from '../../assets/images/home/icon_lemon.png'
 import iconCarot from '../../assets/images/home/icon_carrot.png'
-import WhiteFoodCart from './components/whiteFoodCart'
+// import WhiteFoodCart from './components/whiteFoodCart'
 import Slider from 'react-slick'
 import 'slick-carousel/slick/slick.css'
 import 'slick-carousel/slick/slick-theme.css'
-import { ArrowBackIos, ArrowForwardIos } from '@mui/icons-material'
-
-const menu = [
-  {
-    price: '200.000vnd',
-    name: 'Phô mai Burrata thịt nguội mai Burrata thịt nguội mai Burrata thịt nguội',
-    desc: 'Chiếc pizza “best-seller” kết hợp phô mai Burrata tươi, sốt cà chua và những lát Parma Ham thượng hạng, tạo nên sự cân bằng hoàn hảo giữa vị béo, mặn và tươi mát.',
-  },
-  {
-    price: '200.000vnd',
-    name: 'Phô mai Burrata thịt nguội mai Burrata thịt nguội mai Burrata thịt nguội',
-    desc: 'Chiếc pizza “best-seller” kết hợp phô mai Burrata tươi, sốt cà chua và những lát Parma Ham thượng hạng, tạo nên sự cân bằng hoàn hảo giữa vị béo, mặn và tươi mát.',
-  },
-  {
-    price: '200.000vnd',
-    name: 'Phô mai Burrata thịt nguội mai Burrata thịt nguội mai Burrata thịt nguội',
-    desc: 'Chiếc pizza “best-seller” kết hợp phô mai Burrata tươi, sốt cà chua và những lát Parma Ham thượng hạng, tạo nên sự cân bằng hoàn hảo giữa vị béo, mặn và tươi mát.',
-  },
-  {
-    price: '200.000vnd',
-    name: 'Phô mai Burrata thịt nguội mai Burrata thịt nguội mai Burrata thịt nguội',
-    desc: 'Chiếc pizza “best-seller” kết hợp phô mai Burrata tươi, sốt cà chua và những lát Parma Ham thượng hạng, tạo nên sự cân bằng hoàn hảo giữa vị béo, mặn và tươi mát.',
-  },
-]
+import { ArrowBackIos, ArrowForwardIos, WidthFull } from '@mui/icons-material'
+import { useEffect, useState } from 'react'
+import DishApi from '~/api/dishApi'
+import FoodCard from '~/components/ui/FoodCard'
+import cate_appetizer from '../../assets/images/home/categories/Appetizer.jpg'
+import cate_desserts from '../../assets/images/home/categories/Desserts.jpg'
+import cate_deliveryCombo from '../../assets/images/home/categories/Delivery-combo.jpg'
+import cate_drinks from '../../assets/images/home/categories/Drinks.jpg'
+import cate_market from '../../assets/images/home/categories/Market.jpg'
+import cate_pasta from '../../assets/images/home/categories/Pasta.jpg'
+import cate_pizza from '../../assets/images/home/categories/Pizza.jpg'
+import cate_salad from '../../assets/images/home/categories/Salad.jpg'
+import cate_seasonal from '../../assets/images/home/categories/Seasonal.jpg'
+import cate_topping from '../../assets/images/home/categories/Topping.jpg'
+import { useNavigate } from 'react-router-dom'
 
 const standards = [
   {
@@ -54,12 +45,80 @@ const standards = [
     title: 'Phô mai tươi tự làm',
     desc: 'Sự kết hợp hoàn hảo giữa ẩm thực Ý và Nhật, từ pizza cá hồi sashimi đến những món ăn kèm tinh tế, mang lại trải nghiệm mới lạ.',
   },
+  {
+    icon: iconLemon,
+    title: 'Phô mai tươi tự làm',
+    desc: 'Sự kết hợp hoàn hảo giữa ẩm thực Ý và Nhật, từ pizza cá hồi sashimi đến những món ăn kèm tinh tế, mang lại trải nghiệm mới lạ.',
+  },
+]
+
+const categoryList = [
+  {
+    index: 1,
+    img: cate_pizza,
+    title: 'Pizza',
+    desc: 'Thơm ngon, phô mai ngập tràn, đa dạng hương vị chuẩn Ý. Mỗi chiếc pizza được chế biến tỉ mỉ từ lớp đế giòn rụm đến phần nhân đậm đà, phù hợp cho mọi khẩu vị từ cổ điển đến hiện đại.',
+  },
+  {
+    index: 2,
+    img: cate_appetizer,
+    title: 'Appetizer',
+    desc: 'Món khai vị hấp dẫn, kích thích vị giác. Những món nhỏ xinh nhưng đậm đà này sẽ khơi dậy sự thèm ăn và tạo nên sự khởi đầu hoàn hảo cho bữa ăn của bạn.',
+  },
+  {
+    index: 3,
+    img: cate_salad,
+    title: 'Salad',
+    desc: 'Tươi mát, bổ dưỡng với rau củ sạch và sốt đặc biệt. Kết hợp các loại nguyên liệu tự nhiên, salad là lựa chọn lý tưởng cho người yêu thích sự nhẹ nhàng và lành mạnh.',
+  },
+  {
+    index: 4,
+    img: cate_pasta,
+    title: 'Pasta',
+    desc: 'Mì Ý đậm đà, phong cách truyền thống hoặc hiện đại. Được chế biến từ nguyên liệu chất lượng cùng các loại sốt đặc trưng, mỗi phần mì là một hành trình ẩm thực đậm chất Ý.',
+  },
+  {
+    index: 5,
+    img: cate_drinks,
+    title: 'Drinks',
+    desc: 'Giải khát mọi lúc với đủ loại nước ngon, mát lạnh. Từ nước ép trái cây tươi mát đến soda sảng khoái, thức uống của chúng tôi đáp ứng mọi nhu cầu thưởng thức.',
+  },
+  {
+    index: 6,
+    img: cate_topping,
+    title: 'Topping',
+    desc: 'Tùy chọn thêm topping yêu thích cho món ăn của bạn. Dễ dàng cá nhân hóa món ăn với các loại topping đa dạng từ phô mai, thịt xông khói đến rau củ tươi ngon.',
+  },
+  {
+    index: 7,
+    img: cate_deliveryCombo,
+    title: 'Delivery-combo',
+    desc: 'Combo giao hàng siêu tiết kiệm, tiện lợi. Thiết kế phù hợp cho mọi gia đình hoặc nhóm bạn, giúp bạn có ngay bữa ăn ngon miệng mà không cần phải ra ngoài.',
+  },
+  {
+    index: 8,
+    img: cate_seasonal,
+    title: 'Seasonal',
+    desc: 'Món theo mùa, tươi ngon và đầy cảm hứng. Với nguyên liệu đặc trưng từng mùa, mỗi món là sự kết hợp hài hòa giữa hương vị tự nhiên và cảm hứng ẩm thực sáng tạo.',
+  },
+  {
+    index: 9,
+    img: cate_desserts,
+    title: 'Desserts',
+    desc: 'Ngọt ngào tráng miệng, kết thúc bữa ăn hoàn hảo. Những món ngọt tinh tế từ bánh ngọt, kem đến trái cây, mang lại cảm giác thoải mái và hạnh phúc sau mỗi bữa ăn.',
+  },
+  {
+    index: 10,
+    img: cate_market,
+    title: 'Market',
+    desc: 'Sản phẩm từ cửa hàng, mang hương vị về nhà. Bạn có thể mua các nguyên liệu, món ăn chế biến sẵn hoặc đặc sản để thưởng thức tại nhà bất cứ lúc nào.',
+  },
 ]
 
 const textHeader1 = 'text-[40px] sm:text-[50px] md:text-[70px] lg:text-[80px] xl:text-[100px]'
 const textHeader2 = 'text-[35px] sm:text-[40px] md:text-[50px] lg:text-[60px] xl:text-[70px]'
 const textTitle = 'text-[25px] sm:text-[30px] md:text-[35px] lg:text-[40px] xl:text-[45px]'
-const textDesc = 'text-[18px] sm:text-[20px] md:text-[27px] lg:text-[30px] xl:text-[30px]'
+const textDesc = 'text-[18px] sm:text-[20px]lg:text-[22px] xl:text-[25px]'
 const PrevArrow = (props) => {
   const { className, onClick, style } = props
   return (
@@ -113,20 +172,37 @@ const NextArrow = (props) => {
 }
 
 export default function Home() {
+  const navigate = useNavigate()
+  const [topRatingList, setTopRatingList] = useState([])
+  const getTopRatingDish = async () => {
+    try {
+      const res = await DishApi.getTopRatingDish()
+      console.log('top rating: ', res)
+      setTopRatingList(res.data)
+    } catch (error) {
+      console.log('Có lỗi khi lấy món nổi bật: ', error)
+    }
+  }
+
+  useEffect(() => {
+    getTopRatingDish()
+  }, [])
+
   const settings = {
     dots: true,
     infinite: true,
     speed: 500,
     slidesToShow: 4,
-    slidesToScroll: 1,
+    slidesToScroll: 3,
     autoplay: true,
-    autoplaySpeed: 3000,
+    autoplaySpeed: 2000,
     pauseOnHover: true,
     vertical: false,
     verticalSwiping: false,
     centerMode: true,
-    nextArrow: <NextArrow />, // Custom Next Arrow
-    prevArrow: <PrevArrow />, // Custom Previous Arrow
+    WidthFull,
+    nextArrow: <NextArrow />,
+    prevArrow: <PrevArrow />,
     responsive: [
       {
         breakpoint: 1200,
@@ -205,16 +281,42 @@ export default function Home() {
         }}
         className='px-[5vw] justify-center pt-[10vh]'
       >
-        <h1 className={`text-primary ${textHeader2} font-extrabold mb-5`}>Thực đơn...</h1>
-        <div className='grid grid-cols-2 md:grid-cols-2 justify-center w-full gap-10'>
+        <h1 className={`text-primary ${textHeader2} font-extrabold mb-5`}>
+          Danh mục các món ăn...
+        </h1>
+        <div className='grid grid-cols-5 gap-5 pb-10'>
+          {categoryList.map((item, index) => {
+            return (
+              <div
+                style={{
+                  backgroundImage: `url(${item.img})`,
+                  backgroundSize: 'cover',
+                  backgroundPosition: 'center',
+                }}
+                className='w-[16vw] h-[40vh] rounded-br-[70px] rounded-tl-[70px] group overflow-hidden'
+                onClick={() => navigate(`/mon-an?category=${item.title}`)}
+              >
+                <div className='w-full h-full rounded-br-[70px] rounded-tl-[70px] bg-[#0303033b] flex flex-col justify-end pb-5 relative'>
+                  <p className='text-white font-extrabold text-[30px] text-center transform transition-all duration-300 group-hover:-translate-y-4'>
+                    {item.title}
+                  </p>
+                  <p className='px-3 text-white text-[15px] font-light bottom-5  w-full text-center opacity-0 translate-y-5 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-500 pointer-events-none'>
+                    {item.desc}
+                  </p>
+                </div>
+              </div>
+            )
+          })}
+        </div>
+        {/* <div className='grid grid-cols-2 md:grid-cols-2 justify-center w-full gap-10'>
           {menu.map((item) => (
             <WhiteFoodCart item={item} />
           ))}
-        </div>
+        </div> */}
       </div>
 
       <div className='bg-[#EBF0E4] pt-20 px-20 md:flex justify-between'>
-        <img src={manImage} alt='Người đàn ông đang nấu pizza' className='w-[600px] rounded-3xl' />
+        <img src={manImage} alt='Người đàn ông đang nấu pizza' className='w-[500px] rounded-3xl' />
         <div>
           <h2 className={`text-black ${textHeader2} max-w-[700px] mt-8 font-extrabold`}>
             Hương vị Pizza hoàn hảo tại NapoliZza!
@@ -229,16 +331,16 @@ export default function Home() {
         </div>
       </div>
 
-      <div className=' grid grid-cols-1 md:grid-cols-3 gap-3  mx-auto justify-items-center px-[5vw] w-full mt-[100px]'>
+      <div className=' grid grid-cols-1 md:grid-cols-4 gap-3  mx-auto justify-items-center px-[5vw] w-full mt-[100px]'>
         {standards.map((item) => {
           return (
-            <div className='flex flex-col items-center text-center max-w-[310px] border-2 p-5 rounded-4xl border-primary'>
+            <div className='flex flex-col shadow-lg shadow-sky-50 hover:scale-110 transition delay-100 duration-400 items-center text-center max-w-[310px] bg-white p-5 rounded-4xl'>
               <img
                 src={item.icon}
                 alt='Ảnh icon của tiêu chuẩn'
-                className='p-[35px] bg-[#EBF0E4] rounded-full w-[170px]'
+                className='p-[35px] bg-white rounded-full w-[170px]'
               />
-              <h6 className='text-black text-[25px] max-w-[700px] mt-3 font-extrabold'>
+              <h6 className='text-black text-[22px] max-w-[700px] mt-1 font-extrabold'>
                 {item.title}
               </h6>
               <p className='text-descText text-[15px] mt-2'>{item.desc}</p>
@@ -253,12 +355,11 @@ export default function Home() {
         </h2>
         {/* drop-shadow-lg */}
         <div className='w-full mt-5'>
-          <div className='mx-auto max-w-[1200px] relative'>
+          <div className='mx-auto max-w-[1400px] relative'>
             <Slider {...settings}>
-              {/* {outstandingPizza.map((item) => (
-                <div>ádas</div>
+              {topRatingList.map((item) => (
                 <FoodCard item={item} />
-              ))} */}
+              ))}
             </Slider>
           </div>
         </div>
