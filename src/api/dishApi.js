@@ -1,6 +1,5 @@
 import DishEndpoints from '~/services/dish.endpoints'
-import axiosClient from './axiosClient'
-
+import { apiAuth } from '~/services'
 class dishApi {
   async searchDish(itemPerPage, page, searchValue, category, sortList) {
     let sortPrice = ''
@@ -17,7 +16,7 @@ class dishApi {
       }
     }
     try {
-      const res = await axiosClient.get(
+      const res = await apiAuth.get(
         `${DishEndpoints.search}?page=${page}&limit=${itemPerPage}&category=${category}&name=${searchValue}&sort=price:${sortPrice},quantitySold:${sortStock}`,
       )
       return res.data
@@ -27,13 +26,9 @@ class dishApi {
     }
   }
 
-  async getTopRatingDish(token) {
+  async getTopRatingDish() {
     try {
-      const res = await axiosClient.get(`${DishEndpoints.getTopRating}`, {
-        headers: {
-          Authorization: `Bearer ${token}`, // Sử dụng token
-        },
-      })
+      const res = await apiAuth.get(DishEndpoints.getTopRating)
       return res.data
     } catch (error) {
       console.error('Lỗi từ server:', error)

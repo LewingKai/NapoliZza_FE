@@ -17,7 +17,6 @@ export default function OrderMenu() {
   const [note, setNote] = useState('')
   const [menuData, setMenuData] = useState({})
   const [loading, setLoading] = useState(true)
-  const { token } = useSelector((state) => state.user)
   const navigate = useNavigate()
 
   const categories = [
@@ -63,11 +62,6 @@ export default function OrderMenu() {
   const totalPrice = cart.reduce((total, item) => total + item.price * item.quantity, 0)
 
   const handleSubmitReservation = async () => {
-    if (!date || !time || !guests) {
-      toast.error('Vui lòng kiểm tra lại thông tin đặt bàn.')
-      return
-    }
-
     const formattedDate = dayjs(date).format('YYYY-MM-DD')
     const formattedTime = dayjs(time, 'HH:mm').format('HH:mm')
 
@@ -83,7 +77,7 @@ export default function OrderMenu() {
     }
 
     try {
-      const response = await ReservationApi.createReservation(reservationData, token)
+      const response = await ReservationApi.createReservation(reservationData) // Không cần truyền accessToken
       toast.success('Đặt bàn thành công!')
       console.log('Response:', response)
       navigate(`${routes.HOME}`)

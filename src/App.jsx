@@ -14,8 +14,12 @@ import PolicyAndRegulations from './pages/PolicyAndRegulations'
 import DetailPage from './pages/DetailPage'
 import Reservation from './pages/Reservation'
 import OrderMenu from './pages/OrderMenu'
+import OrderTracking from './pages/OrderTracking'
 import LayoutForSeller from './components/Layout/LayoutForSeller'
 import ScrollToTop from './components/Layout/ScrollToTop'
+import Dashboard from './pages/Admin/Dashboard'
+import ManageOder from './pages/Admin/ManageOder'
+import ManageFood from './pages/Admin/ManageFood'
 // import Dashboard from './pages/Admin/Dashboard'
 // import ManageOder from './pages/Admin/ManageOder'
 
@@ -38,11 +42,13 @@ function App() {
           <Route path={routes.DETAILPAGE} element={<DetailPage />} />
           <Route path={routes.RESERVATION} element={<Reservation />} />
           <Route path={routes.ORDERMENU} element={<OrderMenu />} />
+          <Route path={routes.ORDER_TRACKING} element={<OrderTracking />} />
         </Route>
 
         <Route element={<LayoutForSeller />}>
-          {/* <Route path={routes.DASHBOARD} element={<SignIn />} />
-          <Route path={routes.MANAGEREQUEST} element={<SignIn />} /> */}
+          <Route path={routes.DASHBOARD} element={<Dashboard />} />
+          <Route path={routes.MANAGEREQUEST} element={<ManageOder />} />
+          <Route path={routes.MANAGEFOOD} element={<ManageFood />} />
         </Route>
       </Routes>
     </BrowserRouter>

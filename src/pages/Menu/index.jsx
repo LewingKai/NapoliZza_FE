@@ -10,6 +10,7 @@ import Pagination from '@mui/material/Pagination'
 import Stack from '@mui/material/Stack'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faFilter } from '@fortawesome/free-solid-svg-icons'
+import { useSearchParams, useNavigate } from 'react-router-dom'
 
 const MenuProps = {
   PaperProps: {
@@ -27,7 +28,9 @@ const sortValue = [
 ]
 
 export default function Menu() {
-  const [category, setCategory] = React.useState('pizza')
+  const [searchParams] = useSearchParams()
+  const navigate = useNavigate()
+  const [category, setCategory] = React.useState('')
   const itemPrePage = 20
   const [pages, setPages] = React.useState(1)
   const [pageNumber, setPageNumber] = React.useState(0)
@@ -49,7 +52,9 @@ export default function Menu() {
     getDish()
   }
   const handleChangeCategory = (e) => {
-    setCategory(e.target.value)
+    const value = e.target.value
+    searchParams.set('category', value)
+    navigate(`/mon-an?category=${value}`)
   }
 
   const getDish = async () => {
@@ -64,9 +69,16 @@ export default function Menu() {
   }
 
   React.useEffect(() => {
-    window.scrollTo(0, 0)
-    console.log('render')
-    getDish()
+    const categoryParam = searchParams.get('category') || 'Pizza'
+    setCategory(categoryParam)
+    setPages(1)
+  }, [searchParams])
+
+  React.useEffect(() => {
+    if (category !== '') {
+      window.scrollTo(0, 0)
+      getDish()
+    }
   }, [pages, category, sortList])
   return (
     <div className='p-[1vw] sm:p-[5vw]'>
@@ -119,17 +131,17 @@ export default function Menu() {
           <FormControl fullWidth>
             <InputLabel id='demo-simple-select-label'>Danh mục</InputLabel>
             <Select value={category} label='Danh mục' onChange={handleChangeCategory}>
-              <MenuItem value='pizza'>Pizza</MenuItem>
-              <MenuItem value='appetizer'>Appetizer</MenuItem>
-              <MenuItem value='salad'>Salad</MenuItem>
-              <MenuItem value='pasta'>Pasta</MenuItem>
-              <MenuItem value='drinks'>Drinks</MenuItem>
-              <MenuItem value='topping'>Topping</MenuItem>
-              <MenuItem value='delivery-combo'>Delivery-combo</MenuItem>
-              <MenuItem value='seasonal'>Seasonal</MenuItem>
-              <MenuItem value='desserts'>Desserts</MenuItem>
-              <MenuItem value='market'>Market</MenuItem>
-              <MenuItem value='all'>All</MenuItem>
+              <MenuItem value='Pizza'>Pizza</MenuItem>
+              <MenuItem value='Appetizer'>Appetizer</MenuItem>
+              <MenuItem value='Salad'>Salad</MenuItem>
+              <MenuItem value='Pasta'>Pasta</MenuItem>
+              <MenuItem value='Drinks'>Drinks</MenuItem>
+              <MenuItem value='Topping'>Topping</MenuItem>
+              <MenuItem value='Delivery-combo'>Delivery-combo</MenuItem>
+              <MenuItem value='Seasonal'>Seasonal</MenuItem>
+              <MenuItem value='Desserts'>Desserts</MenuItem>
+              <MenuItem value='Market'>Market</MenuItem>
+              <MenuItem value='All'>All</MenuItem>
             </Select>
           </FormControl>
         </div>

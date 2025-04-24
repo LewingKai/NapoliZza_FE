@@ -1,6 +1,9 @@
 const DishEndpoints = {
-  search: '/admin/dish/search',
+  search: '/user/search/dish',
   manageReservation: '/admin/manageReservation',
-  getTopRating: '/admin/dish/toprating',
+  getTopRating: '/user/display/toprating',
+  deleteDish: '/admin/dish',
+  addDish: '/admin/dish',
+  updateDish: '/admin/dish',
 }
 export default DishEndpoints
