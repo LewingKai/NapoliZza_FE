@@ -6,7 +6,7 @@ import RowProduct from './components/RowProduct'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlus } from '@fortawesome/free-solid-svg-icons'
 import PopupAddProduct from './components/PopupAddProduct'
-
+import LoadingComponent from '~/components/ui/LoadingComponent'
 export default function ManageFood() {
   const [category, setCategory] = useState('Pizza')
   const [skipPage, setSkipPage] = useState(0)
@@ -55,6 +55,10 @@ export default function ManageFood() {
   useEffect(() => {
     fetchProducts()
   }, [skipPage, rowsPerPage, category, sortList])
+
+  if (isLoading) {
+    return <LoadingComponent />
+  }
 
   return (
     <div className='w-full flex flex-col items-center gap-5 bg-[#F5F6FA] py-5'>
@@ -146,6 +150,7 @@ export default function ManageFood() {
                   val={val}
                   index={skipPage * rowsPerPage + index + 1}
                   fetchProducts={fetchProducts}
+                  setIsLoading={setIsLoading}
                 />
               ))
             ) : (

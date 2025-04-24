@@ -3,14 +3,14 @@ import { Modal, Box } from '@mui/material'
 import AdminApi from '~/api/adminApi'
 import { toast } from 'react-toastify'
 
-const RowOrder = ({ val, key, index, fetchOrder }) => {
-  console.log('vsdfadfasfas: ', val._id)
+const RowOrder = ({ val, key, index, fetchOrder, setLoading }) => {
   const [orderItems, setOrderItems] = useState([])
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [status, setStatus] = useState(val.status)
   const openModal = () => setIsModalOpen(true)
   const closeModal = () => setIsModalOpen(false)
   const handleStatus = async (e) => {
+    setLoading(true)
     const newStatus = e.target.value
     setStatus(newStatus)
     const update = {
@@ -25,6 +25,7 @@ const RowOrder = ({ val, key, index, fetchOrder }) => {
       console.error('Không thể update status: ', error)
     } finally {
       fetchOrder()
+      setLoading(false)
     }
   }
 

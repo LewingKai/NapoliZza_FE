@@ -6,11 +6,12 @@ import PopupProduct from './PopupProduct'
 import AdminApi from '~/api/adminApi'
 import { toast } from 'react-toastify'
 
-const RowProduct = ({ val, index, fetchProducts }) => {
+const RowProduct = ({ val, index, fetchProducts, setIsLoading }) => {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const openModal = () => setIsModalOpen(true)
   const closeModal = () => setIsModalOpen(false)
   const handleDeleteProduct = async () => {
+    setIsLoading(false)
     try {
       const res = await AdminApi.handleDeleteDish(val._id)
       fetchProducts()
@@ -19,9 +20,10 @@ const RowProduct = ({ val, index, fetchProducts }) => {
     } catch (error) {
       toast.error('Không thể xóa món ăn!')
       console.error('Không thể xóa sản phẩm: ', error)
+    } finally {
+      setIsLoading(false)
     }
   }
-
   return (
     <>
       <tr key={index} className='border-t-2 border-[#D5D5D5]'>

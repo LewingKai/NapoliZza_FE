@@ -31,7 +31,17 @@ class dishApi {
       const res = await apiAuth.get(DishEndpoints.getTopRating)
       return res.data
     } catch (error) {
-      console.error('Lỗi từ server:', error)
+      console.error('Lỗi lấy món nổi bật:', error)
+      throw new Error('Đã có lỗi khi lấy món ăn: ', error)
+    }
+  }
+
+  async getDetailDish(dishId) {
+    try {
+      const res = await apiAuth.get(`${DishEndpoints.detailDish}/${dishId}`)
+      return res
+    } catch (error) {
+      console.error('Lỗi lấy detail món:', error)
       throw new Error('Đã có lỗi khi lấy món ăn: ', error)
     }
   }

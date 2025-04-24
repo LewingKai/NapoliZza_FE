@@ -15,4 +15,6 @@ export const routes = {
   MANAGEREQUEST: '/admin/manage-request',
   DASHBOARD: '/admin/dashboard',
   MANAGEFOOD: '/admin/manage-food',
+  DETAILPAGE: '/detail-dish/:id',
+  getDetailPage: (id) => `/detail-dish/${id}`,
 }

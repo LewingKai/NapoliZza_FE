@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react'
 import TablePagination from '@mui/material/TablePagination'
-// import RowOrder from './components/rowOrder'
 import AdminApi from '~/api/adminApi'
 import RowOrder from './components/RowOrder'
+import LoadingComponent from '~/components/ui/LoadingComponent'
 
 export default function ManageOder() {
   const [orderList, setOrderList] = useState([])
@@ -31,12 +31,18 @@ export default function ManageOder() {
       setOrderList([])
       setLoading(false)
       console.log('Lỗi lấy đơn hàng: ', error)
+    } finally {
+      setLoading(false)
     }
   }
 
   useEffect(() => {
     fetchOrder()
   }, [status])
+
+  if (loading) {
+    return <LoadingComponent />
+  }
 
   return (
     <div className='w-full flex h-[88vh] flex-col items-center gap-5 bg-gray-200 py-5'>
@@ -84,6 +90,7 @@ export default function ManageOder() {
                       key={val._id}
                       index={skipPage * rowsPerPage + index}
                       fetchOrder={fetchOrder}
+                      setLoading={setLoading}
                     />
                   )
                 })

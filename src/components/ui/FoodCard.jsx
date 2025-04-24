@@ -6,7 +6,7 @@ import { faStar } from '@fortawesome/free-solid-svg-icons'
 
 export default function FoodCard({ item }) {
   return (
-    <Link to={`${routes.DETAILPAGE}`} onClick={() => ScrollToTop()}>
+    <Link to={routes.getDetailPage(item._id)} onClick={() => ScrollToTop()}>
       <div className='bg-white rounded-[20px] relative drop-shadow-lg w-[40vw] md:w-[20vw] flex-shrink-0 mt-4 duration-300  hover:-translate-1 hover:scale-105'>
         <img
           src={item.dishImg.url}
