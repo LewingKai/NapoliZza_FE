@@ -17,7 +17,9 @@ class AccountApi {
 
   async updateAccount(accountData) {
     try {
-      const res = await apiAuth.put(AccountEndpoints.updateCustomerInfo, accountData)
+      const res = await apiAuth.patch(AccountEndpoints.updateCustomerInfo, accountData, {
+        headers: { 'Content-Type': 'multipart/form-data' },
+      })
       return res.data
     } catch (error) {
       console.error('Error updating account:', error)
@@ -27,7 +29,7 @@ class AccountApi {
 
   async changePassword(passwordData) {
     try {
-      const res = await apiAuth.put(AccountEndpoints.changePass, passwordData)
+      const res = await apiAuth.patch(AccountEndpoints.changePass, passwordData)
       return res.data
     } catch (error) {
       console.error('Error changing password:', error)

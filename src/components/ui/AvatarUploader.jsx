@@ -4,21 +4,19 @@ import { Button } from '@mui/material'
 import PhotoCameraIcon from '@mui/icons-material/PhotoCamera'
 import { toast } from 'react-toastify'
 
-const AvatarUploader = ({ currentAvatar, onAvatarChange }) => {
+const AvatarUploader = ({ currentAvatar, onAvatarChange, isEditing }) => {
   const [avatar, setAvatar] = useState(currentAvatar || '/path/to/default-avatar.png')
   const [isLoading, setIsLoading] = useState(false)
 
   const handleImageChange = async (e) => {
     const file = e.target.files[0]
     if (file) {
-      // Kiểm tra định dạng tệp
       const validTypes = ['image/jpeg', 'image/png', 'image/gif']
       if (!validTypes.includes(file.type)) {
         toast.error('Chỉ chấp nhận các định dạng ảnh: JPEG, PNG, GIF.')
         return
       }
 
-      // Kiểm tra kích thước tệp (giới hạn 2MB)
       const maxSize = 2 * 1024 * 1024
       if (file.size > maxSize) {
         toast.error('Kích thước ảnh không được vượt quá 2MB.')
@@ -27,9 +25,6 @@ const AvatarUploader = ({ currentAvatar, onAvatarChange }) => {
 
       setIsLoading(true)
       try {
-        if (avatar && typeof avatar === 'string') {
-          URL.revokeObjectURL(avatar)
-        }
         const imageUrl = URL.createObjectURL(file)
         setAvatar(imageUrl)
         await onAvatarChange(file)
@@ -61,31 +56,35 @@ const AvatarUploader = ({ currentAvatar, onAvatarChange }) => {
         )}
       </div>
 
-      <input
-        type='file'
-        accept='image/*'
-        id='avatar-upload'
-        style={{ display: 'none' }}
-        onChange={handleImageChange}
-      />
-      <label htmlFor='avatar-upload'>
-        <Button
-          variant='outlined'
-          startIcon={<PhotoCameraIcon />}
-          component='span'
-          sx={{
-            color: '#000',
-            borderColor: '#ccc',
-            padding: '8px 16px',
-            borderRadius: '24px',
-            fontWeight: 'bold',
-            fontSize: '14px',
-            textTransform: 'none',
-          }}
-        >
-          Đổi hình
-        </Button>
-      </label>
+      {isEditing && (
+        <>
+          <input
+            type='file'
+            accept='image/*'
+            id='avatar-upload'
+            style={{ display: 'none' }}
+            onChange={handleImageChange}
+          />
+          <label htmlFor='avatar-upload'>
+            <Button
+              variant='outlined'
+              startIcon={<PhotoCameraIcon />}
+              component='span'
+              sx={{
+                color: '#000',
+                borderColor: '#ccc',
+                padding: '8px 16px',
+                borderRadius: '24px',
+                fontWeight: 'bold',
+                fontSize: '14px',
+                textTransform: 'none',
+              }}
+            >
+              Đổi hình
+            </Button>
+          </label>
+        </>
+      )}
     </div>
   )
 }

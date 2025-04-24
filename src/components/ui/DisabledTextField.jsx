@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 
 const DisabledTextField = ({ value, label, className }) => {
   return (
-    <div className={`mx-auto w-full sm:max-w-[300px] md:max-w-[500px] my-5 ${className}`}>
+    <div className={`mx-auto w-full max-w-[432px] ${className}`}>
       <TextField
         label={label}
         value={value}
@@ -15,7 +15,7 @@ const DisabledTextField = ({ value, label, className }) => {
           margin: 'auto',
           width: '100%',
           '& .MuiOutlinedInput-root': {
-            borderRadius: '20px',
+            borderRadius: '8px',
             '& .MuiInputBase-input.Mui-disabled': {
               WebkitTextFillColor: '#333333',
             },
