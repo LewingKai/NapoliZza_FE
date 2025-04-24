@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
-import { useSelector } from 'react-redux'
 import DishApi from '~/api/dishApi'
 import ReservationApi from '~/api/reservationApi'
 import { Button } from '~/components/ui/Button'

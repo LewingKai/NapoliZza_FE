@@ -1,6 +1,5 @@
 import DishEndpoints from '~/services/dish.endpoints'
-import axiosClient from './axiosClient'
-
+import { apiAuth } from '~/services'
 class dishApi {
   async searchDish(itemPerPage, page, searchValue, category, sortList) {
     let sortPrice = ''
@@ -17,12 +16,32 @@ class dishApi {
       }
     }
     try {
-      const res = await axiosClient.get(
+      const res = await apiAuth.get(
         `${DishEndpoints.search}?page=${page}&limit=${itemPerPage}&category=${category}&name=${searchValue}&sort=price:${sortPrice},quantitySold:${sortStock}`,
       )
       return res.data
     } catch (error) {
       console.error('Lỗi từ server:', error)
+      throw new Error('Đã có lỗi khi lấy món ăn: ', error)
+    }
+  }
+
+  async getTopRatingDish() {
+    try {
+      const res = await apiAuth.get(DishEndpoints.getTopRating)
+      return res.data
+    } catch (error) {
+      console.error('Lỗi lấy món nổi bật:', error)
+      throw new Error('Đã có lỗi khi lấy món ăn: ', error)
+    }
+  }
+
+  async getDetailDish(dishId) {
+    try {
+      const res = await apiAuth.get(`${DishEndpoints.detailDish}/${dishId}`)
+      return res
+    } catch (error) {
+      console.error('Lỗi lấy detail món:', error)
       throw new Error('Đã có lỗi khi lấy món ăn: ', error)
     }
   }

@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet');
+@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Roboto:wght@300;400;500;700&display=swap');
 
 @import 'tailwindcss';
 
@@ -36,10 +36,10 @@ body {
   display: none !important;
 }
 .slick-slide {
-  width: 300px !important;
+  width: 310px !important;
   display: inline-block !important;
   margin-left: 10px !important;
-  height: 260px !important;
+  height: 250px !important;
 }
 
 .custom-slider .slick-slide {
