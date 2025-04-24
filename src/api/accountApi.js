@@ -8,6 +8,11 @@ class AccountApi {
       if (!res.data) {
         throw new Error('Không tìm thấy dữ liệu tài khoản.')
       }
+
+      if (res.data.avatar && typeof res.data.avatar === 'object') {
+        res.data.avatar = res.data.avatar.url || null
+      }
+
       return res.data
     } catch (error) {
       console.error('Error fetching account:', error)
