@@ -82,7 +82,7 @@ const OrderTracking = () => {
                 </p>
                 <p>
                   <strong>Phương thức thanh toán:</strong>{' '}
-                  {reservation.paymentMethod === 'direct' ? 'Online' : 'Trực tiếp'}
+                  {reservation.paymentMethod === 'direct' ? 'Trực tiếp' : 'Online'}
                 </p>
                 <p>
                   <strong>Ghi chú:</strong> {reservation.note || 'Không có'}

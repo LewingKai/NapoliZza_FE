@@ -34,7 +34,7 @@ class ReservationApi {
 
   async changePaymentMethod(id, paymentMethod) {
     try {
-      const response = await apiAuth.put(ReservationEndpoints.changePaymentMethod(id), {
+      const response = await apiAuth.patch(ReservationEndpoints.changePaymentMethod(id), {
         paymentMethod,
       })
       return response.data
