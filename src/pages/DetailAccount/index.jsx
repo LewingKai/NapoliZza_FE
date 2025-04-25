@@ -8,6 +8,12 @@ import ChangePasswordModal from './_components/ChangePasswordModal'
 import { toast } from 'react-toastify'
 import defaultAvatar from '~/assets/images/DetailAccount/default-avatar.jpg'
 import { Button } from '~/components/ui/Button'
+import { useNavigate } from 'react-router-dom'
+import { routes } from '~/configs'
+import ConfirmationModal from './_components/ConfirmationModal'
+import CustomDatePicker from '~/components/ui/CustomDatePicker'
+import { useDispatch } from 'react-redux'
+import { logout } from '~/redux/userSlice'
 
 export default function DetailAccount() {
   const [account, setAccount] = useState(null)
@@ -16,7 +22,10 @@ export default function DetailAccount() {
   const [avatar, setAvatar] = useState(null)
   const [isChanged, setIsChanged] = useState(false)
   const [isPasswordModalOpen, setIsPasswordModalOpen] = useState(false)
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false)
   const isFetched = useRef(false)
+  const navigate = useNavigate()
+  const dispatch = useDispatch()
 
   useEffect(() => {
     const fetchAccount = async () => {
@@ -88,6 +97,22 @@ export default function DetailAccount() {
     }
   }
 
+  const handleDeleteAccount = async () => {
+    try {
+      const response = await accountApi.deleteAccount(account.id)
+      if (response.success) {
+        toast.success('Xóa tài khoản thành công!')
+        dispatch(logout())
+        navigate(`${routes.SIGNIN}`)
+      } else {
+        toast.error('Xóa tài khoản thất bại.')
+      }
+    } catch (error) {
+      console.error('Error deleting account:', error)
+      toast.error('Có lỗi xảy ra khi xóa tài khoản.')
+    }
+  }
+
   if (!account) {
     return <div>Đang tải thông tin tài khoản...</div>
   }
@@ -125,15 +150,15 @@ export default function DetailAccount() {
             <CustomSelect
               label='Giới tính'
               options={[
-                { label: 'Nam', value: 'male' },
-                { label: 'Nữ', value: 'female' },
-                { label: 'Khác', value: 'other' },
+                { label: 'Nam', value: 'Nam' },
+                { label: 'Nữ', value: 'Nữ' },
+                { label: 'Không tiện tiết lộ', value: 'Không tiện tiết lộ' },
               ]}
               value={formData.gender || ''}
               onChange={(value) => handleChange('gender', value)}
               placeholder='Chọn giới tính'
             />
-            <ValidatedTextField
+            <CustomDatePicker
               label='Ngày sinh'
               value={formData.birthday || ''}
               onChange={(value) => handleChange('birthday', value)}
@@ -196,11 +221,31 @@ export default function DetailAccount() {
             </div>
           </>
         )}
+        <div className='flex justify-center mt-4 space-x-4'>
+          <Button
+            variant='default'
+            size='lg'
+            className='bg-red-500 text-white'
+            onClick={() => setIsDeleteModalOpen(true)}
+          >
+            Xóa tài khoản
+          </Button>
+        </div>
       </div>
 
       <ChangePasswordModal
         isOpen={isPasswordModalOpen}
         onClose={() => setIsPasswordModalOpen(false)}
+      />
+
+      <ConfirmationModal
+        isOpen={isDeleteModalOpen}
+        onClose={() => setIsDeleteModalOpen(false)}
+        onConfirm={() => {
+          handleDeleteAccount()
+          setIsDeleteModalOpen(false)
+        }}
+        message='Bạn có chắc chắn muốn xóa tài khoản? Hành động này không thể hoàn tác.'
       />
     </div>
   )

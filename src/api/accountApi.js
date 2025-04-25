@@ -34,7 +34,10 @@ class AccountApi {
 
   async changePassword(passwordData) {
     try {
-      const res = await apiAuth.patch(AccountEndpoints.changePass, passwordData)
+      const res = await apiAuth.patch(AccountEndpoints.changePass, {
+        password: passwordData.password,
+        newpassword: passwordData.newpassword,
+      })
       return res.data
     } catch (error) {
       console.error('Error changing password:', error)

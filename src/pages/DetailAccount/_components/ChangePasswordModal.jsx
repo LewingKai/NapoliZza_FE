@@ -17,20 +17,26 @@ export default function ChangePasswordModal({ isOpen, onClose }) {
   }
 
   const handleSubmit = async () => {
+    if (!passwordData.currentPassword || !passwordData.newPassword) {
+      toast.error('Vui lòng nhập đầy đủ thông tin mật khẩu.')
+      return
+    }
+
     if (passwordData.newPassword !== passwordData.confirmPassword) {
       toast.error('Mật khẩu mới và xác nhận mật khẩu không khớp.')
       return
     }
 
     try {
-      await accountApi.changePassword({
+      const response = await accountApi.changePassword({
         password: passwordData.currentPassword,
         newpassword: passwordData.newPassword,
       })
       toast.success('Đổi mật khẩu thành công!')
       onClose()
     } catch (error) {
-      toast.error('Có lỗi xảy ra khi đổi mật khẩu.')
+      console.error('Error changing password:', error)
+      toast.error(error.response?.data?.message || 'Có lỗi xảy ra khi đổi mật khẩu.')
     }
   }
 
