@@ -15,6 +15,7 @@ import DetailPage from './pages/DetailPage'
 import Reservation from './pages/Reservation'
 import OrderMenu from './pages/OrderMenu'
 import OrderTracking from './pages/OrderTracking'
+import DetailAccount from './pages/DetailAccount'
 import LayoutForSeller from './components/Layout/LayoutForSeller'
 import ScrollToTop from './components/Layout/ScrollToTop'
 import Dashboard from './pages/Admin/Dashboard'
@@ -43,6 +44,7 @@ function App() {
           <Route path={routes.RESERVATION} element={<Reservation />} />
           <Route path={routes.ORDERMENU} element={<OrderMenu />} />
           <Route path={routes.ORDER_TRACKING} element={<OrderTracking />} />
+          <Route path={routes.DETAIL_ACCOUNT} element={<DetailAccount />} />
         </Route>
 
         <Route element={<LayoutForSeller />}>

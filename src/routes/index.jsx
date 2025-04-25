@@ -17,4 +17,5 @@ export const routes = {
   MANAGEFOOD: '/admin/manage-food',
   DETAILPAGE: '/detail-dish/:id',
   getDetailPage: (id) => `/detail-dish/${id}`,
+  DETAIL_ACCOUNT: '/thong-tin-tai-khoan',
 }

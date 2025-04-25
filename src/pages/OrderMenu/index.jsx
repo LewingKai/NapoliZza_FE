@@ -76,7 +76,7 @@ export default function OrderMenu() {
     }
 
     try {
-      const response = await ReservationApi.createReservation(reservationData) // Không cần truyền accessToken
+      const response = await ReservationApi.createReservation(reservationData)
       toast.success('Đặt bàn thành công!')
       console.log('Response:', response)
       navigate(`${routes.HOME}`)
