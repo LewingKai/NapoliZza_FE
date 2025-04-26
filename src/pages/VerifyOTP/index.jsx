@@ -5,6 +5,7 @@ import { toast } from 'react-toastify'
 import { Button } from '~/components/ui/Button'
 import { routes } from '~/configs'
 import ValidatedTextField from '~/components/ui/ValidatedTextField'
+import LoadingDisplay from '~/components/ui/LoadingDisplay'
 
 export default function VerifyOTP() {
   const [email, setEmail] = useState('')
@@ -12,6 +13,7 @@ export default function VerifyOTP() {
   const [step, setStep] = useState(1)
   const [timeLeft, setTimeLeft] = useState(15 * 60)
   const [isResendEnabled, setIsResendEnabled] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
   const navigate = useNavigate()
 
   useEffect(() => {
@@ -33,6 +35,7 @@ export default function VerifyOTP() {
   }
 
   const handleSendOTP = async () => {
+    setIsLoading(true)
     try {
       await AuthApi.sendOTP(email)
       toast.success('OTP đã được gửi đến email của bạn.')
@@ -41,6 +44,8 @@ export default function VerifyOTP() {
       setIsResendEnabled(false)
     } catch (error) {
       toast.error(error.response?.data?.message || 'Có lỗi xảy ra khi gửi OTP.')
+    } finally {
+      setIsLoading(false)
     }
   }
 
@@ -55,11 +60,14 @@ export default function VerifyOTP() {
   }
 
   return (
-    <div className='flex justify-center items-center'>
-      <div className='w-[480px] mt-12 mb-14 px-6 py-8 bg-white rounded-xl shadow-md'>
+    <div className='flex justify-center items-center px-4 sm:px-6 lg:px-8'>
+      <LoadingDisplay isLoading={isLoading} message='Đang gửi OTP...' />
+      <div className='w-full max-w-md sm:max-w-lg mt-12 mb-14 px-6 py-8 bg-white rounded-xl shadow-md'>
         {step === 1 ? (
           <>
-            <div className='text-center text-3xl font-bold leading-loose mb-6'>Nhập Email</div>
+            <div className='text-center text-2xl sm:text-3xl font-bold leading-loose mb-6'>
+              Nhập Email
+            </div>
             <ValidatedTextField
               label='Email'
               value={email}
@@ -79,7 +87,9 @@ export default function VerifyOTP() {
           </>
         ) : (
           <>
-            <div className='text-center text-3xl font-bold leading-loose mb-6'>Nhập OTP</div>
+            <div className='text-center text-2xl sm:text-3xl font-bold leading-loose mb-6'>
+              Nhập OTP
+            </div>
             <ValidatedTextField
               label='OTP'
               value={otp}

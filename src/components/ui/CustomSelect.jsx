@@ -3,7 +3,7 @@ import { FormControl, InputLabel, Select, MenuItem } from '@mui/material'
 
 function CustomSelect({ label, options, placeholder, value, onChange, className, ...rest }) {
   return (
-    <div className={`mx-auto w-full max-w-[432px] ${className}`}>
+    <div className={`mx-auto w-full ${className}`}>
       <FormControl fullWidth>
         <InputLabel id={`select-label-${label.replace(/\s+/g, '-')}`}>{label}</InputLabel>
         <Select

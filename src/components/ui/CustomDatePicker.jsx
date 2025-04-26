@@ -6,7 +6,7 @@ import dayjs from 'dayjs'
 
 function CustomDatePicker({ label, className, placeholder, value, onChange, ...rest }) {
   return (
-    <div className={`mx-auto w-full max-w-[432px] ${className}`}>
+    <div className={`mx-auto w-full ${className}`}>
       <LocalizationProvider dateAdapter={AdapterDayjs}>
         <DatePicker
           value={value ? dayjs(value) : null}

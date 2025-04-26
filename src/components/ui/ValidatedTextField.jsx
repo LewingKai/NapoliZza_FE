@@ -31,7 +31,7 @@ function ValidatedTextField({
   }
 
   return (
-    <div className={`mx-auto w-full max-w-[432px] ${className}`}>
+    <div className={`mx-auto w-full ${className}`}>
       <TextField
         sx={{
           margin: 'auto',

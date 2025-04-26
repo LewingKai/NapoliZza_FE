@@ -14,6 +14,7 @@ import ConfirmationModal from './_components/ConfirmationModal'
 import CustomDatePicker from '~/components/ui/CustomDatePicker'
 import { useDispatch } from 'react-redux'
 import { logout } from '~/redux/userSlice'
+import LoadingDisplay from '~/components/ui/LoadingDisplay'
 
 export default function DetailAccount() {
   const [account, setAccount] = useState(null)
@@ -23,6 +24,7 @@ export default function DetailAccount() {
   const [isChanged, setIsChanged] = useState(false)
   const [isPasswordModalOpen, setIsPasswordModalOpen] = useState(false)
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
   const isFetched = useRef(false)
   const navigate = useNavigate()
   const dispatch = useDispatch()
@@ -69,13 +71,12 @@ export default function DetailAccount() {
   }
 
   const handleSave = async () => {
+    setIsLoading(true)
     try {
       const formDataToSend = new FormData()
       Object.keys(formData).forEach((key) => {
-        if (key === 'avatar') {
-          if (formData[key] instanceof File) {
-            formDataToSend.append('image', formData[key])
-          }
+        if (key === 'avatar' && formData[key] instanceof File) {
+          formDataToSend.append('image', formData[key])
         } else {
           formDataToSend.append(key, formData[key])
         }
@@ -87,13 +88,14 @@ export default function DetailAccount() {
         setIsEditing(false)
         setIsChanged(false)
         toast.success('Cập nhật thông tin thành công!')
-        window.scrollTo(0, 0)
       } else {
         toast.error('Cập nhật thông tin thất bại.')
       }
     } catch (error) {
       console.error(error)
       toast.error('Có lỗi xảy ra khi cập nhật thông tin.')
+    } finally {
+      setIsLoading(false)
     }
   }
 
@@ -114,118 +116,127 @@ export default function DetailAccount() {
   }
 
   if (!account) {
-    return <div>Đang tải thông tin tài khoản...</div>
+    return (
+      <div className='flex justify-center items-center h-screen'>
+        <p className='text-lg font-semibold'>Đang tải thông tin tài khoản...</p>
+      </div>
+    )
   }
 
   return (
-    <div className='p-6'>
-      <h1 className='text-5xl text-center font-bold mb-12'>Thông tin tài khoản</h1>
+    <div className='p-4 sm:p-6 lg:p-10'>
+      <LoadingDisplay isLoading={isLoading} message='Đang cập nhật thông tin...' />
+      <h1 className='text-3xl sm:text-5xl text-center font-bold mb-8 sm:mb-12'>
+        Thông tin tài khoản
+      </h1>
 
-      <div className='flex flex-col justify-center gap-4'>
+      <div className='flex flex-col items-center gap-6'>
         <AvatarUploader
           currentAvatar={avatar}
           onAvatarChange={handleAvatarChange}
           isEditing={isEditing}
         />
-        {isEditing ? (
-          <>
-            <ValidatedTextField
-              label='Tên tài khoản'
-              value={formData.username || ''}
-              onChange={(value) => handleChange('username', value)}
-              placeholder='Nhập tên tài khoản'
-            />
-            <ValidatedTextField
-              label='Họ và tên'
-              value={formData.name || ''}
-              onChange={(value) => handleChange('name', value)}
-              placeholder='Nhập họ và tên'
-            />
-            <ValidatedTextField
-              label='Số điện thoại'
-              value={formData.phone || ''}
-              onChange={(value) => handleChange('phone', value)}
-              placeholder='Nhập số điện thoại'
-            />
-            <CustomSelect
-              label='Giới tính'
-              options={[
-                { label: 'Nam', value: 'Nam' },
-                { label: 'Nữ', value: 'Nữ' },
-                { label: 'Không tiện tiết lộ', value: 'Không tiện tiết lộ' },
-              ]}
-              value={formData.gender || ''}
-              onChange={(value) => handleChange('gender', value)}
-              placeholder='Chọn giới tính'
-            />
-            <CustomDatePicker
-              label='Ngày sinh'
-              value={formData.birthday || ''}
-              onChange={(value) => handleChange('birthday', value)}
-              placeholder='Nhập ngày sinh'
-            />
-            <div className='flex justify-center mt-4 space-x-4'>
-              <Button
-                variant='default'
-                size='lg'
-                className='bg-third'
-                onClick={handleSave}
-                disabled={!isChanged}
-              >
-                Lưu
-              </Button>
-              <Button
-                variant='default'
-                size='lg'
-                className='bg-third text-white'
-                onClick={() => {
-                  setIsEditing(false)
-                  window.scrollTo(0, 0)
-                }}
-              >
-                Hủy
-              </Button>
-            </div>
-          </>
-        ) : (
-          <>
-            <DisabledTextField label='Tên tài khoản' value={account.username || ''} />
-            <DisabledTextField label='Họ và tên' value={account.name || ''} />
-            <DisabledTextField label='Số điện thoại' value={account.phone || ''} />
-            <DisabledTextField label='Email' value={account.email || ''} />
-            <DisabledTextField label='Giới tính' value={account.gender || ''} />
-            <DisabledTextField
-              label='Ngày sinh'
-              value={new Date(account.birthday).toLocaleDateString('vi-VN') || ''}
-            />
-            <div className='flex justify-center mt-4 space-x-4'>
-              <Button
-                variant='default'
-                size='lg'
-                className='bg-third'
-                onClick={() => {
-                  setIsEditing(true)
-                  window.scrollTo(0, 0)
-                }}
-              >
-                Chỉnh sửa
-              </Button>
-              <Button
-                variant='default'
-                size='lg'
-                className='bg-third text-white'
-                onClick={() => setIsPasswordModalOpen(true)}
-              >
-                Đổi mật khẩu
-              </Button>
-            </div>
-          </>
-        )}
+        <div className='w-full max-w-xl flex flex-col gap-6'>
+          {isEditing ? (
+            <>
+              <ValidatedTextField
+                label='Tên tài khoản'
+                value={formData.username || ''}
+                onChange={(value) => handleChange('username', value)}
+                placeholder='Nhập tên tài khoản'
+              />
+              <ValidatedTextField
+                label='Họ và tên'
+                value={formData.name || ''}
+                onChange={(value) => handleChange('name', value)}
+                placeholder='Nhập họ và tên'
+              />
+              <ValidatedTextField
+                label='Số điện thoại'
+                value={formData.phone || ''}
+                onChange={(value) => handleChange('phone', value)}
+                placeholder='Nhập số điện thoại'
+              />
+              <CustomSelect
+                label='Giới tính'
+                options={[
+                  { label: 'Nam', value: 'Nam' },
+                  { label: 'Nữ', value: 'Nữ' },
+                  { label: 'Không tiện tiết lộ', value: 'Không tiện tiết lộ' },
+                ]}
+                value={formData.gender || ''}
+                onChange={(value) => handleChange('gender', value)}
+                placeholder='Chọn giới tính'
+              />
+              <CustomDatePicker
+                label='Ngày sinh'
+                value={formData.birthday || ''}
+                onChange={(value) => handleChange('birthday', value)}
+                placeholder='Nhập ngày sinh'
+              />
+              <div className='flex justify-center mt-4 space-x-4'>
+                <Button
+                  variant='default'
+                  size='lg'
+                  className={`bg-third ${isLoading ? 'opacity-50 cursor-not-allowed' : ''}`}
+                  onClick={handleSave}
+                  disabled={!isChanged || isLoading}
+                >
+                  {isLoading ? 'Đang lưu...' : 'Lưu'}
+                </Button>
+                <Button
+                  variant='default'
+                  size='lg'
+                  className='bg-gray-500 hover:bg-gray-700'
+                  onClick={() => {
+                    setIsEditing(false)
+                    window.scrollTo(0, 0)
+                  }}
+                >
+                  Hủy
+                </Button>
+              </div>
+            </>
+          ) : (
+            <>
+              <DisabledTextField label='Tên tài khoản' value={account.username || ''} />
+              <DisabledTextField label='Họ và tên' value={account.name || ''} />
+              <DisabledTextField label='Số điện thoại' value={account.phone || ''} />
+              <DisabledTextField label='Email' value={account.email || ''} />
+              <DisabledTextField label='Giới tính' value={account.gender || ''} />
+              <DisabledTextField
+                label='Ngày sinh'
+                value={new Date(account.birthday).toLocaleDateString('vi-VN') || ''}
+              />
+              <div className='flex justify-center mt-4 space-x-4'>
+                <Button
+                  variant='default'
+                  size='lg'
+                  className='bg-third'
+                  onClick={() => {
+                    setIsEditing(true)
+                    window.scrollTo(0, 0)
+                  }}
+                >
+                  Chỉnh sửa
+                </Button>
+                <Button
+                  variant='default'
+                  size='lg'
+                  className='bg-third text-white'
+                  onClick={() => setIsPasswordModalOpen(true)}
+                >
+                  Đổi mật khẩu
+                </Button>
+              </div>
+            </>
+          )}
+        </div>
         <div className='flex justify-center mt-4 space-x-4'>
           <Button
             variant='default'
             size='lg'
-            className='bg-red-500 text-white'
+            className='bg-red-500 hover:bg-red-700 text-white'
             onClick={() => setIsDeleteModalOpen(true)}
           >
             Xóa tài khoản

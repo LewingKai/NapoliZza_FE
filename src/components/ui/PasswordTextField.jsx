@@ -43,7 +43,7 @@ function PasswordTextField({ label, confirm = false, className, placeholder, val
   const toggleShowConfirmPassword = () => setShowConfirmPassword((prev) => !prev)
 
   return (
-    <div className={`mx-auto w-full max-w-[432px] ${className}`}>
+    <div className={`mx-auto w-full ${className}`}>
       <TextField
         sx={{
           margin: 'auto',

@@ -76,12 +76,12 @@ export default function Reservation() {
   }
 
   return (
-    <div>
-      <h1 className='text-8xl text-center mt-20'>Đặt bàn</h1>
-      <div className='text-center pt-4'>
+    <div className='px-5 lg:px-20'>
+      <h1 className='text-4xl lg:text-8xl text-center mt-10 lg:mt-20'>Đặt bàn</h1>
+      <div className='text-center pt-4 text-sm lg:text-base'>
         Đặt bàn ngay để không bỏ lỡ cơ hội trải nghiệm hương vị Pizza 4P’s độc đáo.
       </div>
-      <div className='max-w-5xl mt-10 flex gap-3 mx-auto'>
+      <div className='max-w-5xl mt-10 flex flex-col lg:flex-row gap-3 mx-auto'>
         <CustomDatePicker
           label='Chọn ngày'
           value={date}
@@ -104,10 +104,10 @@ export default function Reservation() {
           placeholder='Nhập số lượng khách'
         />
       </div>
-      <div className='flex justify-center my-20'>
+      <div className='flex justify-center my-10 lg:my-20'>
         <Button
-          variant='outline'
-          className='w-72 h-20 bg-third text-3xl rounded-[0px]'
+          variant='default'
+          className='w-full lg:w-72 h-12 lg:h-20 bg-third text-lg lg:text-3xl rounded-md'
           onClick={handleReservation}
         >
           Đặt ngay

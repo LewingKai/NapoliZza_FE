@@ -14,8 +14,7 @@ const OrderTracking = () => {
       const statusMap = ['pending', 'confirmed', 'rejected', 'canceled']
       const status = statusMap[selectedTab]
 
-      // Gọi API để lấy danh sách đặt bàn
-      const response = await ReservationApi.getReservations(status) // Không cần truyền accessToken
+      const response = await ReservationApi.getReservations(status)
 
       if (response && response.success) {
         const filteredReservations = Array.isArray(response.data)
@@ -62,35 +61,40 @@ const OrderTracking = () => {
   }, [selectedTab])
 
   return (
-    <div className='w-full flex flex-col items-center my-12 space-y-2'>
-      <div className='w-full max-w-[800px] shadow-[0_3px_10px_rgb(0,0,0,0.2)]'>
+    <div className='w-full flex flex-col items-center my-6 px-4 space-y-4'>
+      <div className='w-full max-w-[800px] shadow-md'>
         <Navigation labels={tabLabels} value={selectedTab} onChange={handleTabChange} />
       </div>
 
-      <div className='bg-[#fdf8e7] w-full max-w-[800px] min-h-[350px] shadow-[0_3px_10px_rgb(0,0,0,0.2)] rounded-lg p-5'>
+      <div className='bg-[#fdf8e7] w-full max-w-[800px] min-h-[350px] shadow-md rounded-lg p-4'>
         {reservations.length === 0 ? (
-          <p>Không có đơn đặt bàn nào.</p>
+          <p className='text-center text-gray-500'>Không có đơn đặt bàn nào.</p>
         ) : (
-          <div className='space-y-5'>
+          <div className='space-y-4'>
             {reservations.map((reservation) => (
-              <div key={reservation._id} className='p-5 border rounded-md shadow-md'>
-                <p>
-                  <strong>Thời gian:</strong> {new Date(reservation.time).toLocaleString()}
-                </p>
-                <p>
-                  <strong>Số lượng khách:</strong> {reservation.numGuests}
-                </p>
-                <p>
-                  <strong>Phương thức thanh toán:</strong>{' '}
-                  {reservation.paymentMethod === 'direct' ? 'Trực tiếp' : 'Online'}
-                </p>
-                <p>
-                  <strong>Ghi chú:</strong> {reservation.note || 'Không có'}
-                </p>
-                <p>
+              <div
+                key={reservation._id}
+                className='p-4 border rounded-md shadow-sm bg-white hover:shadow-md transition-shadow'
+              >
+                <div className='grid grid-cols-1 sm:grid-cols-2 gap-2'>
+                  <p>
+                    <strong>Thời gian:</strong> {new Date(reservation.time).toLocaleString()}
+                  </p>
+                  <p>
+                    <strong>Số lượng khách:</strong> {reservation.numGuests}
+                  </p>
+                  <p>
+                    <strong>Phương thức thanh toán:</strong>{' '}
+                    {reservation.paymentMethod === 'direct' ? 'Trực tiếp' : 'Online'}
+                  </p>
+                  <p>
+                    <strong>Ghi chú:</strong> {reservation.note || 'Không có'}
+                  </p>
+                </div>
+                <p className='mt-2'>
                   <strong>Món ăn:</strong>
                 </p>
-                <table className='w-full border-collapse border mt-2'>
+                <table className='w-full border-collapse border mt-2 text-sm'>
                   <thead>
                     <tr>
                       <th className='border px-2 py-1'>Tên món</th>
@@ -110,17 +114,17 @@ const OrderTracking = () => {
                   <strong>Tổng tiền:</strong> {reservation.totalPrice.toLocaleString()} VND
                 </p>
                 {reservation.status === 'pending' && (
-                  <div className='mt-3 flex gap-3 justify-end'>
+                  <div className='mt-3 flex flex-wrap gap-2 justify-end'>
                     <Button
                       variant='outline'
-                      className='bg-third text-white'
+                      className='bg-red-500 hover:bg-red-700 text-white'
                       onClick={() => handleCancelReservation(reservation._id)}
                     >
                       Hủy đặt bàn
                     </Button>
                     <Button
                       variant='outline'
-                      className='bg-third text-white'
+                      className='bg-blue-500 hover:bg-blue-700 text-white'
                       onClick={() =>
                         handleChangePaymentMethod(
                           reservation._id,
