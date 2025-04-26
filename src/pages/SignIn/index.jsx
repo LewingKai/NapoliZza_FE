@@ -67,9 +67,11 @@ export default function SignIn() {
   }
 
   return (
-    <div className='flex justify-center items-center'>
-      <div className='w-[480px] mt-12 mb-14 px-6 py-8 bg-white rounded-xl shadow-md'>
-        <div className='text-center text-3xl font-bold leading-loose mb-6'>Đăng nhập</div>
+    <div className='flex justify-center items-center px-4 sm:px-6 lg:px-8'>
+      <div className='w-full max-w-md sm:max-w-lg mt-12 mb-14 px-6 py-8 bg-white rounded-xl shadow-md'>
+        <div className='text-center text-2xl sm:text-3xl font-bold leading-loose mb-6'>
+          Đăng nhập
+        </div>
         <div className='flex flex-col gap-4'>
           <ValidatedTextField
             label='Email'
