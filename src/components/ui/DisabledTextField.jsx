@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 
 const DisabledTextField = ({ value, label, className }) => {
   return (
-    <div className={`mx-auto w-full max-w-[432px] ${className}`}>
+    <div className={`mx-auto w-full ${className}`}>
       <TextField
         label={label}
         value={value}
