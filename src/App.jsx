@@ -16,6 +16,8 @@ import Reservation from './pages/Reservation'
 import OrderMenu from './pages/OrderMenu'
 import OrderTracking from './pages/OrderTracking'
 import DetailAccount from './pages/DetailAccount'
+import VerifyOTP from './pages/VerifyOTP'
+import ChangePasswordByOTP from './pages/ChangePasswordByOTP'
 import LayoutForSeller from './components/Layout/LayoutForSeller'
 import ScrollToTop from './components/Layout/ScrollToTop'
 import Dashboard from './pages/Admin/Dashboard'
@@ -45,6 +47,8 @@ function App() {
           <Route path={routes.ORDERMENU} element={<OrderMenu />} />
           <Route path={routes.ORDER_TRACKING} element={<OrderTracking />} />
           <Route path={routes.DETAIL_ACCOUNT} element={<DetailAccount />} />
+          <Route path={routes.VERIFY_OTP} element={<VerifyOTP />} />
+          <Route path={routes.CHANGE_PASSWORD} element={<ChangePasswordByOTP />} />
         </Route>
 
         <Route element={<LayoutForSeller />}>

@@ -18,4 +18,6 @@ export const routes = {
   DETAILPAGE: '/detail-dish/:id',
   getDetailPage: (id) => `/detail-dish/${id}`,
   DETAIL_ACCOUNT: '/thong-tin-tai-khoan',
+  VERIFY_OTP: '/verify-otp',
+  CHANGE_PASSWORD: '/doi-mat-khau',
 }
