@@ -62,14 +62,14 @@ export default function SignIn() {
       }
     } else {
       toast.error('Đăng nhập không thành công!')
-      console.log(errors) // log errors
+      console.log(errors)
     }
   }
 
   return (
     <div className='flex justify-center items-center'>
-      <div className='w-[480px] mt-12 mb-14 px-6 py-8 bg-white rounded-xl flex flex-col gap-6 shadow-md'>
-        <div className='text-center text-3xl font-bold leading-loose'>Đăng nhập</div>
+      <div className='w-[480px] mt-12 mb-14 px-6 py-8 bg-white rounded-xl shadow-md'>
+        <div className='text-center text-3xl font-bold leading-loose mb-6'>Đăng nhập</div>
         <div className='flex flex-col gap-4'>
           <ValidatedTextField
             label='Email'
@@ -88,11 +88,18 @@ export default function SignIn() {
         </div>
         <Button
           variant='outline'
-          className='w-full h-12 py-2.5 bg-third text-white rounded-lg cursor-pointer'
+          className='w-full h-12 mt-4 py-2.5 bg-third text-white rounded-lg cursor-pointer'
           onClick={handleSubmit}
         >
           Đăng nhập
         </Button>
+        <div>
+          <Link to={routes.VERIFY_OTP} onClick={ScrollToTop}>
+            <Button variant='link' className='text-third font-bold'>
+              Quên mật khẩu?
+            </Button>
+          </Link>
+        </div>
         <div className='text-center'>
           Chưa có tài khoản?{' '}
           <Link to={routes.SIGNUP} onClick={ScrollToTop}>
