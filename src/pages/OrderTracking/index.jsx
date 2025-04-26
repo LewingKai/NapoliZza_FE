@@ -15,7 +15,7 @@ const OrderTracking = () => {
       const status = statusMap[selectedTab]
 
       // Gọi API để lấy danh sách đặt bàn
-      const response = await ReservationApi.getReservations(status) // Không cần truyền accessToken
+      const response = await ReservationApi.getReservations(status)
 
       if (response && response.success) {
         const filteredReservations = Array.isArray(response.data)

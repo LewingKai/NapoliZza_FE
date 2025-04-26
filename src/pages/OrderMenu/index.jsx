@@ -7,6 +7,7 @@ import dayjs from 'dayjs'
 import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import { routes } from '~/routes'
+import LoadingSpinner from '~/components/ui/LoadingSpinner'
 
 export default function OrderMenu() {
   const location = useLocation()
@@ -109,7 +110,6 @@ export default function OrderMenu() {
   return (
     <div className='flex justify-between px-[138px] py-10'>
       <div className='w-2/3 pr-10'>
-        {/* Thông tin đặt bàn */}
         <h1 className='text-4xl font-bold mb-5'>Thông tin đặt bàn</h1>
         <p>
           <strong>Ngày:</strong> {formatDate(date)}
@@ -120,10 +120,9 @@ export default function OrderMenu() {
         <p>
           <strong>Số lượng khách:</strong> {guests}
         </p>
-        {/* Danh sách món ăn */}
         <h1 className='text-4xl font-bold my-5'>Đặt món</h1>
         {loading ? (
-          <p>Đang tải dữ liệu...</p>
+          <LoadingSpinner />
         ) : (
           categories.map((category) => (
             <div key={category} className='mb-10'>
@@ -152,7 +151,6 @@ export default function OrderMenu() {
           ))
         )}
       </div>
-
       {/* Giỏ hàng */}
       <div className='w-1/3 border-l pl-5 sticky top-36 h-full'>
         <h2 className='text-2xl font-bold mb-3'>Giỏ hàng</h2>

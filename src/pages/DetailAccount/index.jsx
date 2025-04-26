@@ -14,6 +14,7 @@ import ConfirmationModal from './_components/ConfirmationModal'
 import CustomDatePicker from '~/components/ui/CustomDatePicker'
 import { useDispatch } from 'react-redux'
 import { logout } from '~/redux/userSlice'
+import LoadingDisplay from '~/components/ui/LoadingDisplay'
 
 export default function DetailAccount() {
   const [account, setAccount] = useState(null)
@@ -23,6 +24,7 @@ export default function DetailAccount() {
   const [isChanged, setIsChanged] = useState(false)
   const [isPasswordModalOpen, setIsPasswordModalOpen] = useState(false)
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
   const isFetched = useRef(false)
   const navigate = useNavigate()
   const dispatch = useDispatch()
@@ -69,13 +71,12 @@ export default function DetailAccount() {
   }
 
   const handleSave = async () => {
+    setIsLoading(true)
     try {
       const formDataToSend = new FormData()
       Object.keys(formData).forEach((key) => {
-        if (key === 'avatar') {
-          if (formData[key] instanceof File) {
-            formDataToSend.append('image', formData[key])
-          }
+        if (key === 'avatar' && formData[key] instanceof File) {
+          formDataToSend.append('image', formData[key])
         } else {
           formDataToSend.append(key, formData[key])
         }
@@ -87,13 +88,14 @@ export default function DetailAccount() {
         setIsEditing(false)
         setIsChanged(false)
         toast.success('Cập nhật thông tin thành công!')
-        window.scrollTo(0, 0)
       } else {
         toast.error('Cập nhật thông tin thất bại.')
       }
     } catch (error) {
       console.error(error)
       toast.error('Có lỗi xảy ra khi cập nhật thông tin.')
+    } finally {
+      setIsLoading(false)
     }
   }
 
@@ -119,6 +121,7 @@ export default function DetailAccount() {
 
   return (
     <div className='p-6'>
+      <LoadingDisplay isLoading={isLoading} message='Đang cập nhật thông tin...' />
       <h1 className='text-5xl text-center font-bold mb-12'>Thông tin tài khoản</h1>
 
       <div className='flex flex-col justify-center gap-4'>
@@ -170,7 +173,7 @@ export default function DetailAccount() {
                 size='lg'
                 className='bg-third'
                 onClick={handleSave}
-                disabled={!isChanged}
+                disabled={!isChanged || isLoading}
               >
                 Lưu
               </Button>
