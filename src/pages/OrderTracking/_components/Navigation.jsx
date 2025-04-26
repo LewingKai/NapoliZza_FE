@@ -17,15 +17,16 @@ const Navigation = ({ labels, value, onChange }) => {
           justifyContent: 'center',
         },
         '& .MuiTab-root': {
-          minWidth: '120px',
-          padding: '8px 16px',
-          fontSize: { xs: 12, sm: 14 },
+          minWidth: '40px',
+          padding: { xs: '6px 12px', sm: '8px 16px' },
+          fontSize: { xs: '10px', sm: '14px' },
           fontFamily: 'Roboto, sans-serif',
           fontWeight: 'medium',
           color: 'var(--color-black)',
           transition: 'color 0.3s, background-color 0.3s',
           '&:hover': {
             backgroundColor: '#cfe1b9',
+            color: 'var(--color-third)',
           },
         },
         '& .MuiTabs-indicator': {
