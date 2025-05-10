@@ -4,7 +4,7 @@ import { toast } from 'react-toastify'
 import ReservationApi from '~/api/reservationApi'
 import { Button } from '~/components/ui/Button'
 
-const OrderTracking = () => {
+export default function OrderTracking() {
   const tabLabels = ['Chờ xác nhận', 'Đã xác nhận', 'Bị từ chối', 'Đã hủy']
   const [selectedTab, setSelectedTab] = useState(0)
   const [reservations, setReservations] = useState([])
@@ -49,6 +49,31 @@ const OrderTracking = () => {
     } catch (error) {
       toast.error('Không thể thay đổi phương thức thanh toán.')
       console.log('Lỗi: ', error)
+    }
+  }
+
+  const handleCreatePaymentLink = async (reservation) => {
+    try {
+      const paymentData = {
+        reservationid: reservation._id,
+        amount: reservation.totalPrice,
+        description: `Thanh toán cho đơn đặt bàn #${reservation._id}`,
+        items: reservation.listDishes.map((dish) => ({
+          name: dish.dishId.name,
+          quantity: dish.quantity,
+          price: dish.dishId.price,
+        })),
+      }
+
+      const response = await ReservationApi.createPaymentLink(paymentData)
+      if (response.url) {
+        window.location.href = response.url
+      } else {
+        toast.error('Không thể tạo liên kết thanh toán.')
+      }
+    } catch (error) {
+      console.error('Lỗi khi tạo liên kết thanh toán:', error)
+      toast.error('Đã xảy ra lỗi khi tạo liên kết thanh toán.')
     }
   }
 
@@ -136,6 +161,17 @@ const OrderTracking = () => {
                     </Button>
                   </div>
                 )}
+                {reservation.status === 'confirmed' && reservation.paymentMethod === 'online' && (
+                  <div className='mt-3 flex flex-wrap gap-2 justify-end'>
+                    <Button
+                      variant='outline'
+                      className='bg-green-500 hover:bg-green-700 text-white'
+                      onClick={() => handleCreatePaymentLink(reservation)}
+                    >
+                      Thanh toán
+                    </Button>
+                  </div>
+                )}
               </div>
             ))}
           </div>
@@ -144,5 +180,3 @@ const OrderTracking = () => {
     </div>
   )
 }
-
-export default OrderTracking

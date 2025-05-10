@@ -46,6 +46,16 @@ class ReservationApi {
       throw error
     }
   }
+
+  async createPaymentLink(reservationData) {
+    try {
+      const response = await apiAuth.post(ReservationEndpoints.paymentReservation, reservationData)
+      return response.data
+    } catch (error) {
+      console.error('Lỗi khi tạo liên kết thanh toán:', error.response?.data || error.message)
+      throw error
+    }
+  }
 }
 
 export default new ReservationApi()
