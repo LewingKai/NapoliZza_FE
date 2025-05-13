@@ -35,11 +35,11 @@ body {
 .slick-next:before {
   display: none !important;
 }
+
 .slick-slide {
-  width: 310px !important;
-  display: inline-block !important;
-  margin-left: 10px !important;
-  height: 250px !important;
+  display: inline-block;
+  height: 250px;
+  margin-left: 10px;
 }
 
 .custom-slider .slick-slide {
