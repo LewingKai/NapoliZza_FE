@@ -3,13 +3,22 @@ import FoodCard from '~/components/ui/FoodCard'
 import 'swiper/css'
 import 'swiper/css/navigation'
 import 'swiper/css/pagination'
-import { Box, Chip, FormControl, InputLabel, MenuItem, OutlinedInput, Select } from '@mui/material'
+import {
+  Box,
+  Chip,
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Modal,
+  OutlinedInput,
+  Select,
+} from '@mui/material'
 import SearchBar from '~/components/ui/SearchBar'
 import DishApi from '~/api/dishApi'
 import Pagination from '@mui/material/Pagination'
 import Stack from '@mui/material/Stack'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faFilter } from '@fortawesome/free-solid-svg-icons'
+import { faClose, faFilter } from '@fortawesome/free-solid-svg-icons'
 import { useSearchParams, useNavigate } from 'react-router-dom'
 
 const MenuProps = {
@@ -37,7 +46,7 @@ export default function Menu() {
   const [searchValue, setSearchValue] = React.useState('')
   const [dishList, setDishList] = React.useState([])
   const [sortList, setSortList] = React.useState([1])
-
+  const [isFilterBox, setIsFilterBox] = React.useState(false)
   const handleChange = (event) => {
     const {
       target: { value },
@@ -81,10 +90,12 @@ export default function Menu() {
     }
   }, [pages, category, sortList])
   return (
-    <div className='p-[1vw] sm:p-[5vw]'>
-      <div className='px-10'>
-        <h1 className='text-[70px] text-black font-bold text-center '>Menu của chúng tôi</h1>
-        <p className='text-center'>
+    <div className='py-10 p-[5vw]'>
+      <div className='px-5'>
+        <h1 className='text-[45px] md:text-[70px] text-black font-bold text-center '>
+          Menu của chúng tôi
+        </h1>
+        <p className='text-center italic font-light'>
           Chào mừng bạn đến với NapoliZza – nơi hội tụ những hương vị pizza truyền thống Ý và sáng
           tạo độc đáo!
         </p>
@@ -123,8 +134,8 @@ export default function Menu() {
               searchValue={searchValue}
             />
           </div>
-          <div className='flex sm:hidden '>
-            <FontAwesomeIcon icon={faFilter} size='2xl' />
+          <div className='flex sm:hidden'>
+            <FontAwesomeIcon icon={faFilter} size='2xl' onClick={() => setIsFilterBox(true)} />
           </div>
         </div>
         <div className='w-[10vw] hidden sm:flex'>
@@ -181,20 +192,59 @@ export default function Menu() {
           />
         </Stack>
       </div>
-      {/* <Swiper
-            modules={[Navigation, Pagination]}
-            spaceBetween={-70}
-            slidesPerView={4}
-            navigation // Nút điều hướng
-            pagination={{ clickable: true }} // Thanh chuyển slide
-            className=' mt-10 max:w-90vw h-[540px]'
-          >
-            {food.map((item, index) => (
-              <SwiperSlide key={index}>
-                <FoodCard item={item} />
-              </SwiperSlide>
-            ))} 
-          </Swiper> */}
+      <Modal open={isFilterBox} className='w-[70vw] h-[30vh] m-auto'>
+        <div className=' h-full w-full bg-white p-5 rounded-xl items-center'>
+          <div className='flex justify-between'>
+            <p className='text-[20px] font-bold uppercase text-primary'>Bộ lọc tìm kiếm</p>
+            <FontAwesomeIcon icon={faClose} size='xl' onClick={() => setIsFilterBox(false)} />
+          </div>
+          <div className='flex flex-col gap-5 items-start mt-10'>
+            <div className='w-[40vw] '>
+              <FormControl fullWidth>
+                <InputLabel id='demo-simple-select-label'>Danh mục</InputLabel>
+                <Select value={category} label='Danh mục' onChange={handleChangeCategory}>
+                  <MenuItem value='Pizza'>Pizza</MenuItem>
+                  <MenuItem value='Appetizer'>Appetizer</MenuItem>
+                  <MenuItem value='Salad'>Salad</MenuItem>
+                  <MenuItem value='Pasta'>Pasta</MenuItem>
+                  <MenuItem value='Drinks'>Drinks</MenuItem>
+                  <MenuItem value='Topping'>Topping</MenuItem>
+                  <MenuItem value='Delivery-combo'>Delivery-combo</MenuItem>
+                  <MenuItem value='Seasonal'>Seasonal</MenuItem>
+                  <MenuItem value='Desserts'>Desserts</MenuItem>
+                  <MenuItem value='Market'>Market</MenuItem>
+                  <MenuItem value='All'>All</MenuItem>
+                </Select>
+              </FormControl>
+            </div>
+            <div>
+              <FormControl sx={{ m: 1, maxWidth: 400, minWidth: 150 }}>
+                <InputLabel id='demo-multple-chip-label'>Xếp theo</InputLabel>
+                <Select
+                  labelId='demo-multiple-chip-label'
+                  id='demo-multiple-chip'
+                  multiple
+                  value={sortList}
+                  onChange={handleChange}
+                  input={<OutlinedInput id='select-multiple-chip' label='Xếp theo' />}
+                  renderValue={(selected) => (
+                    <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
+                      {selected.map((item) => (
+                        <Chip label={sortValue[item - 1].label} />
+                      ))}
+                    </Box>
+                  )}
+                  MenuProps={MenuProps}
+                >
+                  {sortValue.map((value) => (
+                    <MenuItem value={value.value}>{value.label}</MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+            </div>
+          </div>
+        </div>
+      </Modal>
     </div>
   )
 }
