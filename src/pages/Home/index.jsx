@@ -28,24 +28,29 @@ import cate_salad from '../../assets/images/home/categories/Salad.jpg'
 import cate_seasonal from '../../assets/images/home/categories/Seasonal.jpg'
 import cate_topping from '../../assets/images/home/categories/Topping.jpg'
 import { useNavigate } from 'react-router-dom'
+import { motion } from 'framer-motion'
 
 const standards = [
   {
+    key: 1,
     icon: iconCheese,
     title: 'Phô mai tươi tự làm',
     desc: 'Tự hào với phô mai Burrata, Mozzarella và Ricotta được sản xuất tươi mỗi ngày tại Đà Lạt, mang đến hương vị béo ngậy, độc đáo.',
   },
   {
+    key: 2,
     icon: iconCarot,
     title: 'Nguyên liệu tươi sạch',
     desc: 'Rau củ được tuyển chọn kỹ lưỡng từ các nông trại địa phương, đảm bảo độ tươi ngon và cân bằng dinh dưỡng trong từng món ăn.',
   },
   {
+    key: 3,
     icon: iconLemon,
     title: 'Phô mai tươi tự làm',
     desc: 'Sự kết hợp hoàn hảo giữa ẩm thực Ý và Nhật, từ pizza cá hồi sashimi đến những món ăn kèm tinh tế, mang lại trải nghiệm mới lạ.',
   },
   {
+    key: 4,
     icon: iconLemon,
     title: 'Phô mai tươi tự làm',
     desc: 'Sự kết hợp hoàn hảo giữa ẩm thực Ý và Nhật, từ pizza cá hồi sashimi đến những món ăn kèm tinh tế, mang lại trải nghiệm mới lạ.',
@@ -224,8 +229,9 @@ export default function Home() {
         },
       },
       {
-        breakpoint: 700,
+        breakpoint: 768,
         settings: {
+          dots: false,
           slidesToShow: 1,
           slidesToScroll: 1,
           initialSlide: 2,
@@ -249,22 +255,82 @@ export default function Home() {
         </div>
 
         <div className='hidden md:flex gap-9 absolute bottom-[-200px] left-[550px]'>
-          <img src={oneImage} alt='Ảnh món ăn thứ nhất' className='w-[180px] h-[180px]' />
-          <img src={twoImage} alt='Ánh món ăn thứ hai' className='w-[180px] h-[180px]' />
-          <img src={threeImage} alt='Ảnh món ăn thứ ba' className='w-[180px] h-[180px]' />
+          <motion.div
+            animate={{
+              scale: [1, 1.2, 1.5, 1, 1],
+              rotate: [0, 0, 180, 180, 0],
+              borderRadius: ['0%', '0%', '50%', '50%', '0%'],
+            }}
+            transition={{
+              duration: 2,
+              ease: 'easeInOut',
+              times: [0, 0.2, 0.5, 0.8, 1],
+              repeat: Infinity,
+              repeatDelay: 1,
+            }}
+            style={{
+              width: 180,
+              height: 180,
+              backgroundImage: `url(${oneImage})`,
+              backgroundSize: 'cover',
+              borderRadius: 5,
+            }}
+          />
+          <motion.div
+            animate={{
+              scale: [1, 1.2, 1.5, 1, 1],
+              rotate: [0, 0, 180, 180, 0],
+              borderRadius: ['0%', '0%', '50%', '50%', '0%'],
+            }}
+            transition={{
+              duration: 2,
+              ease: 'easeInOut',
+              times: [0, 0.2, 0.5, 0.8, 1],
+              repeat: Infinity,
+              repeatDelay: 1,
+            }}
+            style={{
+              width: 180,
+              height: 180,
+              backgroundImage: `url(${twoImage})`,
+              backgroundSize: 'cover',
+              borderRadius: 5,
+            }}
+          />
+          <motion.div
+            animate={{
+              scale: [1, 1.2, 1.5, 1, 1],
+              rotate: [0, 0, 180, 180, 0],
+              borderRadius: ['0%', '0%', '50%', '50%', '0%'],
+            }}
+            transition={{
+              duration: 2,
+              ease: 'easeInOut',
+              times: [0, 0.2, 0.5, 0.8, 1],
+              repeat: Infinity,
+              repeatDelay: 1,
+            }}
+            style={{
+              width: 180,
+              height: 180,
+              backgroundImage: `url(${threeImage})`,
+              backgroundSize: 'cover',
+              borderRadius: 5,
+            }}
+          />
         </div>
         <div className='sm:mt-[20vh] mt-[10vh] flex px-[5vw] gap-5 justify-between pb-[10vh]'>
           <div className='flex flex-col gap-3 w-[40vw]'>
             <img src={inviteImage} alt='Ảnh bánh pizza' className='rounded-xl' />
-            <h2 className={`text-white ${textTitle} max-w-[700px] mt-6`}>
+            <h2 className={`text-white ${textTitle} max-w-[700px] mt-6 `}>
               Mời bạn đến bữa tiệc Pizza ở nhà hàng của chúng tôi!
             </h2>
-            <p className={`max-w-[700px] text-white ${textDesc}`}>
-              Hãy để Pizza lấp đầy trái tin vầ chiếc bụng đói của bạn!
+            <p className={`max-w-[700px] text-white ${textDesc} italic font-light`}>
+              Hãy để Pizza lấp đầy trái tim và chiếc bụng đói của bạn!
             </p>
           </div>
           <div className='w-[35vw]'>
-            <p className={`text-white ${textDesc}`}>
+            <p className={`text-white ${textDesc} italic font-light`}>
               Chúng tôi mang đến hương vị Ý đích thực, từ những chiếc pizza nóng hổi đến không gian
               ấm cúng để bạn sẻ chia khoảnh khắc bên gia đình và bạn bè.
             </p>
@@ -284,7 +350,7 @@ export default function Home() {
         <h1 className={`text-primary ${textHeader2} font-extrabold mb-5`}>
           Danh mục các món ăn...
         </h1>
-        <div className='grid grid-cols-5 gap-5 pb-10'>
+        <div className='grid xl:grid-cols-5 grid-cols-2 gap-5 pb-10'>
           {categoryList.map((item, index) => {
             return (
               <div
@@ -293,8 +359,9 @@ export default function Home() {
                   backgroundSize: 'cover',
                   backgroundPosition: 'center',
                 }}
-                className='w-[16vw] h-[40vh] rounded-br-[70px] rounded-tl-[70px] group overflow-hidden'
+                className='md:h-[40vh] h-[40vh] rounded-br-[70px] rounded-tl-[70px] group overflow-hidden'
                 onClick={() => navigate(`/mon-an?category=${item.title}`)}
+                key={item.index}
               >
                 <div className='w-full h-full rounded-br-[70px] rounded-tl-[70px] bg-[#0303033b] flex flex-col justify-end pb-5 relative'>
                   <p className='text-white font-extrabold text-[30px] text-center transform transition-all duration-300 group-hover:-translate-y-4'>
@@ -308,20 +375,15 @@ export default function Home() {
             )
           })}
         </div>
-        {/* <div className='grid grid-cols-2 md:grid-cols-2 justify-center w-full gap-10'>
-          {menu.map((item) => (
-            <WhiteFoodCart item={item} />
-          ))}
-        </div> */}
       </div>
 
-      <div className='bg-[#EBF0E4] pt-20 px-20 md:flex justify-between'>
-        <img src={manImage} alt='Người đàn ông đang nấu pizza' className='w-[500px] rounded-3xl' />
+      <div className='bg-[#EBF0E4] pt-10 md:flex justify-between max-w-[90vw] m-auto'>
+        <img src={manImage} alt='Người đàn ông đang nấu pizza' className='w-[500px]' />
         <div>
           <h2 className={`text-black ${textHeader2} max-w-[700px] mt-8 font-extrabold`}>
             Hương vị Pizza hoàn hảo tại NapoliZza!
           </h2>
-          <p className={`max-w-[700px] text-descText ${textDesc} mt-5 italic font-thin`}>
+          <p className={`max-w-[800px] text-descText ${textDesc} mt-5 italic font-thin`}>
             Tại NapoliZza, mỗi chiếc pizza được làm từ bột tươi nhào thủ công, kết hợp với phô mai
             mozzarella hảo hạng và sốt cà chua đậm đà. Được nướng trong lò đá truyền thống, pizza
             của chúng tôi có lớp vỏ giòn rụm, nhân mềm thơm ngon. Đội ngũ đầu bếp tận tâm, luôn sáng
@@ -331,10 +393,13 @@ export default function Home() {
         </div>
       </div>
 
-      <div className=' grid grid-cols-1 md:grid-cols-4 gap-3  mx-auto justify-items-center px-[5vw] w-full mt-[100px]'>
+      <div className=' grid grid-cols-2 md:grid-cols-4 gap-5  mx-auto justify-items-center px-[5vw] w-full mt-[100px]'>
         {standards.map((item) => {
           return (
-            <div className='flex flex-col shadow-lg shadow-sky-50 hover:scale-110 transition delay-100 duration-400 items-center text-center max-w-[310px] bg-white p-5 rounded-4xl'>
+            <div
+              key={item.key}
+              className='flex flex-col shadow-lg shadow-sky-50 hover:scale-110 transition delay-100 duration-400 items-center text-center max-w-[310px] bg-white p-5 rounded-4xl'
+            >
               <img
                 src={item.icon}
                 alt='Ảnh icon của tiêu chuẩn'
@@ -343,7 +408,7 @@ export default function Home() {
               <h6 className='text-black text-[22px] max-w-[700px] mt-1 font-extrabold'>
                 {item.title}
               </h6>
-              <p className='text-descText text-[15px] mt-2'>{item.desc}</p>
+              <p className='text-descText text-[15px] mt-2 hidden sm:flex'>{item.desc}</p>
             </div>
           )
         })}
