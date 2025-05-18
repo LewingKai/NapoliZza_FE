@@ -4,7 +4,7 @@ const ReservationEndpoints = {
   cancelReservation: (id) => `/customer/reservation/${id}`,
   changePaymentMethod: (id) => `/customer/reservation/${id}/payment-method`,
   changeStatusReservation: '/admin/manageReservation',
-  paymentReservation: '/create-payment-link',
+  paymentReservation: '/customer/reservation/create-payment-link',
 }
 
 export default ReservationEndpoints
