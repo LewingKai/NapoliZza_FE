@@ -3,11 +3,13 @@ import Navigation from './_components/Navigation'
 import { toast } from 'react-toastify'
 import ReservationApi from '~/api/reservationApi'
 import { Button } from '~/components/ui/Button'
+import { useLocation } from 'react-router-dom'
 
 export default function OrderTracking() {
   const tabLabels = ['Chờ xác nhận', 'Đã xác nhận', 'Bị từ chối', 'Đã hủy']
   const [selectedTab, setSelectedTab] = useState(0)
   const [reservations, setReservations] = useState([])
+  const location = useLocation()
 
   const fetchReservations = async () => {
     try {
@@ -85,6 +87,22 @@ export default function OrderTracking() {
     fetchReservations()
   }, [selectedTab])
 
+  useEffect(() => {
+    const params = new URLSearchParams(location.search)
+    const status = params.get('status')
+    const reservationId = params.get('reservationid')
+    if (status === 'PAID' && reservationId) {
+      ReservationApi.changePaymentStatus(reservationId)
+        .then(() => {
+          window.history.replaceState({}, document.title, location.pathname)
+          fetchReservations()
+        })
+        .catch(() => {
+          toast.error('Thanh toán thất bại!')
+        })
+    }
+  }, [location.search])
+
   return (
     <div className='w-full flex flex-col items-center my-6 px-4 space-y-4'>
       <div className='w-full max-w-[800px] shadow-md'>
@@ -111,6 +129,10 @@ export default function OrderTracking() {
                   <p>
                     <strong>Phương thức thanh toán:</strong>{' '}
                     {reservation.paymentMethod === 'direct' ? 'Trực tiếp' : 'Online'}
+                  </p>
+                  <p>
+                    <strong>Trạng thái thanh toán:</strong>{' '}
+                    {reservation.paymentStatus === 'pending' ? 'Đang chờ' : 'Đã thanh toán'}
                   </p>
                   <p>
                     <strong>Ghi chú:</strong> {reservation.note || 'Không có'}
@@ -167,6 +189,7 @@ export default function OrderTracking() {
                       variant='outline'
                       className='bg-green-500 hover:bg-green-700 text-white'
                       onClick={() => handleCreatePaymentLink(reservation)}
+                      disabled={reservation.paymentStatus === 'paid'}
                     >
                       Thanh toán
                     </Button>

@@ -122,7 +122,7 @@ export default function AccountMenu({ user }) {
         <Link to={routes.ORDER_TRACKING}>
           <MenuItem onClick={handleClose} sx={{ paddingTop: '8px', paddingBottom: '8px' }}>
             <FontAwesomeIcon icon={faClockRotateLeft} className='mr-2' size='lg' />
-            Lịch sử mua hàng
+            Lịch sử đặt bàn
           </MenuItem>
         </Link>
         {user.role == 'admin' && (
