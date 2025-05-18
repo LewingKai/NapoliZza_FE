@@ -146,7 +146,7 @@ export default function OrderMenu() {
                         {item.price.toLocaleString()} VND
                       </p>
                       <Button
-                        variant='outline'
+                        variant='default'
                         className='mt-3 w-full bg-third rounded-md'
                         onClick={() => addToCart(item)}
                       >
@@ -211,14 +211,14 @@ export default function OrderMenu() {
                     </div>
                     <div className='flex items-center space-x-2'>
                       <Button
-                        variant='outline'
+                        variant='default'
                         className='h-10 w-10 rounded-full bg-third px-2 lg:px-4 text-2xl'
                         onClick={() => addToCart(item)}
                       >
                         +
                       </Button>
                       <Button
-                        variant='outline'
+                        variant='default'
                         className='h-10 w-10 rounded-full bg-third px-2 lg:px-4 text-2xl'
                         onClick={() => {
                           if (item.quantity > 1) {
@@ -250,7 +250,7 @@ export default function OrderMenu() {
                   onChange={(e) => setNote(e.target.value)}
                 />
                 <Button
-                  variant='outline'
+                  variant='default'
                   className='mt-3 w-full bg-third rounded-md'
                   onClick={handleSubmitReservation}
                 >

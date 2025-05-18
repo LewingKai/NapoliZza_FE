@@ -46,6 +46,29 @@ class ReservationApi {
       throw error
     }
   }
+
+  async changePaymentStatus(id) {
+    try {
+      const response = await apiAuth.patch(ReservationEndpoints.changePaymentStatus(id))
+      return response.data
+    } catch (error) {
+      console.error(
+        'Lỗi khi cập nhật trạng thái thanh toán:',
+        error.response?.data || error.message,
+      )
+      throw error
+    }
+  }
+
+  async createPaymentLink(reservationData) {
+    try {
+      const response = await apiAuth.post(ReservationEndpoints.paymentReservation, reservationData)
+      return response.data
+    } catch (error) {
+      console.error('Lỗi khi tạo liên kết thanh toán:', error.response?.data || error.message)
+      throw error
+    }
+  }
 }
 
 export default new ReservationApi()

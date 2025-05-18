@@ -3,11 +3,13 @@ import Navigation from './_components/Navigation'
 import { toast } from 'react-toastify'
 import ReservationApi from '~/api/reservationApi'
 import { Button } from '~/components/ui/Button'
+import { useLocation } from 'react-router-dom'
 
-const OrderTracking = () => {
+export default function OrderTracking() {
   const tabLabels = ['Chờ xác nhận', 'Đã xác nhận', 'Bị từ chối', 'Đã hủy']
   const [selectedTab, setSelectedTab] = useState(0)
   const [reservations, setReservations] = useState([])
+  const location = useLocation()
 
   const fetchReservations = async () => {
     try {
@@ -52,6 +54,31 @@ const OrderTracking = () => {
     }
   }
 
+  const handleCreatePaymentLink = async (reservation) => {
+    try {
+      const paymentData = {
+        reservationid: reservation._id,
+        amount: reservation.totalPrice,
+        description: `Thanh toán cho đơn đặt bàn #${reservation._id}`,
+        items: reservation.listDishes.map((dish) => ({
+          name: dish.dishId.name,
+          quantity: dish.quantity,
+          price: dish.dishId.price,
+        })),
+      }
+
+      const response = await ReservationApi.createPaymentLink(paymentData)
+      if (response.url) {
+        window.location.href = response.url
+      } else {
+        toast.error('Không thể tạo liên kết thanh toán.')
+      }
+    } catch (error) {
+      console.error('Lỗi khi tạo liên kết thanh toán:', error)
+      toast.error('Đã xảy ra lỗi khi tạo liên kết thanh toán.')
+    }
+  }
+
   const handleTabChange = (_event, newValue) => {
     setSelectedTab(newValue)
   }
@@ -59,6 +86,22 @@ const OrderTracking = () => {
   useEffect(() => {
     fetchReservations()
   }, [selectedTab])
+
+  useEffect(() => {
+    const params = new URLSearchParams(location.search)
+    const status = params.get('status')
+    const reservationId = params.get('reservationid')
+    if (status === 'PAID' && reservationId) {
+      ReservationApi.changePaymentStatus(reservationId)
+        .then(() => {
+          window.history.replaceState({}, document.title, location.pathname)
+          fetchReservations()
+        })
+        .catch(() => {
+          toast.error('Thanh toán thất bại!')
+        })
+    }
+  }, [location.search])
 
   return (
     <div className='w-full flex flex-col items-center my-6 px-4 space-y-4'>
@@ -86,6 +129,10 @@ const OrderTracking = () => {
                   <p>
                     <strong>Phương thức thanh toán:</strong>{' '}
                     {reservation.paymentMethod === 'direct' ? 'Trực tiếp' : 'Online'}
+                  </p>
+                  <p>
+                    <strong>Trạng thái thanh toán:</strong>{' '}
+                    {reservation.paymentStatus === 'pending' ? 'Đang chờ' : 'Đã thanh toán'}
                   </p>
                   <p>
                     <strong>Ghi chú:</strong> {reservation.note || 'Không có'}
@@ -136,6 +183,18 @@ const OrderTracking = () => {
                     </Button>
                   </div>
                 )}
+                {reservation.status === 'confirmed' && reservation.paymentMethod === 'online' && (
+                  <div className='mt-3 flex flex-wrap gap-2 justify-end'>
+                    <Button
+                      variant='outline'
+                      className='bg-green-500 hover:bg-green-700 text-white'
+                      onClick={() => handleCreatePaymentLink(reservation)}
+                      disabled={reservation.paymentStatus === 'paid'}
+                    >
+                      Thanh toán
+                    </Button>
+                  </div>
+                )}
               </div>
             ))}
           </div>
@@ -144,5 +203,3 @@ const OrderTracking = () => {
     </div>
   )
 }
-
-export default OrderTracking
