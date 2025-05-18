@@ -7,7 +7,7 @@ import { faStar } from '@fortawesome/free-solid-svg-icons'
 export default function FoodCard({ item }) {
   return (
     <Link to={routes.getDetailPage(item._id)} onClick={() => ScrollToTop()}>
-      <div className='bg-white rounded-[20px] relative drop-shadow-lg w-[40vw] md:w-[20vw] flex-shrink-0 mt-4 duration-300  hover:-translate-1 hover:scale-105'>
+      <div className='bg-white rounded-[20px] relative drop-shadow-lg w-[full] md:w-[20vw] flex-shrink-0 mt-4 duration-300  hover:-translate-1 hover:scale-105'>
         <img
           src={item.dishImg.url}
           alt='Ảnh pizza'
@@ -26,7 +26,7 @@ export default function FoodCard({ item }) {
           </div> */}
         </div>
         <div className='absolute top-2 right-2 gap-1 flex  px-3 py-1 bg-[#fffffff3] rounded-full'>
-          <strong>4</strong>
+          <strong>{Math.round(item.rating * 10) / 10}</strong>
           <FontAwesomeIcon icon={faStar} size='lg' color='#eccb38' />
         </div>
       </div>

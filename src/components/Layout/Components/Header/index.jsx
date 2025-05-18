@@ -22,7 +22,7 @@ export default function Header({ isOpenSidebar, setIsOpenSideBar }) {
   }
   return (
     <div
-      className={`bg-primary w-[100vw] h-[10vh] md:h-[15vh] flex items-center px-[5vw] justify-between sticky top-0 z-50
+      className={`bg-primary h-[10vh] md:h-[15vh] flex items-center px-[5vw] justify-between sticky top-0 z-50
         ${
           scrolled
             ? 'shadow-[0_4px_10px_rgba(255,255,255,0.8)] rounded-b-[20px]'

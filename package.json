@@ -32,6 +32,7 @@
     "axios": "^1.8.4",
     "class-variance-authority": "^0.7.1",
     "dayjs": "^1.11.13",
+    "framer-motion": "^12.10.5",
     "jwt-decode": "^4.0.0",
     "prop-types": "^15.8.1",
     "react": "^19.0.0",
