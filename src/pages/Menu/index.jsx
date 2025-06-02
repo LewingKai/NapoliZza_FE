@@ -57,7 +57,9 @@ export default function Menu() {
   const handleChangeSearch = (e) => {
     setSearchValue(e.target.value)
   }
+
   const handleSubmit = () => {
+    setPages(1)
     getDish()
   }
   const handleChangeCategory = (e) => {
