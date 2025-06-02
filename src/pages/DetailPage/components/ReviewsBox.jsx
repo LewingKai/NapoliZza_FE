@@ -1,6 +1,6 @@
 import { faTrash } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { Rating, TextareaAutosize } from '@mui/material'
+import { Avatar, Rating, TextareaAutosize } from '@mui/material'
 import { useState } from 'react'
 import { useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
@@ -106,7 +106,11 @@ export default function ReviewBox({ reviewList, fetchCommentList, dishDetail }) 
             return (
               <div className='flex py-3 justify-between border-b-2 border-[#cfcfcf] mt-4'>
                 <div>
-                  <p className='text-[20px] font-bold '>Nguyễn Công Bá</p>
+                  <div className='flex items-center gap-2 mb-3'>
+                    <Avatar src={item?.accountId?.avatar?.public_id} />
+                    <p className='text-[20px] font-bold '>{item.accountId.username}</p>
+                  </div>
+
                   <Rating name='half-rating' defaultValue={item.rating} precision={0.5} />
                   <p className='text-[18px]'>{item.reviewContent}</p>
                 </div>
