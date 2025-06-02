@@ -102,6 +102,7 @@ export default function ReviewBox({ reviewList, fetchCommentList, dishDetail }) 
       {reviewList.length != 0 ? (
         <div className='mt-10'>
           {reviewList.map((item) => {
+            console.log(item)
             return (
               <div className='flex py-3 justify-between border-b-2 border-[#cfcfcf] mt-4'>
                 <div>
