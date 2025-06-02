@@ -70,17 +70,3 @@ NapoliZza_FE/
 
 5. **Truy cập:**  
    Mở trình duyệt và truy cập [http://localhost:5173](http://localhost:5173)
-
-## Đóng góp
-
-- Fork dự án, tạo branch mới, commit và gửi pull request.
-- Vui lòng tuân thủ quy tắc code và chuẩn format (Prettier, ESLint).
-
-## Liên hệ
-
-- Email hỗ trợ: napolizza.support@gmail.com
-- Hotline: 0338963327
-
----
-
-Cảm ơn bạn đã sử dụng và đóng góp cho NapoliZza!
